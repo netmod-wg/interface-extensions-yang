@@ -208,8 +208,8 @@ module: ietf-if-extensions
     +--rw encapsulation
     |  +--rw (encaps-type)?
     +--rw loopback?          identityref {loopback}?
-    +--rw l2-mtu?            uint16 {configurable-l2-mtu}?
-    +--rw forwarding-mode?   identityref {forwarding-mode}?
+    +--rw max-frame-size?    uint32 {max-frame-size}?
+    +--ro forwarding-mode?   identityref
   augment /if:interfaces/if:interface:
     +--rw parent-interface    if:interface-ref {sub-interfaces}?
             ]]>
@@ -284,21 +284,21 @@ module: ietf-if-extensions
             flapping interface is identified by the device and assigned a
             penalty for each up to down link state change, but the interface is
             not automatically dampened.  The device tracks the penalties that a
-            flapping interface accumulates.  When the accumulated penalty reaches
-            the default or configured suppress threshold, the interface is
-            placed in a suppressed state.</t>
+            flapping interface accumulates.  When the accumulated penalty
+            reaches or exceeds the suppress threshold, the interface is placed
+            in a suppressed state.</t>
           </section>
           <section title="Half-Life Period">
-            <t>The half-life period determines how fast the accumulated
-            penalties can decay exponentially.  Any penalties that have been
-            accumulated on a flapping interface are reduced by half after each
-            half-life period.</t>
+            <t>The half-life period determines how fast the
+            accumulated penalties can decay exponentially.  The
+            accumulated penalty decays at a rate that causes its value
+            to be reduced by half after each half-life period.</t>
           </section>
           <section title="Reuse Threshold">
             <t>If, after one or more half-life periods, the accumulated penalty
             decreases below the reuse threshold and the underlying interface
             link state is up then the interface is taken out of suppressed state
-            and allowed to go up.</t>
+            and is allowed to go up.</t>
           </section>
           <section title="Maximum Suppress Time">
             <t>The maximum suppress time represents the maximum amount of time
@@ -344,18 +344,14 @@ module: ietf-if-extensions
             </list>
           </t>
         </section>
-        <section title="Layer 2 MTU">
-          <t>A layer 2 MTU configuration leaf (l2-mtu) is provided to specify
-          the maximum size of a layer 2 frame that may be transmitted or
-          received on an interface.  The layer 2 MTU includes the overhead of
-          the layer 2 header and the maximum length of the payload, but excludes
-          any frame check sequence (FCS) bytes.  The payload MTU available to
-          higher layer protocols is calculated from the l2-mtu leaf after taking
-          the layer 2 header size into account.</t>
-		
-          <t>For Ethernet interfaces carrying 802.1Q VLAN tagged frames, the
-          l2-mtu excludes the 4-8 byte overhead of any known (e.g. explicitly
-          matched by a child sub-interface) 802.1Q VLAN tags.</t>
+        <section title="Maximum frame size">
+          <t>A maximum frame size configuration leaf (max-frame-size) is
+          provided to specify the maximum size of a layer 2 frame that may be
+          transmitted or received on an interface.  The value includes the
+          overhead of any layer 2 header, the maximum length of the payload, and
+          any frame check sequence (FCS) bytes.  If configured, the
+          max-frame-size leaf on an interface also restricts the max-frame-size
+          of any child sub-interfaces, and the available MTU for protocols.</t>
         </section>
         <section title="Sub-interface">
           <t>The sub-interface feature specifies the minimal leaves required to
@@ -391,24 +387,14 @@ module: ietf-if-extensions
           stripped off before the packet is forwarded at the given layer.
           Conversely, on egress any lower layer headers must be added to the
           packet before it is transmitted out of the interface.</t>
-          <t>YANG Modules can conditionally use this leaf as a simple mechanism
-          to determine whether particular types of configuration are valid.
-          YANG modules can write 'must' statements to check whether the
-          forwarding mode leaf has been configured, and if it is, then validate
-          that the specified configuration is consistent with any forwarding
-          mode that has also been configured.  E.g., a layer 2 QoS policy YANG
-          module could ensure that it is only applied to a interface forwarding
-          traffic at layer 2 by checking whether the forwarding-mode leaf
-          exists, and if it does then also ensure that it has been set to
-          'layer-2-forwarding'.</t>
           <t>The following forwarding modes are defined:
             <list style="symbols">
-              <t>Optical Layer - Traffic is being forwarded at the optical
-              layer.  This includes DWDM or OTN based switching.</t>
-              <t>Layer 2 - Layer 2 based forwarding, such as Ethernet/VLAN based
-              switching, or L2VPN services.</t>
-              <t>Network Layer - Network layer based forwarding, such as IP,
-              MPLS, or L3VPNs.</t>
+              <t>Physical - Traffic is being forwarded at the physical layer.
+              This includes DWDM or OTN based switching.</t>
+              <t>Data-link - Layer 2 based forwarding, such as Ethernet/VLAN
+              based switching, or L2VPN services.</t>
+              <t>Network - Network layer based forwarding, such as IP, MPLS, or
+              L3VPNs.</t>
             </list>
            </t>
         </section>
@@ -429,7 +415,8 @@ module: ietf-if-extensions
 module: ietf-if-ethernet-like
   augment /if:interfaces/if:interface:
     +--rw ethernet-like
-       +--rw mac-address?       yang:mac-address {configurable-mac-address}?
+       +--rw mac-address?       yang:mac-address
+       |       {configurable-mac-address}?
        +--ro bia-mac-address?   yang:mac-address
   augment /if:interfaces/if:interface/if:statistics:
     +--ro in-drop-unknown-dest-mac-pkts?   yang:counter64
@@ -437,7 +424,7 @@ module: ietf-if-ethernet-like
                 </artwork>
             </figure>
         </section>
-        <section title="Interfaces Common YANG Module">
+        <section title="Interface Extensions YANG Module">
             <t>
                 This YANG module augments the interface container
                 defined in <xref
@@ -446,7 +433,7 @@ module: ietf-if-ethernet-like
             <figure>
                 <artwork>
                     <![CDATA[
-<CODE BEGINS> file "ietf-if-extensions@2019-08-29.yang"
+<CODE BEGINS> file "ietf-if-extensions@2019-11-04.yang"
 module ietf-if-extensions {
   yang-version 1.1;
 
@@ -456,14 +443,18 @@ module ietf-if-extensions {
 
   import ietf-yang-types {
     prefix yang;
+    reference "RFC 6991: Common YANG Data Types";
   }
 
   import ietf-interfaces {
     prefix if;
+    reference
+      "RFC 8343: A YANG Data Model For Interface Management";
   }
 
   import iana-if-type {
     prefix ianaift;
+    reference "RFC 7224: IANA Interface Type YANG Module";
   }
 
   organization
@@ -493,9 +484,15 @@ module ietf-if-extensions {
 
      This version of this YANG module is part of RFC XXXX
      (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
-     for full legal notices.";
+     for full legal notices.
 
-  revision 2019-08-29 {
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.";
+
+  revision 2019-11-04 {
     description
       "Initial revision.";
 
@@ -528,16 +525,11 @@ module ietf-if-extensions {
     reference "RFC XXX, Section 2.4 Loopback";
   }
 
-  feature configurable-l2-mtu {
+  feature max-frame-size {
     description
       "This feature indicates that the device supports configuring
-       layer 2 MTUs on interfaces.  Such MTU configurations include
-       the layer 2 header overheads (but exclude any FCS overhead).
-       The payload MTU available to higher layer protocols is either
-       derived from the layer 2 MTU, taking into account the size of
-       the layer 2 header, or is further restricted by explicit layer
-       3 or protocol specific MTU configuration.";
-    reference "RFC XXX, Section 2.5 Layer 2 MTU";
+       or reporting the maximum frame size on interfaces.";
+    reference "RFC XXX, Section 2.5 Maximum Frame Size";
   }
 
   feature sub-interfaces {
@@ -548,13 +540,6 @@ module ietf-if-extensions {
        decisions to be applied to a subset of the traffic processed
        on the specified parent interface.";
     reference "RFC XXX, Section 2.6 Sub-interface";
-  }
-
-  feature forwarding-mode {
-    description
-      "This feature indicates that the device supports the
-       configurable forwarding mode leaf.";
-    reference "RFC XXX, Section 2.7 Forwarding Mode";
   }
 
   /*
@@ -584,54 +569,56 @@ module ietf-if-extensions {
     description "Base identity for interface loopback options";
     reference "RFC XXX, Section 2.4";
   }
-  identity loopback-internal {
+  identity internal {
     base loopback;
     description
       "All egress traffic on the interface is internally looped back
        within the interface to be received on the ingress path.";
     reference "RFC XXX, Section 2.4";
   }
-  identity loopback-line {
+  identity line {
     base loopback;
     description
       "All ingress traffic received on the interface is internally
        looped back within the interface to the egress path.";
     reference "RFC XXX, Section 2.4";
   }
-  identity loopback-connector {
+  identity connector {
     base loopback;
     description
       "The interface has a physical loopback connector attached that
        loops all egress traffic back into the interface's ingress
-       path, with equivalent semantics to loopback-internal.";
+       path, with equivalent semantics to loopback internal.";
     reference "RFC XXX, Section 2.4";
   }
 
+  
   identity forwarding-mode {
     description "Base identity for forwarding-mode options.";
     reference "RFC XXX, Section 2.7";
   }
-  identity optical-layer {
+  identity physical {
     base forwarding-mode;
     description
-      "Traffic is being forwarded at the optical layer.  This
-       includes DWDM or OTN based switching.";
+      "Physical layer forwarding.  This includes DWDM or OTN based
+       optical switching.";
     reference "RFC XXX, Section 2.7";
   }
-  identity layer-2-forwarding {
+  identity data-link {
     base forwarding-mode;
     description
       "Layer 2 based forwarding, such as Ethernet/VLAN based
        switching, or L2VPN services.";
     reference "RFC XXX, Section 2.7";
   }
-  identity network-layer {
+  identity network {
     base forwarding-mode;
     description
       "Network layer based forwarding, such as IP, MPLS, or L3VPNs.";
     reference "RFC XXX, Section 2.7";
   }
 
+  
   /*
    * Augments the IETF interfaces model with leaves to configure
    * and monitor carrier-delay on an interface.
@@ -706,7 +693,6 @@ module ietf-if-extensions {
                actually down.";
           }
         }
-        default "none";
         config false;
         description
           "Reports whether a carrier delay timer is actively running,
@@ -791,7 +777,6 @@ module ietf-if-extensions {
 
       leaf suppressed {
         type boolean;
-        default "false";
         config false;
         description
           "Represents whether the interface is suppressed (i.e. held
@@ -872,20 +857,25 @@ module ietf-if-extensions {
     }
 
     /*
-     * Many types of interfaces support a configurable layer 2 MTU.
+     * Allows the maximum frame size to be configured or reported.
      */
-    leaf l2-mtu {
-      if-feature "configurable-l2-mtu";
-      type uint16 {
-        range "64 .. 65535";
+    leaf max-frame-size {
+      if-feature "max-frame-size";
+      type uint32 {
+        range "64 .. max";
       }
       description
         "The maximum size of layer 2 frames that may be transmitted
-         or received on the interface (excluding any FCS overhead).
-         In the case of Ethernet interfaces it also excludes the
-         4-8 byte overhead of any known (i.e. explicitly matched by
-         a child sub-interface) 802.1Q VLAN tags.";
-      reference "RFC XXX, Section 2.5 Layer 2 MTU";
+         or received on the interface (including any frame header,
+         maximum frame payload size, and frame checksum sequence).
+
+         If configured, the max-frame-size also limits the maximum
+         frame size of any child sub-interfaces.  The MTU available
+         to higher layer protocols is restricted to the maximum frame
+         payload size, and MAY be further restricted by explicit
+         layer 3 or protocol specific MTU configuration.";
+      
+      reference "RFC XXX, Section 2.5 Maximum Frame Size";
     }
 
     /*
@@ -893,10 +883,10 @@ module ietf-if-extensions {
      * which mode, or layer, is being used to forward the traffic.
      */
     leaf forwarding-mode {
-      if-feature "forwarding-mode";
       type identityref {
         base forwarding-mode;
       }
+      config false;
 
       description
         "The forwarding mode that the interface is operating in.";
@@ -935,7 +925,6 @@ module ietf-if-extensions {
     }
   }
 }
-
 <CODE ENDS>
 ]]>
                 </artwork>
@@ -951,7 +940,7 @@ module ietf-if-extensions {
             <figure>
                 <artwork>
                     <![CDATA[
-<CODE BEGINS> file "ietf-if-ethernet-like@2019-08-29.yang"
+<CODE BEGINS> file "ietf-if-ethernet-like@2019-11-04.yang"
 module ietf-if-ethernet-like {
   yang-version 1.1;
 
@@ -962,14 +951,18 @@ module ietf-if-ethernet-like {
 
   import ietf-interfaces {
     prefix if;
+    reference
+      "RFC 8343: A YANG Data Model For Interface Management";
   }
 
   import ietf-yang-types {
     prefix yang;
+    reference "RFC 6991: Common YANG Data Types";
   }
 
   import iana-if-type {
     prefix ianaift;
+    reference "RFC 7224: IANA Interface Type YANG Module";
   }
 
   organization
@@ -989,6 +982,11 @@ module ietf-if-ethernet-like {
      layer, and includes such interfaces as physical Ethernet
      interfaces, Ethernet LAG interfaces and VLAN sub-interfaces.
 
+     Additional interface configuration and counters for physical
+     Ethernet interfaces are defined in
+     ieee802-ethernet-interface.yang, as part of IEEE Std
+     802.3.2-2019.
+
      Copyright (c) 2019 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
@@ -1003,7 +1001,7 @@ module ietf-if-ethernet-like {
      (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
      for full legal notices.";
   
-  revision 2019-08-29 {
+  revision 2019-11-04 {
     description "Initial revision.";
 
     reference
@@ -1024,7 +1022,6 @@ module ietf-if-ethernet-like {
   augment "/if:interfaces/if:interface" {
     when "derived-from-or-self(if:type, 'ianaift:ethernetCsmacd') or
           derived-from-or-self(if:type, 'ianaift:ieee8023adLag') or
-          derived-from-or-self(if:type, 'ianaift:l2vlan') or
           derived-from-or-self(if:type, 'ianaift:ifPwType')" {
       description "Applies to all Ethernet-like interfaces";
     }
@@ -1042,8 +1039,8 @@ module ietf-if-ethernet-like {
         type yang:mac-address;
         description
           "The MAC address of the interface.  The operational value
-           matches the if:phys-address leaf defined in
-           ietf-interface.yang";
+           matches the /if:interfaces/if:interface/if:phys-address
+           leaf defined in ietf-interface.yang.";
       }
 
       leaf bia-mac-address {
@@ -1058,7 +1055,7 @@ module ietf-if-ethernet-like {
   }
 
 
-    /*
+  /*
    * Configuration parameters for Ethernet-like interfaces.
    */
   augment "/if:interfaces/if:interface/if:statistics" {
@@ -1066,7 +1063,6 @@ module ietf-if-ethernet-like {
                                'ianaift:ethernetCsmacd') or
           derived-from-or-self(../if:type,
                                'ianaift:ieee8023adLag') or
-          derived-from-or-self(../if:type, 'ianaift:l2vlan') or
           derived-from-or-self(../if:type, 'ianaift:ifPwType')" {
       description "Applies to all Ethernet-like interfaces";
     }
@@ -1089,15 +1085,13 @@ module ietf-if-ethernet-like {
          or in-broadcast-pkts, because they are not delivered to a
          higher layer.
 
-         Discontinuities in the values of this counters in this
-         container can occur at re-initialization of the management
-         system, and at other times as indicated by the value of the
-         'discontinuity-time' leaf defined in the ietf-interfaces
-         YANG module (RFC 8343).";
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module (RFC 8343).";
     }
   }
 }
-  
 <CODE ENDS>
             ]]>
                 </artwork>
@@ -1303,8 +1297,8 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
             <t>The authors wish to thank Eric Gray, Ing-Wher Chen, Jon Culver,
             Juergen Schoenwaelder, Ladislav Lhotka, Lou Berger, Mahesh
             Jethanandani, Martin Bjorklund, Michael Zitao, Neil Ketley, Qin Wu,
-            William Lupton, Xufeng Liu, and Andy Bierman for their helpful
-            comments contributing to this document.</t>
+            William Lupton, Xufeng Liu, Andy Bierman, and Vladimir Vassilev for
+            their helpful comments contributing to this document.</t>
         </section>
         <section title="ChangeLog">
             <t>XXX, RFC Editor, please delete this change log before publication.</t>
@@ -1395,8 +1389,9 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
             leaves can cause an interface to go down, or become unreliable, or
             to drop traffic forwarded over it. More specific details of the
             possible failure modes are given below.</t>
-            <t>The following leaf could cause the interface to go down, and stop
-            processing any ingress or egress traffic on the interface:
+            <t>The following leaf could cause the interface to go down
+            and stop processing any ingress or egress traffic on the
+            interface.  It could also cause broadcast traffic storms.
                     <list style="symbols">
                         <t>/if:interfaces/if:interface/loopback</t>
                     </list>
@@ -1421,15 +1416,12 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
                 hence would be dropped:
                     <list style="symbols">
                         <t>/if:interfaces/if:interface/encapsulation</t>
-                        <t>/if:interfaces/if:interface/l2-mtu</t>
+                        <t>/if:interfaces/if:interface/max-frame-size</t>
                         <t>/if:interfaces/if:interface/forwarding-mode</t>
                     </list>
                 </t>
-                <t>Normally devices will not allow the parent-interface leaf to
-                be changed after the interface has been created.  If an
-                implementation did allow the parent-interface leaf to be changed
-                then it could cause all traffic on the affected interface to be
-                dropped. The affected leaf is:
+                <t>Changing the parent-interface leaf could cause all traffic on
+                the affected interface to be dropped.  The affected leaf is:
                     <list style="symbols">
                         <t>/if:interfaces/if:interface/parent-interface</t>
                     </list>
@@ -1499,6 +1491,20 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
             &RFC6991;
             &RFC7224;
 	    &RFC8340;
+
+            <!-- XXX, RFC Editor, please check that this references is cited appropriately. -->
+
+            <reference anchor="IEEE802.3.2" target="">
+        <front>
+          <title>IEEE 802.3.2-2019</title>
+
+          <author initials="" surname="" fullname="">
+            <organization>IEEE WG802.3 - Ethernet Working Group</organization>
+          </author>
+
+          <date year="2019" />
+        </front>
+            </reference>
 
 
             <?rfc include="reference.I-D.ietf-netmod-sub-intf-vlan-model.xml"?>

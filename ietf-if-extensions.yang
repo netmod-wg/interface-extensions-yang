@@ -7,14 +7,18 @@ module ietf-if-extensions {
 
   import ietf-yang-types {
     prefix yang;
+    reference "RFC 6991: Common YANG Data Types";
   }
 
   import ietf-interfaces {
     prefix if;
+    reference
+      "RFC 8343: A YANG Data Model For Interface Management";
   }
 
   import iana-if-type {
     prefix ianaift;
+    reference "RFC 7224: IANA Interface Type YANG Module";
   }
 
   organization
@@ -44,9 +48,15 @@ module ietf-if-extensions {
 
      This version of this YANG module is part of RFC XXXX
      (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
-     for full legal notices.";
+     for full legal notices.
 
-  revision 2019-03-05 {
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.";
+
+  revision 2019-11-04 {
     description
       "Initial revision.";
 
@@ -79,16 +89,11 @@ module ietf-if-extensions {
     reference "RFC XXX, Section 2.4 Loopback";
   }
 
-  feature configurable-l2-mtu {
+  feature max-frame-size {
     description
       "This feature indicates that the device supports configuring
-       layer 2 MTUs on interfaces.  Such MTU configurations include
-       the layer 2 header overheads (but exclude any FCS overhead).
-       The payload MTU available to higher layer protocols is either
-       derived from the layer 2 MTU, taking into account the size of
-       the layer 2 header, or is further restricted by explicit layer
-       3 or protocol specific MTU configuration.";
-    reference "RFC XXX, Section 2.5 Layer 2 MTU";
+       or reporting the maximum frame size on interfaces.";
+    reference "RFC XXX, Section 2.5 Maximum Frame Size";
   }
 
   feature sub-interfaces {
@@ -99,13 +104,6 @@ module ietf-if-extensions {
        decisions to be applied to a subset of the traffic processed
        on the specified parent interface.";
     reference "RFC XXX, Section 2.6 Sub-interface";
-  }
-
-  feature forwarding-mode {
-    description
-      "This feature indicates that the device supports the
-       configurable forwarding mode leaf.";
-    reference "RFC XXX, Section 2.7 Forwarding Mode";
   }
 
   /*
@@ -135,54 +133,56 @@ module ietf-if-extensions {
     description "Base identity for interface loopback options";
     reference "RFC XXX, Section 2.4";
   }
-  identity loopback-internal {
+  identity internal {
     base loopback;
     description
       "All egress traffic on the interface is internally looped back
        within the interface to be received on the ingress path.";
     reference "RFC XXX, Section 2.4";
   }
-  identity loopback-line {
+  identity line {
     base loopback;
     description
       "All ingress traffic received on the interface is internally
        looped back within the interface to the egress path.";
     reference "RFC XXX, Section 2.4";
   }
-  identity loopback-connector {
+  identity connector {
     base loopback;
     description
       "The interface has a physical loopback connector attached that
        loops all egress traffic back into the interface's ingress
-       path, with equivalent semantics to loopback-internal.";
+       path, with equivalent semantics to loopback internal.";
     reference "RFC XXX, Section 2.4";
   }
 
+  
   identity forwarding-mode {
     description "Base identity for forwarding-mode options.";
     reference "RFC XXX, Section 2.7";
   }
-  identity optical-layer {
+  identity physical {
     base forwarding-mode;
     description
-      "Traffic is being forwarded at the optical layer.  This
-       includes DWDM or OTN based switching.";
+      "Physical layer forwarding.  This includes DWDM or OTN based
+       optical switching.";
     reference "RFC XXX, Section 2.7";
   }
-  identity layer-2-forwarding {
+  identity data-link {
     base forwarding-mode;
     description
       "Layer 2 based forwarding, such as Ethernet/VLAN based
        switching, or L2VPN services.";
     reference "RFC XXX, Section 2.7";
   }
-  identity network-layer {
+  identity network {
     base forwarding-mode;
     description
       "Network layer based forwarding, such as IP, MPLS, or L3VPNs.";
     reference "RFC XXX, Section 2.7";
   }
 
+  
   /*
    * Augments the IETF interfaces model with leaves to configure
    * and monitor carrier-delay on an interface.
@@ -257,7 +257,6 @@ module ietf-if-extensions {
                actually down.";
           }
         }
-        default "none";
         config false;
         description
           "Reports whether a carrier delay timer is actively running,
@@ -342,7 +341,6 @@ module ietf-if-extensions {
 
       leaf suppressed {
         type boolean;
-        default "false";
         config false;
         description
           "Represents whether the interface is suppressed (i.e. held
@@ -423,20 +421,25 @@ module ietf-if-extensions {
     }
 
     /*
-     * Many types of interfaces support a configurable layer 2 MTU.
+     * Allows the maximum frame size to be configured or reported.
      */
-    leaf l2-mtu {
-      if-feature "configurable-l2-mtu";
-      type uint16 {
-        range "64 .. 65535";
+    leaf max-frame-size {
+      if-feature "max-frame-size";
+      type uint32 {
+        range "64 .. max";
       }
       description
         "The maximum size of layer 2 frames that may be transmitted
-         or received on the interface (excluding any FCS overhead).
-         In the case of Ethernet interfaces it also excludes the
-         4-8 byte overhead of any known (i.e. explicitly matched by
-         a child sub-interface) 802.1Q VLAN tags.";
-      reference "RFC XXX, Section 2.5 Layer 2 MTU";
+         or received on the interface (including any frame header,
+         maximum frame payload size, and frame checksum sequence).
+
+         If configured, the max-frame-size also limits the maximum
+         frame size of any child sub-interfaces.  The MTU available
+         to higher layer protocols is restricted to the maximum frame
+         payload size, and MAY be further restricted by explicit
+         layer 3 or protocol specific MTU configuration.";
+      
+      reference "RFC XXX, Section 2.5 Maximum Frame Size";
     }
 
     /*
@@ -444,10 +447,10 @@ module ietf-if-extensions {
      * which mode, or layer, is being used to forward the traffic.
      */
     leaf forwarding-mode {
-      if-feature "forwarding-mode";
       type identityref {
         base forwarding-mode;
       }
+      config false;
 
       description
         "The forwarding mode that the interface is operating in.";
