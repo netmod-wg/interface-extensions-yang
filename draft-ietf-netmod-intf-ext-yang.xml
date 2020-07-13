@@ -18,6 +18,8 @@
 <!ENTITY RFC8342 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8342.xml">
 <!ENTITY RFC8343 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8343.xml">
 <!ENTITY RFC8340 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8340.xml">
+<!ENTITY RFC6020 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6020.xml">
+<!ENTITY RFC3688 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3688.xml">
 
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
@@ -45,7 +47,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-netmod-intf-ext-yang-08" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-netmod-intf-ext-yang-09" ipr="trust200902">
   <!-- category values: std, bcp, info, exp, and historic
    ipr values: full3667, noModification3667, noDerivatives3667
    you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -81,7 +83,7 @@
           <email>ssivaraj@juniper.net</email>
         </address>
       </author>
-      <date year="2019"/>
+      <date year="2020"/>
         <!-- If the month and year are both specified and are the current ones, xml2rfc will fill 
          in the current day for you. If only the current year is specified, xml2rfc will fill 
 	 in the current day and month for you. If the year is not the current one, it is 
@@ -427,8 +429,9 @@ module: ietf-if-ethernet-like
         <section title="Interface Extensions YANG Module">
             <t>
                 This YANG module augments the interface container
-                defined in <xref
-                target="RFC8343">RFC&#160;8343</xref>.
+                defined in <xref target="RFC8343"></xref>. It also
+                contains references to <xref target="RFC6991"></xref>
+                and <xref target="RFC7224"></xref>.
             </t>
             <figure>
                 <artwork>
@@ -497,16 +500,15 @@ module ietf-if-extensions {
       "Initial revision.";
 
     reference
-      "RFC XXX, Common Interface Extension YANG Data Models";
+      "RFC XXXX, Common Interface Extension YANG Data Models";
   }
 
   feature carrier-delay {
     description
-      "This feature indicates that configurable interface
-       carrier delay is supported, which is a feature is used to
-       limit the propagation of very short interface link state
-       flaps.";
-    reference "RFC XXX, Section 2.1 Carrier Delay";
+      "This feature indicates that configurable interface carrier
+       delay is supported, which is a feature is used to limit the
+       propagation of very short interface link state flaps.";
+    reference "RFC XXXX, Section 2.1 Carrier Delay";
   }
 
   feature dampening {
@@ -515,21 +517,21 @@ module ietf-if-extensions {
        dampening, which is a feature that is used to limit the
        propagation of interface link state flaps over longer
        periods.";
-    reference "RFC XXX, Section 2.2 Dampening";
+    reference "RFC XXXX, Section 2.2 Dampening";
   }
 
   feature loopback {
     description
-      "This feature indicates that configurable interface loopback
-       is supported.";
-    reference "RFC XXX, Section 2.4 Loopback";
+      "This feature indicates that configurable interface loopback is
+       supported.";
+    reference "RFC XXXX, Section 2.4 Loopback";
   }
 
   feature max-frame-size {
     description
-      "This feature indicates that the device supports configuring
-       or reporting the maximum frame size on interfaces.";
-    reference "RFC XXX, Section 2.5 Maximum Frame Size";
+      "This feature indicates that the device supports configuring or
+       reporting the maximum frame size on interfaces.";
+    reference "RFC XXXX, Section 2.5 Maximum Frame Size";
   }
 
   feature sub-interfaces {
@@ -539,7 +541,7 @@ module ietf-if-extensions {
        as logical child interfaces that allow features and forwarding
        decisions to be applied to a subset of the traffic processed
        on the specified parent interface.";
-    reference "RFC XXX, Section 2.6 Sub-interface";
+    reference "RFC XXXX, Section 2.6 Sub-interface";
   }
 
   /*
@@ -552,7 +554,7 @@ module ietf-if-extensions {
 
        New or custom interface types can derive from this type to
        inherit generic sub-interface configuration.";
-    reference "RFC XXX, Section 2.6 Sub-interface";
+    reference "RFC XXXX, Section 2.6 Sub-interface";
   }
 
   identity ethSubInterface{
@@ -567,21 +569,21 @@ module ietf-if-extensions {
 
   identity loopback {
     description "Base identity for interface loopback options";
-    reference "RFC XXX, Section 2.4";
+    reference "RFC XXXX, Section 2.4";
   }
   identity internal {
     base loopback;
     description
       "All egress traffic on the interface is internally looped back
        within the interface to be received on the ingress path.";
-    reference "RFC XXX, Section 2.4";
+    reference "RFC XXXX, Section 2.4";
   }
   identity line {
     base loopback;
     description
       "All ingress traffic received on the interface is internally
        looped back within the interface to the egress path.";
-    reference "RFC XXX, Section 2.4";
+    reference "RFC XXXX, Section 2.4";
   }
   identity connector {
     base loopback;
@@ -589,33 +591,33 @@ module ietf-if-extensions {
       "The interface has a physical loopback connector attached that
        loops all egress traffic back into the interface's ingress
        path, with equivalent semantics to loopback internal.";
-    reference "RFC XXX, Section 2.4";
+    reference "RFC XXXX, Section 2.4";
   }
 
   
   identity forwarding-mode {
     description "Base identity for forwarding-mode options.";
-    reference "RFC XXX, Section 2.7";
+    reference "RFC XXXX, Section 2.7";
   }
   identity physical {
     base forwarding-mode;
     description
       "Physical layer forwarding.  This includes DWDM or OTN based
        optical switching.";
-    reference "RFC XXX, Section 2.7";
+    reference "RFC XXXX, Section 2.7";
   }
   identity data-link {
     base forwarding-mode;
     description
       "Layer 2 based forwarding, such as Ethernet/VLAN based
        switching, or L2VPN services.";
-    reference "RFC XXX, Section 2.7";
+    reference "RFC XXXX, Section 2.7";
   }
   identity network {
     base forwarding-mode;
     description
       "Network layer based forwarding, such as IP, MPLS, or L3VPNs.";
-    reference "RFC XXX, Section 2.7";
+    reference "RFC XXXX, Section 2.7";
   }
 
   
@@ -700,7 +702,7 @@ module ietf-if-extensions {
            underlying carrier state.";
       }
 
-      reference "RFC XXX, Section 2.1 Carrier Delay";
+      reference "RFC XXXX, Section 2.1 Carrier Delay";
     }
 
     /*
@@ -715,7 +717,7 @@ module ietf-if-extensions {
       description
         "Interface dampening limits the propagation of interface link
          state flaps over longer periods.";
-      reference "RFC XXX, Section 2.2 Dampening";
+      reference "RFC XXXX, Section 2.2 Dampening";
       
       leaf half-life {
         type uint32;
@@ -728,7 +730,7 @@ module ietf-if-extensions {
            allowed values may be restricted to particular multiples
            of seconds.  The default value is vendor/device
            specific.";
-        reference "RFC XXX, Section 2.3.2 Half-Life Period";
+        reference "RFC XXXX, Section 2.3.2 Half-Life Period";
       }
       
       leaf reuse {
@@ -738,7 +740,7 @@ module ietf-if-extensions {
            unsuppressed (i.e. brought up) (no units).  The default
            value is vendor/device specific.  The penalty value for a
            link up->down state change is 1000 units.";
-        reference "RFC XXX, Section 2.2.3 Reuse Threshold";
+        reference "RFC XXXX, Section 2.2.3 Reuse Threshold";
       }
 
       leaf suppress {
@@ -749,7 +751,7 @@ module ietf-if-extensions {
            must be greater than the reuse threshold.  The default
            value is vendor/device specific.  The penalty value for a
            link up->down state change is 1000 units.";
-        reference "RFC XXX, Section 2.2.1 Suppress Threshold";
+        reference "RFC XXXX, Section 2.2.1 Suppress Threshold";
       }
 
       leaf max-suppress-time {
@@ -762,7 +764,7 @@ module ietf-if-extensions {
            value effectively acts as a ceiling that the penalty value
            cannot exceed.  The default value is vendor/device
            specific.";
-        reference "RFC XXX, Section 2.2.4 Maximum Suppress Time";
+        reference "RFC XXXX, Section 2.2.4 Maximum Suppress Time";
       }
 
       leaf penalty {
@@ -772,7 +774,7 @@ module ietf-if-extensions {
           "The current penalty value for this interface.  When the
            penalty value exceeds the 'suppress' leaf then the
            interface is suppressed (i.e. held down).";
-        reference "RFC XXX, Section 2.2 Dampening";
+        reference "RFC XXXX, Section 2.2 Dampening";
       }
 
       leaf suppressed {
@@ -782,7 +784,7 @@ module ietf-if-extensions {
           "Represents whether the interface is suppressed (i.e. held
            down) because the 'penalty' leaf value exceeds the
            'suppress' leaf.";
-        reference "RFC XXX, Section 2.2 Dampening";
+        reference "RFC XXXX, Section 2.2 Dampening";
       }
 
       leaf time-remaining {
@@ -797,7 +799,7 @@ module ietf-if-extensions {
           "For a suppressed interface, this leaf represents how long
            (in seconds) that the interface will remain suppressed
            before it is allowed to go back up again.";
-        reference "RFC XXX, Section 2.2 Dampening";
+        reference "RFC XXXX, Section 2.2 Dampening";
       }
     }
 
@@ -831,7 +833,7 @@ module ietf-if-extensions {
       choice encaps-type {
         description
           "Extensible choice of layer 2 encapsulations";
-        reference "RFC XXX, Section 2.3 Encapsulation";
+        reference "RFC XXXX, Section 2.3 Encapsulation";
       }
     }
 
@@ -853,7 +855,7 @@ module ietf-if-extensions {
         base loopback;
       }
       description "Enables traffic loopback.";
-      reference "RFC XXX, Section 2.4 Loopback";
+      reference "RFC XXXX, Section 2.4 Loopback";
     }
 
     /*
@@ -875,7 +877,7 @@ module ietf-if-extensions {
          payload size, and MAY be further restricted by explicit
          layer 3 or protocol specific MTU configuration.";
       
-      reference "RFC XXX, Section 2.5 Maximum Frame Size";
+      reference "RFC XXXX, Section 2.5 Maximum Frame Size";
     }
 
     /*
@@ -890,7 +892,7 @@ module ietf-if-extensions {
 
       description
         "The forwarding mode that the interface is operating in.";
-      reference "RFC XXX, Section 2.7 Forwarding Mode";
+      reference "RFC XXXX, Section 2.7 Forwarding Mode";
     }
   }
 
@@ -921,7 +923,50 @@ module ietf-if-extensions {
       description
         "This is the reference to the parent interface of this
          sub-interface.";
-      reference "RFC XXX, Section 2.6 Sub-interface";
+      reference "RFC XXXX, Section 2.6 Sub-interface";
+    }
+  }
+
+  /*
+   * Add discard counter for unknown sub-interface encapsulation
+   */
+  augment "/if:interfaces/if:interface/if:statistics" {
+    when "derived-from-or-self(../if:type,
+                               'ianaift:ethernetCsmacd') or
+          derived-from-or-self(../if:type,
+                               'ianaift:ieee8023adLag') or
+          derived-from-or-self(../if:type, 'ianaift:ifPwType')" {
+      description
+        "Applies to interfaces that can demux to sub-interfaces";
+    }
+    if-feature "sub-interfaces";
+
+    description
+      "Augment the interface model statistics with a sub-interface
+       demux discard counter.";
+
+    leaf in-discard-unknown-encaps {
+      type yang:counter64;
+      units frames;
+      description
+        "A count of the number of frames that were well formed, but
+         otherwise discarded because their encapsulation does not
+         classify to the interface or any child sub-interface.  E.g.,
+         a packet might be discarded because the it has an unknown
+         VLAN Id, or does not have a VLAN Id when one is expected.
+
+         For consistency, frames counted against this counter are
+         also counted against the IETF interfaces statistics.  In
+         particular, they are included in in-octets and in-discards,
+         but are not included in in-unicast-pkts, in-multicast-pkts
+         or in-broadcast-pkts, because they are not delivered to a
+         higher layer.
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
     }
   }
 }
@@ -931,12 +976,13 @@ module ietf-if-extensions {
             </figure>
         </section>
         <section title="Interfaces Ethernet-Like YANG Module">
-            <t>This YANG module augments the interface container
-            defined in <xref target="RFC8343">RFC&#160;8343</xref> for
-            Ethernet-like interfaces. This includes Ethernet
-            interfaces, 802.3 LAG (802.1AX) interfaces, VLAN
-            sub-interfaces, Switch Virtual interfaces, and Pseudo-Wire
-            Head-End interfaces.</t>
+            <t>This YANG module augments the interface container defined in
+            <xref target="RFC8343">RFC&#160;8343</xref> for Ethernet-like
+            interfaces. This includes Ethernet interfaces, 802.3 LAG (802.1AX)
+            interfaces, Switch Virtual interfaces, and Pseudo-Wire Head-End
+            interfaces.  It also contains references to <xref
+            target="RFC6991"></xref>, <xref target="RFC7224"></xref>, and <xref
+            target="IEEE802.3.2-2019"></xref>.</t>
             <figure>
                 <artwork>
                     <![CDATA[
@@ -1005,14 +1051,15 @@ module ietf-if-ethernet-like {
     description "Initial revision.";
 
     reference
-      "RFC XXX, Common Interface Extension YANG Data Models";
+      "RFC XXXX, Common Interface Extension YANG Data Models";
   }
 
   feature configurable-mac-address {
     description
       "This feature indicates that MAC addresses on Ethernet-like
        interfaces can be configured.";
-    reference "RFC XXX, Section 3 Interfaces Ethernet-Like Module";
+    reference
+      "RFC XXXX, Section 3, Interfaces Ethernet-Like Module";
   }
 
   
@@ -1070,16 +1117,16 @@ module ietf-if-ethernet-like {
       "Augment the interface model statistics with additional
        counters related to Ethernet-like interfaces.";
 
-    leaf in-drop-unknown-dest-mac-pkts {
+    leaf in-discard-unknown-dest-mac-pkts {
       type yang:counter64;
       units frames;
       description
         "A count of the number of frames that were well formed, but
-         otherwise dropped because the destination MAC address did
+         otherwise discarded because the destination MAC address did
          not pass any ingress destination MAC address filter.
 
-         For consistency, frames counted against this drop counters
-         are also counted against the IETF interfaces statistics.  In
+         For consistency, frames counted against this counter are
+         also counted against the IETF interfaces statistics.  In
          particular, they are included in in-octets and in-discards,
          but are not included in in-unicast-pkts, in-multicast-pkts
          or in-broadcast-pkts, because they are not delivered to a
@@ -1088,7 +1135,8 @@ module ietf-if-ethernet-like {
          Discontinuities in the values of this counter can occur at
          re-initialization of the management system, and at other
          times as indicated by the value of the 'discontinuity-time'
-         leaf defined in the ietf-interfaces YANG module (RFC 8343).";
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
     }
   }
 }
@@ -1302,6 +1350,13 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
         </section>
         <section title="ChangeLog">
             <t>XXX, RFC Editor, please delete this change log before publication.</t>
+            <section title="Version -09">
+                <t>
+                  <list style="symbols">
+		    <t>Fixed IANA section.</t>
+                  </list>
+                </t>                
+            </section>
             <section title="Version -08">
                 <t>
                   <list style="symbols">
@@ -1356,10 +1411,44 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
         </section>
         <!-- Possibly a 'Contributors' section ... -->
         <section anchor="IANA" title="IANA Considerations">
-            <t>This document defines several new YANG module and the authors
-            politely request that IANA assigns unique names to the two YANG
-            module files contained within this document, and also appropriate URIs
-            in the "IETF XML Registry".</t>
+        <section anchor="yang-module-registrations" title="YANG Module Registrations">
+          <t>The following YANG modules are requested to be registred in the IANA
+          "YANG Module Names" <xref target="RFC6020"/> registry:</t>
+
+          <t>The ietf-if-extensions module:</t>
+
+          <t><list>
+            <t>Name: ietf-if-extensions</t>
+            <t>XML Namespace: urn:ietf:params:xml:ns:yang:ietf-if-extensions</t>
+            <t>Prefix: if-ext</t>
+            <t>Reference: [RFCXXXX]</t>
+          </list></t>
+          
+          <t>The ietf-if-ethernet-like module:</t>
+
+          <t><list>
+            <t>Name: ietf-if-ethernet-like</t>
+            <t>XML Namespace: urn:ietf:params:xml:ns:yang:ietf-if-ethernet-like</t>
+            <t>Prefix: ethlike</t>
+            <t>Reference: [RFCXXXX]</t>
+          </list></t>
+
+        <t>This document registers two URIs in the "IETF XML Registry" <xref
+        target="RFC3688"/>.  Following the format in RFC 3688, the following
+        registrations have been made.
+
+        <list>
+          <t>URI: urn:ietf:params:xml:ns:yang:ietf-if-extensions</t>
+          <t>Registrant Contact: The IESG.</t>
+          <t>XML: N/A, the requested URI is an XML namespace.</t>
+        </list>
+        <list>
+          <t>URI: urn:ietf:params:xml:ns:yang:ietf-if-ethernet-like</t>
+          <t>Registrant Contact: The IESG.</t>          
+          <t>XML: N/A, the requested URI is an XML namespace.</t>
+        </list>
+        </t>
+        </section>
             <!--      <t>All drafts are required to have an IANA considerations section (see
       <xref target="I-D.narten-iana-considerations-rfc2434bis">the update of
       RFC 2434</xref> for a guide). If the draft does not require IANA to do
@@ -1460,7 +1549,8 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
      filing system or remote ones accessed by http (http://domain/dir/... ).-->
         <references title="Normative References">
             <!--?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?-->
-
+            &RFC3688;
+            &RFC6020;
             &RFC7950;
             &RFC2119;
             &RFC8174;
@@ -1494,7 +1584,7 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
 
             <!-- XXX, RFC Editor, please check that this references is cited appropriately. -->
 
-            <reference anchor="IEEE802.3.2" target="">
+            <reference anchor="IEEE802.3.2-2019" target="">
         <front>
           <title>IEEE 802.3.2-2019</title>
 
