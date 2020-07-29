@@ -47,7 +47,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-netmod-intf-ext-yang-09" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-netmod-intf-ext-yang-10" ipr="trust200902">
   <!-- category values: std, bcp, info, exp, and historic
    ipr values: full3667, noModification3667, noDerivatives3667
    you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -214,6 +214,9 @@ module: ietf-if-extensions
     +--ro forwarding-mode?   identityref
   augment /if:interfaces/if:interface:
     +--rw parent-interface    if:interface-ref {sub-interfaces}?
+  augment /if:interfaces/if:interface/if:statistics:
+    +--ro in-discard-unknown-encaps?   yang:counter64
+            {sub-interfaces}?
             ]]>
                 </artwork>
             </figure>
@@ -436,7 +439,7 @@ module: ietf-if-ethernet-like
             <figure>
                 <artwork>
                     <![CDATA[
-<CODE BEGINS> file "ietf-if-extensions@2019-11-04.yang"
+<CODE BEGINS> file "ietf-if-extensions@2020-07-29.yang"
 module ietf-if-extensions {
   yang-version 1.1;
 
@@ -475,7 +478,7 @@ module ietf-if-extensions {
      interface YANG model (RFC 8343) with common configurable layer 2
      properties.
 
-     Copyright (c) 2019 IETF Trust and the persons identified as
+     Copyright (c) 2020 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -495,7 +498,7 @@ module ietf-if-extensions {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-  revision 2019-11-04 {
+  revision 2020-07-29 {
     description
       "Initial revision.";
 
@@ -820,6 +823,7 @@ module ietf-if-extensions {
          derived-from-or-self(../if:type, 'ianaift:pos') or
          derived-from-or-self(../if:type,
                               'ianaift:atmSubInterface') or
+         derived-from-or-self(../if:type, 'ianaift:l2vlan') or
          derived-from-or-self(../if:type, 'ethSubInterface')" {
 
         description
@@ -904,6 +908,7 @@ module ietf-if-extensions {
    */
   augment "/if:interfaces/if:interface" {
     when "derived-from(if:type, 'sub-interface') or
+          derived-from-or-self(if:type, 'ianaift:l2vlan') or
           derived-from-or-self(if:type, 'ianaift:atmSubInterface') or
           derived-from-or-self(if:type, 'ianaift:frameRelay')"  {
       description
@@ -937,7 +942,8 @@ module ietf-if-extensions {
                                'ianaift:ieee8023adLag') or
           derived-from-or-self(../if:type, 'ianaift:ifPwType')" {
       description
-        "Applies to interfaces that can demux to sub-interfaces";
+        "Applies to interfaces that can demultiplex ingress frames to
+         sub-interfaces.";
     }
     if-feature "sub-interfaces";
 
@@ -951,9 +957,10 @@ module ietf-if-extensions {
       description
         "A count of the number of frames that were well formed, but
          otherwise discarded because their encapsulation does not
-         classify to the interface or any child sub-interface.  E.g.,
-         a packet might be discarded because the it has an unknown
-         VLAN Id, or does not have a VLAN Id when one is expected.
+         classify the frame to the interface or any child
+         sub-interface.  E.g., a frame might be discarded because the
+         it has an unknown VLAN Id, or does not have a VLAN Id when
+         one is expected.
 
          For consistency, frames counted against this counter are
          also counted against the IETF interfaces statistics.  In
@@ -1350,6 +1357,13 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
         </section>
         <section title="ChangeLog">
             <t>XXX, RFC Editor, please delete this change log before publication.</t>
+            <section title="Version -10">
+                <t>
+                  <list style="symbols">
+		    <t>Update modules from github and tree diagram.</t>
+                  </list>
+                </t>                
+            </section>
             <section title="Version -09">
                 <t>
                   <list style="symbols">

@@ -5,14 +5,14 @@
 Internet Engineering Task Force                           R. Wilton, Ed.
 Internet-Draft                                                   D. Ball
 Intended status: Standards Track                                T. Singh
-Expires: January 14, 2021                                  Cisco Systems
+Expires: January 30, 2021                                  Cisco Systems
                                                               S. Sivaraj
                                                         Juniper Networks
-                                                           July 13, 2020
+                                                           July 29, 2020
 
 
               Common Interface Extension YANG Data Models
-                   draft-ietf-netmod-intf-ext-yang-09
+                   draft-ietf-netmod-intf-ext-yang-10
 
 Abstract
 
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 14, 2021.
+   This Internet-Draft will expire on January 30, 2021.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Wilton, et al.          Expires January 14, 2021                [Page 1]
+Wilton, et al.          Expires January 30, 2021                [Page 1]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -90,14 +90,15 @@ Table of Contents
      6.3.  MAC address configuration . . . . . . . . . . . . . . . .  27
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  29
    8.  ChangeLog . . . . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.1.  Version -09 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.2.  Version -08 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.3.  Version -07 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.4.  Version -06 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.5.  Version -05 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.6.  Version -04 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.7.  Version -03 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.8.  Version -02 . . . . . . . . . . . . . . . . . . . . . . .  30
+     8.1.  Version -10 . . . . . . . . . . . . . . . . . . . . . . .  29
+     8.2.  Version -09 . . . . . . . . . . . . . . . . . . . . . . .  29
+     8.3.  Version -08 . . . . . . . . . . . . . . . . . . . . . . .  29
+     8.4.  Version -07 . . . . . . . . . . . . . . . . . . . . . . .  29
+     8.5.  Version -06 . . . . . . . . . . . . . . . . . . . . . . .  29
+     8.6.  Version -05 . . . . . . . . . . . . . . . . . . . . . . .  29
+     8.7.  Version -04 . . . . . . . . . . . . . . . . . . . . . . .  29
+     8.8.  Version -03 . . . . . . . . . . . . . . . . . . . . . . .  30
+     8.9.  Version -02 . . . . . . . . . . . . . . . . . . . . . . .  30
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  30
      9.1.  YANG Module Registrations . . . . . . . . . . . . . . . .  30
    10. Security Considerations . . . . . . . . . . . . . . . . . . .  31
@@ -105,15 +106,15 @@ Table of Contents
      10.2.  ietf-if-ethernet-like.yang . . . . . . . . . . . . . . .  32
    11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  32
      11.1.  Normative References . . . . . . . . . . . . . . . . . .  32
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  33
 
 
 
-Wilton, et al.          Expires January 14, 2021                [Page 2]
+Wilton, et al.          Expires January 30, 2021                [Page 2]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
 
+     11.2.  Informative References . . . . . . . . . . . . . . . . .  33
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  34
 
 1.  Introduction
@@ -164,8 +165,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-
-Wilton, et al.          Expires January 14, 2021                [Page 3]
+Wilton, et al.          Expires January 30, 2021                [Page 3]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -221,7 +221,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-Wilton, et al.          Expires January 14, 2021                [Page 4]
+Wilton, et al.          Expires January 30, 2021                [Page 4]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -251,6 +251,9 @@ Internet-Draft          Interface Extensions YANG              July 2020
        +--ro forwarding-mode?   identityref
      augment /if:interfaces/if:interface:
        +--rw parent-interface    if:interface-ref {sub-interfaces}?
+     augment /if:interfaces/if:interface/if:statistics:
+       +--ro in-discard-unknown-encaps?   yang:counter64
+               {sub-interfaces}?
 
 
 2.1.  Carrier Delay
@@ -271,16 +274,16 @@ Internet-Draft          Interface Extensions YANG              July 2020
    change of the /if:interfaces/if:interface/oper-status or
    /if:interfaces/if:interfaces/last-change leaves for the interface
    that the feature is operating on.  One obvious side effect of using
-   this feature that is that any state transition will always be delayed
-   by the specified time interval.
 
 
 
-
-Wilton, et al.          Expires January 14, 2021                [Page 5]
+Wilton, et al.          Expires January 30, 2021                [Page 5]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
+
+   this feature that is that any state transition will always be delayed
+   by the specified time interval.
 
    The configuration allows for separate timer values to be used in the
    suppression of down->up->down link transitions vs up->down->up link
@@ -330,10 +333,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-
-
-
-Wilton, et al.          Expires January 14, 2021                [Page 6]
+Wilton, et al.          Expires January 30, 2021                [Page 6]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -389,7 +389,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-Wilton, et al.          Expires January 14, 2021                [Page 7]
+Wilton, et al.          Expires January 30, 2021                [Page 7]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -445,7 +445,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-Wilton, et al.          Expires January 14, 2021                [Page 8]
+Wilton, et al.          Expires January 30, 2021                [Page 8]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -501,7 +501,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-Wilton, et al.          Expires January 14, 2021                [Page 9]
+Wilton, et al.          Expires January 30, 2021                [Page 9]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -525,7 +525,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
    [RFC8343].  It also contains references to [RFC6991] and [RFC7224].
 
 
-   <CODE BEGINS> file "ietf-if-extensions@2019-11-04.yang"
+   <CODE BEGINS> file "ietf-if-extensions@2020-07-29.yang"
    module ietf-if-extensions {
      yang-version 1.1;
 
@@ -557,7 +557,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-Wilton, et al.          Expires January 14, 2021               [Page 10]
+Wilton, et al.          Expires January 30, 2021               [Page 10]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -572,7 +572,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
         interface YANG model (RFC 8343) with common configurable layer 2
         properties.
 
-        Copyright (c) 2019 IETF Trust and the persons identified as
+        Copyright (c) 2020 IETF Trust and the persons identified as
         authors of the code.  All rights reserved.
 
         Redistribution and use in source and binary forms, with or
@@ -592,7 +592,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
         described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
         they appear in all capitals, as shown here.";
 
-     revision 2019-11-04 {
+     revision 2020-07-29 {
        description
          "Initial revision.";
 
@@ -613,7 +613,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-Wilton, et al.          Expires January 14, 2021               [Page 11]
+Wilton, et al.          Expires January 30, 2021               [Page 11]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -669,7 +669,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-Wilton, et al.          Expires January 14, 2021               [Page 12]
+Wilton, et al.          Expires January 30, 2021               [Page 12]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -725,7 +725,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-Wilton, et al.          Expires January 14, 2021               [Page 13]
+Wilton, et al.          Expires January 30, 2021               [Page 13]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -781,7 +781,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-Wilton, et al.          Expires January 14, 2021               [Page 14]
+Wilton, et al.          Expires January 30, 2021               [Page 14]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -837,7 +837,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-Wilton, et al.          Expires January 14, 2021               [Page 15]
+Wilton, et al.          Expires January 30, 2021               [Page 15]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -893,7 +893,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-Wilton, et al.          Expires January 14, 2021               [Page 16]
+Wilton, et al.          Expires January 30, 2021               [Page 16]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -949,7 +949,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-Wilton, et al.          Expires January 14, 2021               [Page 17]
+Wilton, et al.          Expires January 30, 2021               [Page 17]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -971,6 +971,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
             derived-from-or-self(../if:type, 'ianaift:pos') or
             derived-from-or-self(../if:type,
                                  'ianaift:atmSubInterface') or
+            derived-from-or-self(../if:type, 'ianaift:l2vlan') or
             derived-from-or-self(../if:type, 'ethSubInterface')" {
 
            description
@@ -1001,15 +1002,15 @@ Internet-Draft          Interface Extensions YANG              July 2020
            description
              "All interface types that support loopback configuration.";
          }
-         if-feature "loopback";
 
 
 
-Wilton, et al.          Expires January 14, 2021               [Page 18]
+Wilton, et al.          Expires January 30, 2021               [Page 18]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
 
+         if-feature "loopback";
          type identityref {
            base loopback;
          }
@@ -1057,20 +1058,21 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
      /*
       * Add generic support for sub-interfaces.
-      *
 
 
 
-Wilton, et al.          Expires January 14, 2021               [Page 19]
+Wilton, et al.          Expires January 30, 2021               [Page 19]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
 
+      *
       * This should be extended to cover all interface types that are
       * child interfaces of other interfaces.
       */
      augment "/if:interfaces/if:interface" {
        when "derived-from(if:type, 'sub-interface') or
+             derived-from-or-self(if:type, 'ianaift:l2vlan') or
              derived-from-or-self(if:type, 'ianaift:atmSubInterface') or
              derived-from-or-self(if:type, 'ianaift:frameRelay')"  {
          description
@@ -1104,7 +1106,8 @@ Internet-Draft          Interface Extensions YANG              July 2020
                                   'ianaift:ieee8023adLag') or
              derived-from-or-self(../if:type, 'ianaift:ifPwType')" {
          description
-           "Applies to interfaces that can demux to sub-interfaces";
+           "Applies to interfaces that can demultiplex ingress frames to
+            sub-interfaces.";
        }
        if-feature "sub-interfaces";
 
@@ -1112,23 +1115,23 @@ Internet-Draft          Interface Extensions YANG              July 2020
          "Augment the interface model statistics with a sub-interface
           demux discard counter.";
 
-       leaf in-discard-unknown-encaps {
-         type yang:counter64;
 
 
-
-Wilton, et al.          Expires January 14, 2021               [Page 20]
+Wilton, et al.          Expires January 30, 2021               [Page 20]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
 
+       leaf in-discard-unknown-encaps {
+         type yang:counter64;
          units frames;
          description
            "A count of the number of frames that were well formed, but
             otherwise discarded because their encapsulation does not
-            classify to the interface or any child sub-interface.  E.g.,
-            a packet might be discarded because the it has an unknown
-            VLAN Id, or does not have a VLAN Id when one is expected.
+            classify the frame to the interface or any child
+            sub-interface.  E.g., a frame might be discarded because the
+            it has an unknown VLAN Id, or does not have a VLAN Id when
+            one is expected.
 
             For consistency, frames counted against this counter are
             also counted against the IETF interfaces statistics.  In
@@ -1167,17 +1170,17 @@ Internet-Draft          Interface Extensions YANG              July 2020
      prefix ethlike;
 
      import ietf-interfaces {
-       prefix if;
-       reference
-         "RFC 8343: A YANG Data Model For Interface Management";
 
 
 
-Wilton, et al.          Expires January 14, 2021               [Page 21]
+Wilton, et al.          Expires January 30, 2021               [Page 21]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
 
+       prefix if;
+       reference
+         "RFC 8343: A YANG Data Model For Interface Management";
      }
 
      import ietf-yang-types {
@@ -1223,16 +1226,16 @@ Internet-Draft          Interface Extensions YANG              July 2020
         (https://trustee.ietf.org/license-info).
 
         This version of this YANG module is part of RFC XXXX
-        (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
-        for full legal notices.";
 
 
 
-
-Wilton, et al.          Expires January 14, 2021               [Page 22]
+Wilton, et al.          Expires January 30, 2021               [Page 22]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
+
+        (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
+        for full legal notices.";
 
      revision 2019-11-04 {
        description "Initial revision.";
@@ -1279,17 +1282,17 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
          leaf bia-mac-address {
            type yang:mac-address;
-           config false;
-           description
-             "The 'burnt-in' MAC address.  I.e the default MAC address
 
 
 
-Wilton, et al.          Expires January 14, 2021               [Page 23]
+Wilton, et al.          Expires January 30, 2021               [Page 23]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
 
+           config false;
+           description
+             "The 'burnt-in' MAC address.  I.e the default MAC address
               assigned to the interface if no MAC address has been
               explicitly configured on it.";
          }
@@ -1335,15 +1338,15 @@ Internet-Draft          Interface Extensions YANG              July 2020
        }
      }
    }
-   <CODE ENDS>
 
 
 
-
-
-Wilton, et al.          Expires January 14, 2021               [Page 24]
+Wilton, et al.          Expires January 30, 2021               [Page 24]
 
 Internet-Draft          Interface Extensions YANG              July 2020
+
+
+   <CODE ENDS>
 
 
 6.  Examples
@@ -1394,10 +1397,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-
-
-
-Wilton, et al.          Expires January 14, 2021               [Page 25]
+Wilton, et al.          Expires January 30, 2021               [Page 25]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -1453,7 +1453,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-Wilton, et al.          Expires January 14, 2021               [Page 26]
+Wilton, et al.          Expires January 30, 2021               [Page 26]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -1509,7 +1509,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-Wilton, et al.          Expires January 14, 2021               [Page 27]
+Wilton, et al.          Expires January 30, 2021               [Page 27]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -1565,7 +1565,7 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-Wilton, et al.          Expires January 14, 2021               [Page 28]
+Wilton, et al.          Expires January 30, 2021               [Page 28]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
@@ -1582,19 +1582,23 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
    XXX, RFC Editor, please delete this change log before publication.
 
-8.1.  Version -09
+8.1.  Version -10
+
+   o  Update modules from github and tree diagram.
+
+8.2.  Version -09
 
    o  Fixed IANA section.
 
-8.2.  Version -08
+8.3.  Version -08
 
    o  Initial updates after WG LC comments.
 
-8.3.  Version -07
+8.4.  Version -07
 
    o  Minor editorial updates
 
-8.4.  Version -06
+8.5.  Version -06
 
    o  Remove reservable-bandwidth, based on Acee's suggestion
 
@@ -1602,17 +1606,14 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
    o  Add additional state parameters for carrier-delay and dampening
 
-8.5.  Version -05
+8.6.  Version -05
 
    o  Incorporate feedback from Andy Bierman
 
-8.6.  Version -04
+8.7.  Version -04
 
    o  Incorporate feedback from Lada, some comments left as open issues.
 
-8.7.  Version -03
-
-   o  Fixed incorrect module name references, and updated tree output
 
 
 
@@ -1620,13 +1621,16 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
 
 
-
-Wilton, et al.          Expires January 14, 2021               [Page 29]
+Wilton, et al.          Expires January 30, 2021               [Page 29]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
 
-8.8.  Version -02
+8.8.  Version -03
+
+   o  Fixed incorrect module name references, and updated tree output
+
+8.9.  Version -02
 
    o  Minor changes only: Fix errors in when statements, use derived-
       from-or-self() for future proofing.
@@ -1670,17 +1674,17 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
       URI: urn:ietf:params:xml:ns:yang:ietf-if-ethernet-like
 
-      Registrant Contact: The IESG.
-
-      XML: N/A, the requested URI is an XML namespace.
 
 
 
-
-Wilton, et al.          Expires January 14, 2021               [Page 30]
+Wilton, et al.          Expires January 30, 2021               [Page 30]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
+
+      Registrant Contact: The IESG.
+
+      XML: N/A, the requested URI is an XML namespace.
 
 10.  Security Considerations
 
@@ -1727,16 +1731,16 @@ Internet-Draft          Interface Extensions YANG              July 2020
 
    o  /if:interfaces/if:interface/dampening/reuse
 
-   o  /if:interfaces/if:interface/dampening/suppress
-
-   o  /if:interfaces/if:interface/dampening/max-suppress-time
 
 
-
-Wilton, et al.          Expires January 14, 2021               [Page 31]
+Wilton, et al.          Expires January 30, 2021               [Page 31]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
+
+   o  /if:interfaces/if:interface/dampening/suppress
+
+   o  /if:interfaces/if:interface/dampening/max-suppress-time
 
    The following leaves could cause traffic loss on the interface
    because the received or transmitted frames do not comply with the
@@ -1780,19 +1784,20 @@ Internet-Draft          Interface Extensions YANG              July 2020
               DOI 10.17487/RFC3688, January 2004,
               <https://www.rfc-editor.org/info/rfc3688>.
 
+
+
+
+
+
+Wilton, et al.          Expires January 30, 2021               [Page 32]
+
+Internet-Draft          Interface Extensions YANG              July 2020
+
+
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
               the Network Configuration Protocol (NETCONF)", RFC 6020,
               DOI 10.17487/RFC6020, October 2010,
               <https://www.rfc-editor.org/info/rfc6020>.
-
-
-
-
-
-Wilton, et al.          Expires January 14, 2021               [Page 32]
-
-Internet-Draft          Interface Extensions YANG              July 2020
-
 
    [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
               RFC 7950, DOI 10.17487/RFC7950, August 2016,
@@ -1816,8 +1821,8 @@ Internet-Draft          Interface Extensions YANG              July 2020
    [I-D.ietf-netmod-sub-intf-vlan-model]
               Wilton, R., Ball, D., tapsingh@cisco.com, t., and S.
               Sivaraj, "Sub-interface VLAN YANG Data Models", draft-
-              ietf-netmod-sub-intf-vlan-model-06 (work in progress),
-              November 2019.
+              ietf-netmod-sub-intf-vlan-model-07 (work in progress),
+              July 2020.
 
    [IEEE802.3.2-2019]
               IEEE WG802.3 - Ethernet Working Group, "IEEE
@@ -1837,18 +1842,17 @@ Internet-Draft          Interface Extensions YANG              July 2020
               DOI 10.17487/RFC6536, March 2012,
               <https://www.rfc-editor.org/info/rfc6536>.
 
-   [RFC6991]  Schoenwaelder, J., Ed., "Common YANG Data Types",
-              RFC 6991, DOI 10.17487/RFC6991, July 2013,
-              <https://www.rfc-editor.org/info/rfc6991>.
 
 
 
-
-
-Wilton, et al.          Expires January 14, 2021               [Page 33]
+Wilton, et al.          Expires January 30, 2021               [Page 33]
 
 Internet-Draft          Interface Extensions YANG              July 2020
 
+
+   [RFC6991]  Schoenwaelder, J., Ed., "Common YANG Data Types",
+              RFC 6991, DOI 10.17487/RFC6991, July 2013,
+              <https://www.rfc-editor.org/info/rfc6991>.
 
    [RFC7224]  Bjorklund, M., "IANA Interface Type YANG Module",
               RFC 7224, DOI 10.17487/RFC7224, May 2014,
@@ -1897,8 +1901,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-Wilton, et al.          Expires January 14, 2021               [Page 34]
+Wilton, et al.          Expires January 30, 2021               [Page 34]
