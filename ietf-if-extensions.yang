@@ -209,7 +209,7 @@ module ietf-if-extensions {
            configured value indicates the minimum time interval (in
            milliseconds) that the carrier signal must be continuously
            down before the interface state is brought down. If not
-           configured, the behaviour on loss of carrier signal is
+           configured, the behavior on loss of carrier signal is
            vendor/interface specific, but with the general
            expectation that there should be little or no delay.";
       }
@@ -220,7 +220,7 @@ module ietf-if-extensions {
           "Defines the minimum time interval (in milliseconds) that
            the carrier signal must be continuously present and error
            free before the interface state is allowed to transition
-           from down to up.  If not configured, the behaviour is
+           from down to up.  If not configured, the behavior is
            vendor/interface specific, but with the general
            expectation that sufficient default delay should be used
            to ensure that the interface is stable when enabled before

@@ -47,7 +47,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-netmod-intf-ext-yang-10" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-netmod-intf-ext-yang-11" ipr="trust200902">
   <!-- category values: std, bcp, info, exp, and historic
    ipr values: full3667, noModification3667, noDerivatives3667
    you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -83,7 +83,7 @@
           <email>ssivaraj@juniper.net</email>
         </address>
       </author>
-      <date year="2020"/>
+      <date year="2022"/>
         <!-- If the month and year are both specified and are the current ones, xml2rfc will fill 
          in the current day for you. If only the current year is specified, xml2rfc will fill 
 	 in the current day and month for you. If the year is not the current one, it is 
@@ -132,12 +132,12 @@
         way, making it easier for users of the YANG model to access these
         features in a vendor independent way.  Where necessary, a description of
         the expected behavior is also provided with the aim of ensuring vendors
-        implementations are consistent with the specified behaviour.</t>
+        implementations are consistent with the specified behavior.</t>
         <t>Given that the modules contain a collection of discrete features with
         the common theme that they generically apply to interfaces, it is
-        plausible that not all implementors of the YANG module will decide to
-        support all features.  Hence separate feature keywords are defined for
-        each logically discrete feature to allow implementors the flexibility to
+        plausible that not all implementers of the YANG module will decide to
+        support all features.  Hence, separate feature keywords are defined for
+        each logically discrete feature to allow implementers the flexibility to
         choose which specific parts of the model they support.</t>
         <t>The augmentations are split into two separate YANG modules that each
         focus on a particular area of functionality.  The two YANG modules
@@ -168,8 +168,8 @@
           extensions to the IETF interfaces YANG module.</t>
           <t>The module provides:
 	    <list style="symbols">
-              <t>A carrier delay feature used to provide control over short
-              lived link state flaps.</t>
+              <t>A carrier delay feature used to provide control over 
+              short-lived link state flaps.</t>
               <t>An interface link state dampening feature that is used to
               provide control over longer lived link state flaps.</t>
               <t>An encapsulation container and extensible choice statement for
@@ -321,7 +321,7 @@ module: ietf-if-extensions
           choice statement ensures that an interface can only have a single
           datalink layer protocol configured.</t>
           <t>The different encapsulations themselves are defined in separate
-          YANG modules defined in other documents that augument the
+          YANG modules defined in other documents that augment the
           encapsulation choice statement.  For example the Ethernet specific
           basic 'dot1q-vlan' encapsulation is defined in ietf-if-l3-vlan.yang
           and the 'flexible' encapsulation is defined in
@@ -374,7 +374,7 @@ module: ietf-if-extensions
           which implies that the child interface can never be reparented to a
           different parent interface after it has been created without deleting
           the existing sub-interface and recreating a new sub-interface. Even in
-          this case it is useful to have a well defined leaf to cleanly identify
+          this case it is useful to have a well-defined leaf to cleanly identify
           the parent interface.</t>
 
 	  <t>The model also allows for arbitrarily named sub-interfaces by
@@ -651,7 +651,7 @@ module ietf-if-extensions {
            configured value indicates the minimum time interval (in
            milliseconds) that the carrier signal must be continuously
            down before the interface state is brought down. If not
-           configured, the behaviour on loss of carrier signal is
+           configured, the behavior on loss of carrier signal is
            vendor/interface specific, but with the general
            expectation that there should be little or no delay.";
       }
@@ -662,7 +662,7 @@ module ietf-if-extensions {
           "Defines the minimum time interval (in milliseconds) that
            the carrier signal must be continuously present and error
            free before the interface state is allowed to transition
-           from down to up.  If not configured, the behaviour is
+           from down to up.  If not configured, the behavior is
            vendor/interface specific, but with the general
            expectation that sufficient default delay should be used
            to ensure that the interface is stable when enabled before
@@ -1426,7 +1426,7 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
         <!-- Possibly a 'Contributors' section ... -->
         <section anchor="IANA" title="IANA Considerations">
         <section anchor="yang-module-registrations" title="YANG Module Registrations">
-          <t>The following YANG modules are requested to be registred in the IANA
+          <t>The following YANG modules are requested to be registered in the IANA
           "YANG Module Names" <xref target="RFC6020"/> registry:</t>
 
           <t>The ietf-if-extensions module:</t>
@@ -1540,7 +1540,7 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
                 causing protocol instability, excessive protocol traffic, and
                 general traffic loss, particularly if the configuration change
                 caused a duplicate MAC address to be present on the local
-                network .  The following leaf is affected:
+                network.  The following leaf is affected:
                     <list style="symbols">
                         <t>interfaces/interface/ethernet-like/mac-address</t>
                     </list>
