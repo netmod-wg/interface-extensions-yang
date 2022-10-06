@@ -2,17 +2,17 @@
 
 
 
-Internet Engineering Task Force                           R. Wilton, Ed.
+Internet Engineering Task Force                         R.G. Wilton, Ed.
 Internet-Draft                                                   D. Ball
 Intended status: Standards Track                                T. Singh
-Expires: January 26, 2023                                  Cisco Systems
+Expires: 9 April 2023                                      Cisco Systems
                                                               S. Sivaraj
                                                         Juniper Networks
-                                                           July 25, 2022
+                                                          6 October 2022
 
 
               Common Interface Extension YANG Data Models
-                   draft-ietf-netmod-intf-ext-yang-11
+                    draft-ietf-netmod-intf-ext-yang
 
 Abstract
 
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 26, 2023.
+   This Internet-Draft will expire on 9 April 2023.
 
 Copyright Notice
 
@@ -47,22 +47,21 @@ Copyright Notice
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (https://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
 
 
 
-Wilton, et al.          Expires January 26, 2023                [Page 1]
+Wilton, et al.            Expires 9 April 2023                  [Page 1]
 
-Internet-Draft          Interface Extensions YANG              July 2022
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
-   carefully, as they describe your rights and restrictions with respect
-   to this document.  Code Components extracted from this document must
-   include Simplified BSD License text as described in Section 4.e of
-   the Trust Legal Provisions and are provided without warranty as
-   described in the Simplified BSD License.
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
 
 Table of Contents
 
@@ -70,7 +69,7 @@ Table of Contents
      1.1.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   4
      1.2.  Tree Diagrams . . . . . . . . . . . . . . . . . . . . . .   4
    2.  Interface Extensions Module . . . . . . . . . . . . . . . . .   4
-     2.1.  Carrier Delay . . . . . . . . . . . . . . . . . . . . . .   5
+     2.1.  Link Flap Suppression . . . . . . . . . . . . . . . . . .   5
      2.2.  Dampening . . . . . . . . . . . . . . . . . . . . . . . .   6
        2.2.1.  Suppress Threshold  . . . . . . . . . . . . . . . . .   7
        2.2.2.  Half-Life Period  . . . . . . . . . . . . . . . . . .   7
@@ -106,15 +105,15 @@ Table of Contents
      10.2.  ietf-if-ethernet-like.yang . . . . . . . . . . . . . . .  32
    11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  32
      11.1.  Normative References . . . . . . . . . . . . . . . . . .  32
-
-
-
-Wilton, et al.          Expires January 26, 2023                [Page 2]
-
-Internet-Draft          Interface Extensions YANG              July 2022
-
-
      11.2.  Informative References . . . . . . . . . . . . . . . . .  33
+
+
+
+Wilton, et al.            Expires 9 April 2023                  [Page 2]
+
+Internet-Draft          Interface Extensions YANG           October 2022
+
+
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  34
 
 1.  Introduction
@@ -165,9 +164,10 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
 
 
-Wilton, et al.          Expires January 26, 2023                [Page 3]
+
+Wilton, et al.            Expires 9 April 2023                  [Page 3]
 
-Internet-Draft          Interface Extensions YANG              July 2022
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
 1.1.  Terminology
@@ -190,48 +190,45 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
    The module provides:
 
-   o  A carrier delay feature used to provide control over short-lived
-      link state flaps.
+   *  A link flap suppression feature used to provide control over
+      short-lived link state flaps.
 
-   o  An interface link state dampening feature that is used to provide
+   *  An interface link state dampening feature that is used to provide
       control over longer lived link state flaps.
 
-   o  An encapsulation container and extensible choice statement for use
+   *  An encapsulation container and extensible choice statement for use
       by any interface types that allow for configurable L2
       encapsulations.
 
-   o  A loopback configuration leaf that is primarily aimed at loopback
+   *  A loopback configuration leaf that is primarily aimed at loopback
       at the physical layer.
 
-   o  MTU configuration leaves applicable to all packet/frame based
+   *  MTU configuration leaves applicable to all packet/frame based
       interfaces.
 
-   o  A forwarding mode leaf to indicate the OSI layer at which the
+   *  A forwarding mode leaf to indicate the OSI layer at which the
       interface handles traffic.
 
-   o  A generic "sub-interface" identity that an interface identity
+   *  A generic "sub-interface" identity that an interface identity
       definition can derive from if it defines a sub-interface.
 
-   o  A parent interface leaf useable for all types of sub-interface
+   *  A parent interface leaf useable for all types of sub-interface
       that are children of parent interfaces.
-
-
-
-
-
-
-
-Wilton, et al.          Expires January 26, 2023                [Page 4]
-
-Internet-Draft          Interface Extensions YANG              July 2022
-
 
    The "ietf-if-extensions" YANG module has the following structure:
 
 
+
+
+
+Wilton, et al.            Expires 9 April 2023                  [Page 4]
+
+Internet-Draft          Interface Extensions YANG           October 2022
+
+
    module: ietf-if-extensions
      augment /if:interfaces/if:interface:
-       +--rw carrier-delay {carrier-delay}?
+       +--rw link-flap-suppression {link-flap-suppression}?
        |  +--rw down?                  uint32
        |  +--rw up?                    uint32
        |  +--ro carrier-transitions?   yang:counter64
@@ -256,55 +253,56 @@ Internet-Draft          Interface Extensions YANG              July 2022
                {sub-interfaces}?
 
 
-2.1.  Carrier Delay
+2.1.  Link Flap Suppression
 
-   The carrier delay feature augments the IETF interfaces data model
-   with configuration for a simple algorithm that is used, generally on
-   physical interfaces, to suppress short transient changes in the
-   interface link state.  It can be used in conjunction with the
+   The link flap suppression feature augments the IETF interfaces data
+   model with configuration for a simple algorithm that is used,
+   generally on physical interfaces, to suppress short transient changes
+   in the interface link state.  It can be used in conjunction with the
    dampening feature described in Section 2.2 to provide effective
    control of unstable links and unwanted state transitions.
 
-   The principle of the carrier delay feature is to use a short per
-   interface timer to ensure that any interface link state transition
-   that occurs and reverts back within the specified time interval is
-   entirely suppressed without providing any signalling to any upper
-   layer protocols that the state transition has occurred.  E.g. in the
-   case that the link state transition is suppressed then there is no
-   change of the /if:interfaces/if:interface/oper-status or
+   The principle of the link flap suppression feature is to use a short
+   per interface timer to ensure that any interface link state
+   transition that occurs and reverts back within the specified time
+   interval is entirely suppressed without providing any signalling to
+   any upper layer protocols that the state transition has occurred.
+   E.g. in the case that the link state transition is suppressed then
+   there is no change of the /if:interfaces/if:interface/oper-status or
    /if:interfaces/if:interfaces/last-change leaves for the interface
    that the feature is operating on.  One obvious side effect of using
-
-
-
-Wilton, et al.          Expires January 26, 2023                [Page 5]
-
-Internet-Draft          Interface Extensions YANG              July 2022
-
-
    this feature that is that any state transition will always be delayed
    by the specified time interval.
+
+
+
+
+Wilton, et al.            Expires 9 April 2023                  [Page 5]
+
+Internet-Draft          Interface Extensions YANG           October 2022
+
 
    The configuration allows for separate timer values to be used in the
    suppression of down->up->down link transitions vs up->down->up link
    transitions.
 
-   The carrier delay down timer leaf specifies the amount of time that
-   an interface that is currently in link up state must be continuously
-   down before the down state change is reported to higher level
-   protocols.  Use of this timer can cause traffic to be black holed for
-   the configured value and delay reconvergence after link failures,
-   therefore its use is normally restricted to cases where it is
-   necessary to allow enough time for another protection mechanism (such
-   as an optical layer automatic protection system) to take effect.
+   The link flap suppression down timer leaf specifies the amount of
+   time that an interface that is currently in link up state must be
+   continuously down before the down state change is reported to higher
+   level protocols.  Use of this timer can cause traffic to be black
+   holed for the configured value and delay reconvergence after link
+   failures, therefore its use is normally restricted to cases where it
+   is necessary to allow enough time for another protection mechanism
+   (such as an optical layer automatic protection system) to take
+   effect.
 
-   The carrier delay up timer leaf specifies the amount of time that an
-   interface that is currently in link down state must be continuously
-   up before the down->up link state transition is reported to higher
-   level protocols.  This timer is generally useful as a debounce
-   mechanism to ensure that a link is relatively stable before being
-   brought into service.  It can also be used effectively to limit the
-   frequency at which link state transition events may occur.  The
+   The link flap suppression up timer leaf specifies the amount of time
+   that an interface that is currently in link down state must be
+   continuously up before the down->up link state transition is reported
+   to higher level protocols.  This timer is generally useful as a
+   debounce mechanism to ensure that a link is relatively stable before
+   being brought into service.  It can also be used effectively to limit
+   the frequency at which link state transition events may occur.  The
    default value for this leaf is determined by the underlying network
    device.
 
@@ -333,9 +331,11 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
 
 
-Wilton, et al.          Expires January 26, 2023                [Page 6]
+
+
+Wilton, et al.            Expires 9 April 2023                  [Page 6]
 
-Internet-Draft          Interface Extensions YANG              July 2022
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
 2.2.1.  Suppress Threshold
@@ -389,9 +389,9 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
 
 
-Wilton, et al.          Expires January 26, 2023                [Page 7]
+Wilton, et al.            Expires 9 April 2023                  [Page 7]
 
-Internet-Draft          Interface Extensions YANG              July 2022
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
 2.4.  Loopback
@@ -404,14 +404,14 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
    The following loopback modes are defined:
 
-   o  Internal loopback - All egress traffic on the interface is
+   *  Internal loopback - All egress traffic on the interface is
       internally looped back within the interface to be received on the
       ingress path.
 
-   o  Line loopback - All ingress traffic received on the interface is
+   *  Line loopback - All ingress traffic received on the interface is
       internally looped back within the interface to the egress path.
 
-   o  Loopback Connector - The interface has a physical loopback
+   *  Loopback Connector - The interface has a physical loopback
       connector attached that loops all egress traffic back into the
       interface's ingress path, with equivalent semantics to internal
       loopback.
@@ -440,16 +440,18 @@ Internet-Draft          Interface Extensions YANG              July 2022
    like any other interface in /if:interfaces and supports the standard
    interface features and configuration.
 
+
+
+
+
+
+Wilton, et al.            Expires 9 April 2023                  [Page 8]
+
+Internet-Draft          Interface Extensions YANG           October 2022
+
+
    For some vendor specific interface naming conventions the name of the
    child interface is sufficient to determine the parent interface,
-
-
-
-Wilton, et al.          Expires January 26, 2023                [Page 8]
-
-Internet-Draft          Interface Extensions YANG              July 2022
-
-
    which implies that the child interface can never be reparented to a
    different parent interface after it has been created without deleting
    the existing sub-interface and recreating a new sub-interface.  Even
@@ -475,13 +477,13 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
    The following forwarding modes are defined:
 
-   o  Physical - Traffic is being forwarded at the physical layer.  This
+   *  Physical - Traffic is being forwarded at the physical layer.  This
       includes DWDM or OTN based switching.
 
-   o  Data-link - Layer 2 based forwarding, such as Ethernet/VLAN based
+   *  Data-link - Layer 2 based forwarding, such as Ethernet/VLAN based
       switching, or L2VPN services.
 
-   o  Network - Network layer based forwarding, such as IP, MPLS, or
+   *  Network - Network layer based forwarding, such as IP, MPLS, or
       L3VPNs.
 
 3.  Interfaces Ethernet-Like Module
@@ -495,18 +497,13 @@ Internet-Draft          Interface Extensions YANG              July 2022
    reporting of the operational MAC address and the burnt-in MAC address
    (BIA) associated with any interface using Ethernet framing.
 
-
-
-
-
-
-
-Wilton, et al.          Expires January 26, 2023                [Page 9]
-
-Internet-Draft          Interface Extensions YANG              July 2022
-
-
    The "ietf-if-ethernet-like" YANG module has the following structure:
+
+
+
+Wilton, et al.            Expires 9 April 2023                  [Page 9]
+
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
    module: ietf-if-ethernet-like
@@ -517,13 +514,13 @@ Internet-Draft          Interface Extensions YANG              July 2022
           +--ro bia-mac-address?   yang:mac-address
      augment /if:interfaces/if:interface/if:statistics:
        +--ro in-drop-unknown-dest-mac-pkts?   yang:counter64
+       +--ro in-discard-overflows?            yang:counter64
 
 
 4.  Interface Extensions YANG Module
 
    This YANG module augments the interface container defined in
    [RFC8343].  It also contains references to [RFC6991] and [RFC7224].
-
 
    <CODE BEGINS> file "ietf-if-extensions@2020-07-29.yang"
    module ietf-if-extensions {
@@ -554,17 +551,17 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
      contact
        "WG Web:   <http://tools.ietf.org/wg/netmod/>
-
-
-
-Wilton, et al.          Expires January 26, 2023               [Page 10]
-
-Internet-Draft          Interface Extensions YANG              July 2022
-
-
         WG List:  <mailto:netmod@ietf.org>
 
         Editor:   Robert Wilton
+
+
+
+Wilton, et al.            Expires 9 April 2023                 [Page 10]
+
+Internet-Draft          Interface Extensions YANG           October 2022
+
+
                   <mailto:rwilton@cisco.com>";
 
      description
@@ -600,27 +597,27 @@ Internet-Draft          Interface Extensions YANG              July 2022
          "RFC XXXX, Common Interface Extension YANG Data Models";
      }
 
-     feature carrier-delay {
+     feature link-flap-suppression {
        description
-         "This feature indicates that configurable interface carrier
+         "This feature indicates that configurable interface link
           delay is supported, which is a feature is used to limit the
           propagation of very short interface link state flaps.";
-       reference "RFC XXXX, Section 2.1 Carrier Delay";
+       reference "RFC XXXX, Section 2.1 Link Flap Suppression";
      }
 
      feature dampening {
        description
-
-
-
-Wilton, et al.          Expires January 26, 2023               [Page 11]
-
-Internet-Draft          Interface Extensions YANG              July 2022
-
-
          "This feature indicates that the device supports interface
           dampening, which is a feature that is used to limit the
           propagation of interface link state flaps over longer
+
+
+
+Wilton, et al.            Expires 9 April 2023                 [Page 11]
+
+Internet-Draft          Interface Extensions YANG           October 2022
+
+
           periods.";
        reference "RFC XXXX, Section 2.2 Dampening";
      }
@@ -666,17 +663,17 @@ Internet-Draft          Interface Extensions YANG              July 2022
        base ianaift:l2vlan;
        base sub-interface;
 
-
-
-
-Wilton, et al.          Expires January 26, 2023               [Page 12]
-
-Internet-Draft          Interface Extensions YANG              July 2022
-
-
        description
          "This identity represents the child sub-interface of any
           interface types that uses Ethernet framing (with or without
+
+
+
+Wilton, et al.            Expires 9 April 2023                 [Page 12]
+
+Internet-Draft          Interface Extensions YANG           October 2022
+
+
           802.1Q tagging).";
      }
 
@@ -722,17 +719,17 @@ Internet-Draft          Interface Extensions YANG              July 2022
      identity data-link {
        base forwarding-mode;
        description
-
-
-
-Wilton, et al.          Expires January 26, 2023               [Page 13]
-
-Internet-Draft          Interface Extensions YANG              July 2022
-
-
          "Layer 2 based forwarding, such as Ethernet/VLAN based
           switching, or L2VPN services.";
        reference "RFC XXXX, Section 2.7";
+
+
+
+Wilton, et al.            Expires 9 April 2023                 [Page 13]
+
+Internet-Draft          Interface Extensions YANG           October 2022
+
+
      }
      identity network {
        base forwarding-mode;
@@ -744,7 +741,7 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
      /*
       * Augments the IETF interfaces model with leaves to configure
-      * and monitor carrier-delay on an interface.
+      * and monitor link-flap-suppression on an interface.
       */
      augment "/if:interfaces/if:interface" {
        description
@@ -753,12 +750,12 @@ Internet-Draft          Interface Extensions YANG              July 2022
           specific standard.";
 
        /*
-        * Defines standard YANG for the Carrier Delay feature.
+        * Defines standard YANG for the Link Flap Suppression feature.
         */
-       container carrier-delay {
-         if-feature "carrier-delay";
+       container link-flap-suppression {
+         if-feature "link-flap-suppression";
          description
-           "Holds carrier delay related feature configuration.";
+           "Holds link flap related feature configuration.";
          leaf down {
            type uint32;
            units milliseconds;
@@ -767,9 +764,9 @@ Internet-Draft          Interface Extensions YANG              July 2022
               that would cause the interface state to go down, i.e. the
               command allows short link flaps to be suppressed. The
               configured value indicates the minimum time interval (in
-              milliseconds) that the carrier signal must be continuously
+              milliseconds) that the link signal must be continuously
               down before the interface state is brought down. If not
-              configured, the behavior on loss of carrier signal is
+              configured, the behavior on loss of link signal is
               vendor/interface specific, but with the general
               expectation that there should be little or no delay.";
          }
@@ -778,17 +775,17 @@ Internet-Draft          Interface Extensions YANG              July 2022
            units milliseconds;
            description
              "Defines the minimum time interval (in milliseconds) that
-
-
-
-Wilton, et al.          Expires January 26, 2023               [Page 14]
-
-Internet-Draft          Interface Extensions YANG              July 2022
-
-
-              the carrier signal must be continuously present and error
+              the link signal must be continuously present and error
               free before the interface state is allowed to transition
               from down to up.  If not configured, the behavior is
+
+
+
+Wilton, et al.            Expires 9 April 2023                 [Page 14]
+
+Internet-Draft          Interface Extensions YANG           October 2022
+
+
               vendor/interface specific, but with the general
               expectation that sufficient default delay should be used
               to ensure that the interface is stable when enabled before
@@ -800,50 +797,51 @@ Internet-Draft          Interface Extensions YANG              July 2022
            units transitions;
            config false;
            description
-             "Defines the number of times the underlying carrier state
+             "Defines the number of times the underlying link state
               has changed to, or from, state up.  This counter should be
               incremented even if the high layer interface state changes
-              are being suppressed by a running carrier-delay timer.";
+              are being suppressed by a running link flap suppression
+              timer.";
          }
          leaf timer-running {
            type enumeration {
              enum none {
                description
-                 "No carrier delay timer is running.";
+                 "No link flap suppression timer is running.";
              }
              enum up {
                description
-                 "Carrier-delay up timer is running.  The underlying
-                  carrier state is up, but interface state is not
-                  reported as up.";
+                 "link-flap-suppression up timer is running.  The
+                  underlying link state is up, but interface state is
+                  not reported as up.";
              }
              enum down {
                description
-                 "Carrier-delay down timer is running.  Interface state
-                  is reported as up, but the underlying carrier state is
-                  actually down.";
+                 "link-flap-suppression down timer is running.
+                  Interface state is reported as up, but the underlying
+                  link state is actually down.";
              }
            }
            config false;
            description
-             "Reports whether a carrier delay timer is actively running,
-              in which case the interface state does not match the
-              underlying carrier state.";
+             "Reports whether a link flap suppression timer is actively
+              running, in which case the interface state does not match
+              the underlying link state.";
          }
 
-         reference "RFC XXXX, Section 2.1 Carrier Delay";
+         reference "RFC XXXX, Section 2.1 Link Flap Suppression";
        }
-
-
-
-
-Wilton, et al.          Expires January 26, 2023               [Page 15]
-
-Internet-Draft          Interface Extensions YANG              July 2022
-
 
        /*
         * Augments the IETF interfaces model with a container to hold
+
+
+
+Wilton, et al.            Expires 9 April 2023                 [Page 15]
+
+Internet-Draft          Interface Extensions YANG           October 2022
+
+
         * generic interface dampening
         */
        container dampening {
@@ -891,14 +889,15 @@ Internet-Draft          Interface Extensions YANG              July 2022
            reference "RFC XXXX, Section 2.2.1 Suppress Threshold";
          }
 
-
-
-Wilton, et al.          Expires January 26, 2023               [Page 16]
-
-Internet-Draft          Interface Extensions YANG              July 2022
-
-
          leaf max-suppress-time {
+
+
+
+Wilton, et al.            Expires 9 April 2023                 [Page 16]
+
+Internet-Draft          Interface Extensions YANG           October 2022
+
+
            type uint32;
            units seconds;
            description
@@ -949,9 +948,10 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
 
 
-Wilton, et al.          Expires January 26, 2023               [Page 17]
+
+Wilton, et al.            Expires 9 April 2023                 [Page 17]
 
-Internet-Draft          Interface Extensions YANG              July 2022
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
        /*
@@ -1005,9 +1005,9 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
 
 
-Wilton, et al.          Expires January 26, 2023               [Page 18]
+Wilton, et al.            Expires 9 April 2023                 [Page 18]
 
-Internet-Draft          Interface Extensions YANG              July 2022
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
          if-feature "loopback";
@@ -1061,9 +1061,9 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
 
 
-Wilton, et al.          Expires January 26, 2023               [Page 19]
+Wilton, et al.            Expires 9 April 2023                 [Page 19]
 
-Internet-Draft          Interface Extensions YANG              July 2022
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
       *
@@ -1117,9 +1117,9 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
 
 
-Wilton, et al.          Expires January 26, 2023               [Page 20]
+Wilton, et al.            Expires 9 April 2023                 [Page 20]
 
-Internet-Draft          Interface Extensions YANG              July 2022
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
        leaf in-discard-unknown-encaps {
@@ -1150,7 +1150,6 @@ Internet-Draft          Interface Extensions YANG              July 2022
    }
    <CODE ENDS>
 
-
 5.  Interfaces Ethernet-Like YANG Module
 
    This YANG module augments the interface container defined in RFC 8343
@@ -1158,7 +1157,6 @@ Internet-Draft          Interface Extensions YANG              July 2022
    interfaces, 802.3 LAG (802.1AX) interfaces, Switch Virtual
    interfaces, and Pseudo-Wire Head-End interfaces.  It also contains
    references to [RFC6991], [RFC7224], and [IEEE802.3.2-2019].
-
 
    <CODE BEGINS> file "ietf-if-ethernet-like@2019-11-04.yang"
    module ietf-if-ethernet-like {
@@ -1170,16 +1168,16 @@ Internet-Draft          Interface Extensions YANG              July 2022
      prefix ethlike;
 
      import ietf-interfaces {
-
-
-
-Wilton, et al.          Expires January 26, 2023               [Page 21]
-
-Internet-Draft          Interface Extensions YANG              July 2022
-
-
        prefix if;
        reference
+
+
+
+Wilton, et al.            Expires 9 April 2023                 [Page 21]
+
+Internet-Draft          Interface Extensions YANG           October 2022
+
+
          "RFC 8343: A YANG Data Model For Interface Management";
      }
 
@@ -1226,16 +1224,15 @@ Internet-Draft          Interface Extensions YANG              July 2022
         (https://trustee.ietf.org/license-info).
 
         This version of this YANG module is part of RFC XXXX
-
-
-
-Wilton, et al.          Expires January 26, 2023               [Page 22]
-
-Internet-Draft          Interface Extensions YANG              July 2022
-
-
         (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
         for full legal notices.";
+
+
+
+Wilton, et al.            Expires 9 April 2023                 [Page 22]
+
+Internet-Draft          Interface Extensions YANG           October 2022
+
 
      revision 2019-11-04 {
        description "Initial revision.";
@@ -1282,17 +1279,17 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
          leaf bia-mac-address {
            type yang:mac-address;
-
-
-
-Wilton, et al.          Expires January 26, 2023               [Page 23]
-
-Internet-Draft          Interface Extensions YANG              July 2022
-
-
            config false;
            description
              "The 'burnt-in' MAC address.  I.e the default MAC address
+
+
+
+Wilton, et al.            Expires 9 April 2023                 [Page 23]
+
+Internet-Draft          Interface Extensions YANG           October 2022
+
+
               assigned to the interface if no MAC address has been
               explicitly configured on it.";
          }
@@ -1336,18 +1333,25 @@ Internet-Draft          Interface Extensions YANG              July 2022
             leaf defined in the ietf-interfaces YANG module
             (RFC 8343).";
        }
+
+       leaf in-discard-overflows {
+         type yang:counter64;
+         units frames;
+         description
+
+
+
+Wilton, et al.            Expires 9 April 2023                 [Page 24]
+
+Internet-Draft          Interface Extensions YANG           October 2022
+
+
+            "A count of the number of frames discarded because of
+             overflows.";
+       }
      }
    }
-
-
-
-Wilton, et al.          Expires January 26, 2023               [Page 24]
-
-Internet-Draft          Interface Extensions YANG              July 2022
-
-
    <CODE ENDS>
-
 
 6.  Examples
 
@@ -1359,7 +1363,7 @@ Internet-Draft          Interface Extensions YANG              July 2022
 6.1.  Carrier delay configuration
 
    The following example shows how the operational state datastore could
-   look like for an Ethernet interface without any carrier delay
+   look like for an Ethernet interface without any link flap suppression
    configuration.  The down leaf value of 0 indicates that link down
    events as always propagated to high layers immediately, but an up
    leaf value of 50 indicates that the interface must be up and stable
@@ -1375,31 +1379,37 @@ Internet-Draft          Interface Extensions YANG              July 2022
      <interface>
        <name>eth0</name>
        <type>ianaift:ethernetCsmacd</type>
-       <if-ext:carrier-delay>
+       <if-ext:link-flap-suppression>
          <if-ext:down>0</if-ext:down>
          <if-ext:up>50</if-ext:up>
-       </if-ext:carrier-delay>
+       </if-ext:link-flap-suppression>
      </interface>
    </interfaces>
 
 
-   The following example shows explicit carrier delay up and down values
-   have been configured.  A 50 msec down leaf value has been used to
-   potentially allow optical protection to recover the link before the
-   higher layer protocol state is flapped.  A 1 second (1000
+
+
+
+
+
+
+
+
+
+
+Wilton, et al.            Expires 9 April 2023                 [Page 25]
+
+Internet-Draft          Interface Extensions YANG           October 2022
+
+
+   The following example shows explicit link flap suppression delay up
+   and down values have been configured.  A 50 msec down leaf value has
+   been used to potentially allow optical protection to recover the link
+   before the higher layer protocol state is flapped.  A 1 second (1000
    milliseconds) up leaf value has been used to ensure that the link is
    always reasonably stable before allowing traffic to be carried over
    it.  This also has the benefit of greatly reducing the rate at which
    higher layer protocol state flaps could occur.
-
-
-
-
-
-
-Wilton, et al.          Expires January 26, 2023               [Page 25]
-
-Internet-Draft          Interface Extensions YANG              July 2022
 
 
    <?xml version="1.0" encoding="utf-8"?>
@@ -1411,10 +1421,10 @@ Internet-Draft          Interface Extensions YANG              July 2022
        <interface>
          <name>eth0</name>
          <type>ianaift:ethernetCsmacd</type>
-         <if-ext:carrier-delay>
+         <if-ext:link-flap-suppression>
            <if-ext:down>50</if-ext:down>
            <if-ext:up>1000</if-ext:up>
-         </if-ext:carrier-delay>
+         </if-ext:link-flap-suppression>
        </interface>
      </interfaces>
    </config>
@@ -1443,19 +1453,9 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
 
 
-
-
-
-
-
-
-
-
-
-
-Wilton, et al.          Expires January 26, 2023               [Page 26]
+Wilton, et al.            Expires 9 April 2023                 [Page 26]
 
-Internet-Draft          Interface Extensions YANG              July 2022
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
    <?xml version="1.0" encoding="utf-8"?>
@@ -1509,9 +1509,9 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
 
 
-Wilton, et al.          Expires January 26, 2023               [Page 27]
+Wilton, et al.            Expires 9 April 2023                 [Page 27]
 
-Internet-Draft          Interface Extensions YANG              July 2022
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
    The following example shows the intended configuration for interface
@@ -1565,9 +1565,9 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
 
 
-Wilton, et al.          Expires January 26, 2023               [Page 28]
+Wilton, et al.            Expires 9 April 2023                 [Page 28]
 
-Internet-Draft          Interface Extensions YANG              July 2022
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
 7.  Acknowledgements
@@ -1584,35 +1584,36 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
 8.1.  Version -10
 
-   o  Update modules from github and tree diagram.
+   *  Update modules from github and tree diagram.
 
 8.2.  Version -09
 
-   o  Fixed IANA section.
+   *  Fixed IANA section.
 
 8.3.  Version -08
 
-   o  Initial updates after WG LC comments.
+   *  Initial updates after WG LC comments.
 
 8.4.  Version -07
 
-   o  Minor editorial updates
+   *  Minor editorial updates
 
 8.5.  Version -06
 
-   o  Remove reservable-bandwidth, based on Acee's suggestion
+   *  Remove reservable-bandwidth, based on Acee's suggestion
 
-   o  Add examples
+   *  Add examples
 
-   o  Add additional state parameters for carrier-delay and dampening
+   *  Add additional state parameters for link-flap-suppression and
+      dampening
 
 8.6.  Version -05
 
-   o  Incorporate feedback from Andy Bierman
+   *  Incorporate feedback from Andy Bierman
 
 8.7.  Version -04
 
-   o  Incorporate feedback from Lada, some comments left as open issues.
+   *  Incorporate feedback from Lada, some comments left as open issues.
 
 
 
@@ -1620,19 +1621,18 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
 
 
-
-Wilton, et al.          Expires January 26, 2023               [Page 29]
+Wilton, et al.            Expires 9 April 2023                 [Page 29]
 
-Internet-Draft          Interface Extensions YANG              July 2022
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
 8.8.  Version -03
 
-   o  Fixed incorrect module name references, and updated tree output
+   *  Fixed incorrect module name references, and updated tree output
 
 8.9.  Version -02
 
-   o  Minor changes only: Fix errors in when statements, use derived-
+   *  Minor changes only: Fix errors in when statements, use derived-
       from-or-self() for future proofing.
 
 9.  IANA Considerations
@@ -1677,9 +1677,9 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
 
 
-Wilton, et al.          Expires January 26, 2023               [Page 30]
+Wilton, et al.            Expires 9 April 2023                 [Page 30]
 
-Internet-Draft          Interface Extensions YANG              July 2022
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
       Registrant Contact: The IESG.
@@ -1716,46 +1716,46 @@ Internet-Draft          Interface Extensions YANG              July 2022
    processing any ingress or egress traffic on the interface.  It could
    also cause broadcast traffic storms.
 
-   o  /if:interfaces/if:interface/loopback
+   *  /if:interfaces/if:interface/loopback
 
    The following leaves could cause instabilities at the interface link
    layer, and cause unwanted higher layer routing path changes if the
    leaves are modified, although they would generally only affect a
    device that had some underlying link stability issues:
 
-   o  /if:interfaces/if:interface/carrier-delay/down
+   *  /if:interfaces/if:interface/link-flap-suppression/down
 
-   o  /if:interfaces/if:interface/carrier-delay/up
+   *  /if:interfaces/if:interface/link-flap-suppression/up
 
-   o  /if:interfaces/if:interface/dampening/half-life
+   *  /if:interfaces/if:interface/dampening/half-life
 
-   o  /if:interfaces/if:interface/dampening/reuse
+   *  /if:interfaces/if:interface/dampening/reuse
 
 
 
-Wilton, et al.          Expires January 26, 2023               [Page 31]
+Wilton, et al.            Expires 9 April 2023                 [Page 31]
 
-Internet-Draft          Interface Extensions YANG              July 2022
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
-   o  /if:interfaces/if:interface/dampening/suppress
+   *  /if:interfaces/if:interface/dampening/suppress
 
-   o  /if:interfaces/if:interface/dampening/max-suppress-time
+   *  /if:interfaces/if:interface/dampening/max-suppress-time
 
    The following leaves could cause traffic loss on the interface
    because the received or transmitted frames do not comply with the
    frame matching criteria on the interface and hence would be dropped:
 
-   o  /if:interfaces/if:interface/encapsulation
+   *  /if:interfaces/if:interface/encapsulation
 
-   o  /if:interfaces/if:interface/max-frame-size
+   *  /if:interfaces/if:interface/max-frame-size
 
-   o  /if:interfaces/if:interface/forwarding-mode
+   *  /if:interfaces/if:interface/forwarding-mode
 
    Changing the parent-interface leaf could cause all traffic on the
    affected interface to be dropped.  The affected leaf is:
 
-   o  /if:interfaces/if:interface/parent-interface
+   *  /if:interfaces/if:interface/parent-interface
 
 10.2.  ietf-if-ethernet-like.yang
 
@@ -1769,7 +1769,7 @@ Internet-Draft          Interface Extensions YANG              July 2022
    a duplicate MAC address to be present on the local network.  The
    following leaf is affected:
 
-   o  interfaces/interface/ethernet-like/mac-address
+   *  interfaces/interface/ethernet-like/mac-address
 
 11.  References
 
@@ -1789,9 +1789,9 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
 
 
-Wilton, et al.          Expires January 26, 2023               [Page 32]
+Wilton, et al.            Expires 9 April 2023                 [Page 32]
 
-Internet-Draft          Interface Extensions YANG              July 2022
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
@@ -1820,8 +1820,10 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
    [I-D.ietf-netmod-sub-intf-vlan-model]
               Wilton, R., Ball, D., Singh, T., and S. Sivaraj, "Sub-
-              interface VLAN YANG Data Models", draft-ietf-netmod-sub-
-              intf-vlan-model-07 (work in progress), July 2020.
+              interface VLAN YANG Data Models", Work in Progress,
+              Internet-Draft, draft-ietf-netmod-sub-intf-vlan-model-07,
+              13 July 2020, <https://www.ietf.org/archive/id/draft-ietf-
+              netmod-sub-intf-vlan-model-07.txt>.
 
    [IEEE802.3.2-2019]
               IEEE WG802.3 - Ethernet Working Group, "IEEE
@@ -1843,11 +1845,9 @@ Internet-Draft          Interface Extensions YANG              July 2022
 
 
 
-
-
-Wilton, et al.          Expires January 26, 2023               [Page 33]
+Wilton, et al.            Expires 9 April 2023                 [Page 33]
 
-Internet-Draft          Interface Extensions YANG              July 2022
+Internet-Draft          Interface Extensions YANG           October 2022
 
 
    [RFC6991]  Schoenwaelder, J., Ed., "Common YANG Data Types",
@@ -1866,25 +1866,21 @@ Authors' Addresses
 
    Robert Wilton (editor)
    Cisco Systems
-
    Email: rwilton@cisco.com
 
 
    David Ball
    Cisco Systems
-
    Email: daviball@cisco.com
 
 
    Tapraj Singh
    Cisco Systems
-
    Email: tapsingh@cisco.com
 
 
    Selvakumar Sivaraj
    Juniper Networks
-
    Email: ssivaraj@juniper.net
 
 
@@ -1901,4 +1897,8 @@ Authors' Addresses
 
 
 
-Wilton, et al.          Expires January 26, 2023               [Page 34]
+
+
+
+
+Wilton, et al.            Expires 9 April 2023                 [Page 34]

@@ -11,7 +11,6 @@ module ietf-if-ethernet-like {
     reference
       "RFC 8343: A YANG Data Model For Interface Management";
   }
-
   import ietf-yang-types {
     prefix yang;
     reference "RFC 6991: Common YANG Data Types";
@@ -57,10 +56,9 @@ module ietf-if-ethernet-like {
      This version of this YANG module is part of RFC XXXX
      (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
      for full legal notices.";
-  
+
   revision 2019-11-04 {
     description "Initial revision.";
-
     reference
       "RFC XXXX, Common Interface Extension YANG Data Models";
   }
@@ -73,7 +71,7 @@ module ietf-if-ethernet-like {
       "RFC XXXX, Section 3, Interfaces Ethernet-Like Module";
   }
 
-  
+
   /*
    * Configuration parameters for Ethernet-like interfaces.
    */
@@ -91,7 +89,7 @@ module ietf-if-ethernet-like {
       description
         "Contains parameters for interfaces that use Ethernet framing
          and expose an Ethernet MAC layer.";
-      
+
       leaf mac-address {
         if-feature "configurable-mac-address";
         type yang:mac-address;
@@ -148,6 +146,14 @@ module ietf-if-ethernet-like {
          times as indicated by the value of the 'discontinuity-time'
          leaf defined in the ietf-interfaces YANG module
          (RFC 8343).";
+    }
+
+    leaf in-discard-overflows {
+      type yang:counter64;
+      units frames;
+      description
+         "A count of the number of frames discarded because of
+          overflows.";
     }
   }
 }

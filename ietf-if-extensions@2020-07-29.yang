@@ -30,7 +30,6 @@ module ietf-if-extensions {
 
      Editor:   Robert Wilton
                <mailto:rwilton@cisco.com>";
-
   description
     "This module contains common definitions for extending the IETF
      interface YANG model (RFC 8343) with common configurable layer 2
@@ -64,12 +63,12 @@ module ietf-if-extensions {
       "RFC XXXX, Common Interface Extension YANG Data Models";
   }
 
-  feature carrier-delay {
+  feature link-flap-suppression {
     description
-      "This feature indicates that configurable interface carrier
+      "This feature indicates that configurable interface link
        delay is supported, which is a feature is used to limit the
        propagation of very short interface link state flaps.";
-    reference "RFC XXXX, Section 2.1 Carrier Delay";
+    reference "RFC XXXX, Section 2.1 Link Flap Suppression";
   }
 
   feature dampening {
@@ -127,7 +126,6 @@ module ietf-if-extensions {
        interface types that uses Ethernet framing (with or without
        802.1Q tagging).";
   }
-
   identity loopback {
     description "Base identity for interface loopback options";
     reference "RFC XXXX, Section 2.4";
@@ -155,7 +153,7 @@ module ietf-if-extensions {
     reference "RFC XXXX, Section 2.4";
   }
 
-  
+
   identity forwarding-mode {
     description "Base identity for forwarding-mode options.";
     reference "RFC XXXX, Section 2.7";
@@ -181,10 +179,10 @@ module ietf-if-extensions {
     reference "RFC XXXX, Section 2.7";
   }
 
-  
+
   /*
    * Augments the IETF interfaces model with leaves to configure
-   * and monitor carrier-delay on an interface.
+   * and monitor link-flap-suppression on an interface.
    */
   augment "/if:interfaces/if:interface" {
     description
@@ -193,12 +191,12 @@ module ietf-if-extensions {
        specific standard.";
 
     /*
-     * Defines standard YANG for the Carrier Delay feature.
+     * Defines standard YANG for the Link Flap Suppression feature.
      */
-    container carrier-delay {
-      if-feature "carrier-delay";
+    container link-flap-suppression {
+      if-feature "link-flap-suppression";
       description
-        "Holds carrier delay related feature configuration.";
+        "Holds link flap related feature configuration.";
       leaf down {
         type uint32;
         units milliseconds;
@@ -207,9 +205,9 @@ module ietf-if-extensions {
            that would cause the interface state to go down, i.e. the
            command allows short link flaps to be suppressed. The
            configured value indicates the minimum time interval (in
-           milliseconds) that the carrier signal must be continuously
+           milliseconds) that the link signal must be continuously
            down before the interface state is brought down. If not
-           configured, the behavior on loss of carrier signal is
+           configured, the behavior on loss of link signal is
            vendor/interface specific, but with the general
            expectation that there should be little or no delay.";
       }
@@ -218,7 +216,7 @@ module ietf-if-extensions {
         units milliseconds;
         description
           "Defines the minimum time interval (in milliseconds) that
-           the carrier signal must be continuously present and error
+           the link signal must be continuously present and error
            free before the interface state is allowed to transition
            from down to up.  If not configured, the behavior is
            vendor/interface specific, but with the general
@@ -232,38 +230,39 @@ module ietf-if-extensions {
         units transitions;
         config false;
         description
-          "Defines the number of times the underlying carrier state
+          "Defines the number of times the underlying link state
            has changed to, or from, state up.  This counter should be
            incremented even if the high layer interface state changes
-           are being suppressed by a running carrier-delay timer.";
+           are being suppressed by a running link flap suppression
+           timer.";
       }
       leaf timer-running {
         type enumeration {
           enum none {
             description
-              "No carrier delay timer is running.";
+              "No link flap suppression timer is running.";
           }
           enum up {
             description
-              "Carrier-delay up timer is running.  The underlying
-               carrier state is up, but interface state is not
-               reported as up.";
+              "link-flap-suppression up timer is running.  The
+               underlying link state is up, but interface state is
+               not reported as up.";
           }
           enum down {
             description
-              "Carrier-delay down timer is running.  Interface state
-               is reported as up, but the underlying carrier state is
-               actually down.";
+              "link-flap-suppression down timer is running.
+               Interface state is reported as up, but the underlying
+               link state is actually down.";
           }
         }
         config false;
         description
-          "Reports whether a carrier delay timer is actively running,
-           in which case the interface state does not match the
-           underlying carrier state.";
+          "Reports whether a link flap suppression timer is actively
+           running, in which case the interface state does not match
+           the underlying link state.";
       }
 
-      reference "RFC XXXX, Section 2.1 Carrier Delay";
+      reference "RFC XXXX, Section 2.1 Link Flap Suppression";
     }
 
     /*
@@ -279,7 +278,7 @@ module ietf-if-extensions {
         "Interface dampening limits the propagation of interface link
          state flaps over longer periods.";
       reference "RFC XXXX, Section 2.2 Dampening";
-      
+
       leaf half-life {
         type uint32;
         units seconds;
@@ -293,7 +292,7 @@ module ietf-if-extensions {
            specific.";
         reference "RFC XXXX, Section 2.3.2 Half-Life Period";
       }
-      
+
       leaf reuse {
         type uint32;
         description
@@ -438,7 +437,7 @@ module ietf-if-extensions {
          to higher layer protocols is restricted to the maximum frame
          payload size, and MAY be further restricted by explicit
          layer 3 or protocol specific MTU configuration.";
-      
+
       reference "RFC XXXX, Section 2.5 Maximum Frame Size";
     }
 
