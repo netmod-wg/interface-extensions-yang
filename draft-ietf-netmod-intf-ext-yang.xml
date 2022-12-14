@@ -419,7 +419,7 @@ module: ietf-if-ethernet-like
                 contains references to <xref target="RFC6991" format="default"/>
                 and <xref target="RFC7224" format="default"/>.
       </t>
-      <sourcecode name="ietf-if-extensions@2020-07-29.yang" type="" markers="true"><![CDATA[
+      <sourcecode name="ietf-if-extensions@2022-12-14.yang" type="" markers="true"><![CDATA[
 module ietf-if-extensions {
   yang-version 1.1;
 
@@ -967,7 +967,7 @@ module ietf-if-extensions {
             interfaces. This includes Ethernet interfaces, 802.3 LAG (802.1AX)
             interfaces, Switch Virtual interfaces, and Pseudo-Wire Head-End
             interfaces.  It also contains references to <xref target="RFC6991" format="default"/>, <xref target="RFC7224" format="default"/>, and <xref target="IEEE802.3.2-2019" format="default"/>.</t>
-      <sourcecode name="ietf-if-ethernet-like@2019-11-04.yang" type="" markers="true"><![CDATA[
+      <sourcecode name="ietf-if-ethernet-like@2022-12-14.yang" type="" markers="true"><![CDATA[
 module ietf-if-ethernet-like {
   yang-version 1.1;
 
