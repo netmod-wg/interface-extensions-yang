@@ -32,7 +32,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" consensus="true" docName="draft-ietf-netmod-intf-ext-yang" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="4" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" consensus="true" docName="draft-ietf-netmod-intf-ext-yang-11" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="4" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.15.0 -->
   <!-- category values: std, bcp, info, exp, and historic
    ipr values: full3667, noModification3667, noDerivatives3667
@@ -43,31 +43,19 @@
     <!-- The abbreviated title is used in the page header - it is only necessary if the 
          full title is longer than 39 characters -->
     <title abbrev="Interface Extensions YANG">Common Interface Extension YANG Data Models</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-netmod-intf-ext-yang"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-netmod-intf-ext-yang-11"/>
     <!-- add 'role="editor"' below for the editors if appropriate -->
       <!-- Another author who claims to be an editor -->
-      <author fullname="Robert Wilton" initials="R.G." role="editor" surname="Wilton">
+      <author fullname="Robert Wilton" initials="R.G." surname="Wilton">
       <organization>Cisco Systems</organization>
       <address>
         <email>rwilton@cisco.com</email>
       </address>
     </author>
-    <author fullname="David Ball" initials="D" surname="Ball">
-      <organization>Cisco Systems</organization>
+    <author fullname="Scott Mansfield" initials="S" surname="Mansfield">
+      <organization>Ericsson</organization>
       <address>
-        <email>daviball@cisco.com</email>
-      </address>
-    </author>
-    <author fullname="Tapraj Singh" initials="T" surname="Singh">
-      <organization>Cisco Systems</organization>
-      <address>
-        <email>tapsingh@cisco.com</email>
-      </address>
-    </author>
-    <author fullname="Selvakumar Sivaraj" initials="S" surname="Sivaraj">
-      <organization>Juniper Networks</organization>
-      <address>
-        <email>ssivaraj@juniper.net</email>
+        <email>scott.mansfield@ericsson.com</email>
       </address>
     </author>
     <date year="2022"/>
@@ -470,7 +458,7 @@ module ietf-if-extensions {
      interface YANG model (RFC 8343) with common configurable layer 2
      properties.
 
-     Copyright (c) 2020 IETF Trust and the persons identified as
+     Copyright (c) 2022 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -490,7 +478,7 @@ module ietf-if-extensions {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-  revision 2020-07-29 {
+  revision 2022-12-14 {
     description
       "Initial revision.";
 
@@ -1026,7 +1014,7 @@ module ietf-if-ethernet-like {
      ieee802-ethernet-interface.yang, as part of IEEE Std
      802.3.2-2019.
 
-     Copyright (c) 2019 IETF Trust and the persons identified as
+     Copyright (c) 2022 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -1040,7 +1028,7 @@ module ietf-if-ethernet-like {
      (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
      for full legal notices.";
   
-  revision 2019-11-04 {
+  revision 2022-12-14 {
     description "Initial revision.";
 
     reference
