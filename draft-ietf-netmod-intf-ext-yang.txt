@@ -522,7 +522,7 @@ Internet-Draft          Interface Extensions YANG          December 2022
    This YANG module augments the interface container defined in
    [RFC8343].  It also contains references to [RFC6991] and [RFC7224].
 
-   <CODE BEGINS> file "ietf-if-extensions@2020-07-29.yang"
+   <CODE BEGINS> file "ietf-if-extensions@2022-12-14.yang"
    module ietf-if-extensions {
      yang-version 1.1;
 
@@ -569,7 +569,7 @@ Internet-Draft          Interface Extensions YANG          December 2022
         interface YANG model (RFC 8343) with common configurable layer 2
         properties.
 
-        Copyright (c) 2020 IETF Trust and the persons identified as
+        Copyright (c) 2022 IETF Trust and the persons identified as
         authors of the code.  All rights reserved.
 
         Redistribution and use in source and binary forms, with or
@@ -589,7 +589,7 @@ Internet-Draft          Interface Extensions YANG          December 2022
         described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
         they appear in all capitals, as shown here.";
 
-     revision 2020-07-29 {
+     revision 2022-12-14 {
        description
          "Initial revision.";
 
@@ -1158,7 +1158,7 @@ Internet-Draft          Interface Extensions YANG          December 2022
    interfaces, and Pseudo-Wire Head-End interfaces.  It also contains
    references to [RFC6991], [RFC7224], and [IEEE802.3.2-2019].
 
-   <CODE BEGINS> file "ietf-if-ethernet-like@2019-11-04.yang"
+   <CODE BEGINS> file "ietf-if-ethernet-like@2022-12-14.yang"
    module ietf-if-ethernet-like {
      yang-version 1.1;
 
@@ -1213,7 +1213,7 @@ Internet-Draft          Interface Extensions YANG          December 2022
         ieee802-ethernet-interface.yang, as part of IEEE Std
         802.3.2-2019.
 
-        Copyright (c) 2019 IETF Trust and the persons identified as
+        Copyright (c) 2022 IETF Trust and the persons identified as
         authors of the code.  All rights reserved.
 
         Redistribution and use in source and binary forms, with or
@@ -1234,7 +1234,7 @@ Wilton & Mansfield        Expires 17 June 2023                 [Page 22]
 Internet-Draft          Interface Extensions YANG          December 2022
 
 
-     revision 2019-11-04 {
+     revision 2022-12-14 {
        description "Initial revision.";
 
        reference
