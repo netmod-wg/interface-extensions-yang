@@ -1296,8 +1296,7 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
                 ]]></artwork>
       </section>
     </section>
-    <!-- This PI places the pagebreak correctly (before the section title) in the text output. -->
-        <section anchor="Acknowledgements" numbered="true" toc="default">
+    <section anchor="Acknowledgements" numbered="true" toc="default">
       <name>Acknowledgements</name>
       <t>The authors wish to thank Eric Gray, Ing-Wher Chen, Jon Culver,
             Juergen Schoenwaelder, Ladislav Lhotka, Lou Berger, Mahesh
@@ -1305,68 +1304,7 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
             William Lupton, Xufeng Liu, Andy Bierman, and Vladimir Vassilev for
             their helpful comments contributing to this document.</t>
     </section>
-    <section numbered="true" toc="default">
-      <name>ChangeLog</name>
-      <t>XXX, RFC Editor, please delete this change log before publication.</t>
-      <section numbered="true" toc="default">
-        <name>Version -10</name>
-        <ul spacing="normal">
-          <li>Update modules from github and tree diagram.</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>Version -09</name>
-        <ul spacing="normal">
-          <li>Fixed IANA section.</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>Version -08</name>
-        <ul spacing="normal">
-          <li>Initial updates after WG LC comments.</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>Version -07</name>
-        <ul spacing="normal">
-          <li>Minor editorial updates</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>Version -06</name>
-        <ul spacing="normal">
-          <li>Remove reservable-bandwidth, based on Acee's suggestion</li>
-          <li>Add examples</li>
-          <li>Add additional state parameters for link-flap-suppression and dampening</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>Version -05</name>
-        <ul spacing="normal">
-          <li>Incorporate feedback from Andy Bierman</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>Version -04</name>
-        <ul spacing="normal">
-          <li>Incorporate feedback from Lada, some comments left as open issues.</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>Version -03</name>
-        <ul spacing="normal">
-          <li>Fixed incorrect module name references, and updated tree output</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>Version -02</name>
-        <ul spacing="normal">
-          <li>Minor changes only: Fix errors in when statements, use derived-from-or-self() for future proofing.</li>
-        </ul>
-      </section>
-    </section>
-    <!-- Possibly a 'Contributors' section ... -->
-        <section anchor="IANA" numbered="true" toc="default">
+    <section anchor="IANA" numbered="true" toc="default">
       <name>IANA Considerations</name>
       <section anchor="yang-module-registrations" numbered="true" toc="default">
         <name>YANG Module Registrations</name>
@@ -1401,13 +1339,7 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
           <li>XML: N/A, the requested URI is an XML namespace.</li>
         </ul>
       </section>
-      <!--      <t>All drafts are required to have an IANA considerations section (see
-      <xref target="I-D.narten-iana-considerations-rfc2434bis">the update of
-      RFC 2434</xref> for a guide). If the draft does not require IANA to do
-      anything, the section contains an explicit statement that this is the
-      case (as above). If there are no requirements for IANA, the section will
-      be removed during conversion into an RFC by the RFC Editor.</t>-->
-        </section>
+    </section>
     <section anchor="Security" numbered="true" toc="default">
       <name>Security Considerations</name>
       <t>The YANG module defined in this memo is designed to be accessed via
@@ -1522,7 +1454,7 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
 	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8340.xml"/>
 	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8341.xml"/>
 	<xi:include href="https://bib.ietf.org/public/rfc/bibxml6/reference.R.IEEE.802.3.2-2019.xml"/>
-        <reference anchor="I-D.ietf-netmod-sub-intf-vlan-model" target="https://www.ietf.org/archive/id/draft-ietf-netmod-sub-intf-vlan-model-07.txt" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-sub-intf-vlan-model.xml">
+        <reference anchor="I-D.ietf-netmod-sub-intf-vlan-model" target="https://www.ietf.org/archive/id/draft-ietf-netmod-sub-intf-vlan-model-08.txt" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-sub-intf-vlan-model.xml">
           <front>
             <title>Sub-interface VLAN YANG Data Models</title>
             <author fullname="Robert Wilton">

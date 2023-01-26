@@ -92,20 +92,20 @@ Table of Contents
      6.2.  Dampening configuration . . . . . . . . . . . . . . . . .  26
      6.3.  MAC address configuration . . . . . . . . . . . . . . . .  27
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  29
-   8.  ChangeLog . . . . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.1.  Version -10 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.2.  Version -09 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.3.  Version -08 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.4.  Version -07 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.5.  Version -06 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.6.  Version -05 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.7.  Version -04 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.8.  Version -03 . . . . . . . . . . . . . . . . . . . . . . .  30
-     8.9.  Version -02 . . . . . . . . . . . . . . . . . . . . . . .  30
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  30
-     9.1.  YANG Module Registrations . . . . . . . . . . . . . . . .  30
-   10. Security Considerations . . . . . . . . . . . . . . . . . . .  31
-     10.1.  ietf-if-extensions.yang  . . . . . . . . . . . . . . . .  31
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  29
+     8.1.  YANG Module Registrations . . . . . . . . . . . . . . . .  29
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  30
+     9.1.  ietf-if-extensions.yang . . . . . . . . . . . . . . . . .  30
+     9.2.  ietf-if-ethernet-like.yang  . . . . . . . . . . . . . . .  31
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  31
+     10.1.  Normative References . . . . . . . . . . . . . . . . . .  31
+     10.2.  Informative References . . . . . . . . . . . . . . . . .  32
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  33
+
+
+
+
+
 
 
 
@@ -113,12 +113,6 @@ Wilton & Mansfield        Expires 30 July 2023                  [Page 2]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
-
-     10.2.  ietf-if-ethernet-like.yang . . . . . . . . . . . . . . .  32
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  32
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  32
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  33
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  34
 
 1.  Introduction
 
@@ -165,6 +159,12 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
+
+
+
+
+
+
 Wilton & Mansfield        Expires 30 July 2023                  [Page 3]
 
 Internet-Draft          Interface Extensions YANG           January 2023
@@ -175,8 +175,8 @@ Internet-Draft          Interface Extensions YANG           January 2023
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
    "OPTIONAL" in this document are to be interpreted as described in BCP
-   14 RFC 2119 [RFC2119] RFC 8174 [RFC8174] when, and only when, they
-   appear in all capitals, as shown here.
+   14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
 
 1.2.  Tree Diagrams
 
@@ -247,7 +247,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
        +--rw max-frame-size?    uint32 {max-frame-size}?
        +--ro forwarding-mode?   identityref
      augment /if:interfaces/if:interface:
-       +--rw parent-interface    if:interface-ref {sub-interfaces}?
+       +--rw parent-interface if:interface-ref {sub-interfaces}?
      augment /if:interfaces/if:interface/if:statistics:
        +--ro in-discard-unknown-encaps?   yang:counter64
                {sub-interfaces}?
@@ -1156,7 +1156,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
    [RFC8343] for Ethernet-like interfaces.  This includes Ethernet
    interfaces, 802.3 LAG (802.1AX) interfaces, Switch Virtual
    interfaces, and Pseudo-Wire Head-End interfaces.  It also contains
-   references to [RFC6991], [RFC7224], and [IEEE802.3.2-2019].
+   references to [RFC6991], [RFC7224], and [IEEE_802.3.2_2019].
 
    <CODE BEGINS> file "ietf-if-ethernet-like@2022-12-14.yang"
    module ietf-if-ethernet-like {
@@ -1578,66 +1578,9 @@ Internet-Draft          Interface Extensions YANG           January 2023
    William Lupton, Xufeng Liu, Andy Bierman, and Vladimir Vassilev for
    their helpful comments contributing to this document.
 
-8.  ChangeLog
+8.  IANA Considerations
 
-   XXX, RFC Editor, please delete this change log before publication.
-
-8.1.  Version -10
-
-   *  Update modules from github and tree diagram.
-
-8.2.  Version -09
-
-   *  Fixed IANA section.
-
-8.3.  Version -08
-
-   *  Initial updates after WG LC comments.
-
-8.4.  Version -07
-
-   *  Minor editorial updates
-
-8.5.  Version -06
-
-   *  Remove reservable-bandwidth, based on Acee's suggestion
-
-   *  Add examples
-
-   *  Add additional state parameters for link-flap-suppression and
-      dampening
-
-8.6.  Version -05
-
-   *  Incorporate feedback from Andy Bierman
-
-8.7.  Version -04
-
-   *  Incorporate feedback from Lada, some comments left as open issues.
-
-
-
-
-
-
-
-Wilton & Mansfield        Expires 30 July 2023                 [Page 29]
-
-Internet-Draft          Interface Extensions YANG           January 2023
-
-
-8.8.  Version -03
-
-   *  Fixed incorrect module name references, and updated tree output
-
-8.9.  Version -02
-
-   *  Minor changes only: Fix errors in when statements, use derived-
-      from-or-self() for future proofing.
-
-9.  IANA Considerations
-
-9.1.  YANG Module Registrations
+8.1.  YANG Module Registrations
 
    The following YANG modules are requested to be registered in the IANA
    "YANG Module Names" [RFC6020] registry:
@@ -1674,19 +1617,18 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
       URI: urn:ietf:params:xml:ns:yang:ietf-if-ethernet-like
 
+      Registrant Contact: The IESG.
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 30]
+Wilton & Mansfield        Expires 30 July 2023                 [Page 29]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
 
-      Registrant Contact: The IESG.
-
       XML: N/A, the requested URI is an XML namespace.
 
-10.  Security Considerations
+9.  Security Considerations
 
    The YANG module defined in this memo is designed to be accessed via
    the NETCONF protocol RFC 6241 [RFC6241].  The lowest NETCONF layer is
@@ -1704,7 +1646,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
    on network operations.  These are the subtrees and data nodes and
    their sensitivity/vulnerability:
 
-10.1.  ietf-if-extensions.yang
+9.1.  ietf-if-extensions.yang
 
    The ietf-if-extensions YANG module contains various configuration
    leaves that affect the behavior of interfaces.  Modifying these
@@ -1731,14 +1673,14 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
    *  /if:interfaces/if:interface/dampening/reuse
 
+   *  /if:interfaces/if:interface/dampening/suppress
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 31]
+
+Wilton & Mansfield        Expires 30 July 2023                 [Page 30]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
-
-   *  /if:interfaces/if:interface/dampening/suppress
 
    *  /if:interfaces/if:interface/dampening/max-suppress-time
 
@@ -1757,7 +1699,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
    *  /if:interfaces/if:interface/parent-interface
 
-10.2.  ietf-if-ethernet-like.yang
+9.2.  ietf-if-ethernet-like.yang
 
    Generally, the configuration nodes in the ietf-if-ethernet-like YANG
    module are concerned with configuration that is common across all
@@ -1771,9 +1713,9 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
    *  interfaces/interface/ethernet-like/mac-address
 
-11.  References
+10.  References
 
-11.1.  Normative References
+10.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1784,20 +1726,17 @@ Internet-Draft          Interface Extensions YANG           January 2023
               DOI 10.17487/RFC3688, January 2004,
               <https://www.rfc-editor.org/info/rfc3688>.
 
-
-
-
-
-
-Wilton & Mansfield        Expires 30 July 2023                 [Page 32]
-
-Internet-Draft          Interface Extensions YANG           January 2023
-
-
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
               the Network Configuration Protocol (NETCONF)", RFC 6020,
               DOI 10.17487/RFC6020, October 2010,
               <https://www.rfc-editor.org/info/rfc6020>.
+
+
+
+Wilton & Mansfield        Expires 30 July 2023                 [Page 31]
+
+Internet-Draft          Interface Extensions YANG           January 2023
+
 
    [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
               RFC 7950, DOI 10.17487/RFC7950, August 2016,
@@ -1816,18 +1755,20 @@ Internet-Draft          Interface Extensions YANG           January 2023
               Management", RFC 8343, DOI 10.17487/RFC8343, March 2018,
               <https://www.rfc-editor.org/info/rfc8343>.
 
-11.2.  Informative References
+10.2.  Informative References
 
    [I-D.ietf-netmod-sub-intf-vlan-model]
-              Wilton, R., Ball, D., Singh, T., and S. Sivaraj, "Sub-
-              interface VLAN YANG Data Models", Work in Progress,
-              Internet-Draft, draft-ietf-netmod-sub-intf-vlan-model-07,
-              13 July 2020, <https://www.ietf.org/archive/id/draft-ietf-
-              netmod-sub-intf-vlan-model-07.txt>.
+              Wilton, R. and S. Mansfield, "Sub-interface VLAN YANG Data
+              Models", Work in Progress, Internet-Draft, draft-ietf-
+              netmod-sub-intf-vlan-model-08, 26 January 2023,
+              <https://www.ietf.org/archive/id/draft-ietf-netmod-sub-
+              intf-vlan-model-08.txt>.
 
-   [IEEE802.3.2-2019]
-              IEEE WG802.3 - Ethernet Working Group, "IEEE
-              802.3.2-2019", 2019.
+   [IEEE_802.3.2_2019]
+              IEEE, "IEEE Standard for Ethernet - YANG Data Model
+              Definitions", IEEE 802-3,
+              DOI 10.1109/IEEESTD.2019.8737019, 14 June 2019,
+              <https://ieeexplore.ieee.org/document/8737019>.
 
    [RFC6241]  Enns, R., Ed., Bjorklund, M., Ed., Schoenwaelder, J., Ed.,
               and A. Bierman, Ed., "Network Configuration Protocol
@@ -1842,17 +1783,16 @@ Internet-Draft          Interface Extensions YANG           January 2023
               RFC 6991, DOI 10.17487/RFC6991, July 2013,
               <https://www.rfc-editor.org/info/rfc6991>.
 
-
-
-
-Wilton & Mansfield        Expires 30 July 2023                 [Page 33]
-
-Internet-Draft          Interface Extensions YANG           January 2023
-
-
    [RFC7224]  Bjorklund, M., "IANA Interface Type YANG Module",
               RFC 7224, DOI 10.17487/RFC7224, May 2014,
               <https://www.rfc-editor.org/info/rfc7224>.
+
+
+
+Wilton & Mansfield        Expires 30 July 2023                 [Page 32]
+
+Internet-Draft          Interface Extensions YANG           January 2023
+
 
    [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
               BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
@@ -1901,4 +1841,8 @@ Authors' Addresses
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 34]
+
+
+
+
+Wilton & Mansfield        Expires 30 July 2023                 [Page 33]
