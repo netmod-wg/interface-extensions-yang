@@ -30,6 +30,7 @@ module ietf-if-extensions {
 
      Editor:   Robert Wilton
                <mailto:rwilton@cisco.com>";
+
   description
     "This module contains common definitions for extending the IETF
      interface YANG model (RFC 8343) with common configurable layer 2
@@ -126,6 +127,7 @@ module ietf-if-extensions {
        interface types that uses Ethernet framing (with or without
        802.1Q tagging).";
   }
+
   identity loopback {
     description "Base identity for interface loopback options";
     reference "RFC XXXX, Section 2.4";
@@ -507,7 +509,6 @@ module ietf-if-extensions {
     description
       "Augment the interface model statistics with a sub-interface
        demux discard counter.";
-
     leaf in-discard-unknown-encaps {
       type yang:counter64;
       units frames;
