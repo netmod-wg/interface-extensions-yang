@@ -5,8 +5,8 @@
 Internet Engineering Task Force                              R.G. Wilton
 Internet-Draft                                             Cisco Systems
 Intended status: Standards Track                            S. Mansfield
-Expires: 30 July 2023                                           Ericsson
-                                                         26 January 2023
+Expires: 31 July 2023                                           Ericsson
+                                                         27 January 2023
 
 
               Common Interface Extension YANG Data Models
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 July 2023.
+   This Internet-Draft will expire on 31 July 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                  [Page 1]
+Wilton & Mansfield        Expires 31 July 2023                  [Page 1]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                  [Page 2]
+Wilton & Mansfield        Expires 31 July 2023                  [Page 2]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -165,7 +165,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                  [Page 3]
+Wilton & Mansfield        Expires 31 July 2023                  [Page 3]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -221,7 +221,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                  [Page 4]
+Wilton & Mansfield        Expires 31 July 2023                  [Page 4]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -277,7 +277,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                  [Page 5]
+Wilton & Mansfield        Expires 31 July 2023                  [Page 5]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -333,7 +333,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                  [Page 6]
+Wilton & Mansfield        Expires 31 July 2023                  [Page 6]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -389,7 +389,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                  [Page 7]
+Wilton & Mansfield        Expires 31 July 2023                  [Page 7]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -445,7 +445,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                  [Page 8]
+Wilton & Mansfield        Expires 31 July 2023                  [Page 8]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -501,7 +501,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                  [Page 9]
+Wilton & Mansfield        Expires 31 July 2023                  [Page 9]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -522,7 +522,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
    This YANG module augments the interface container defined in
    [RFC8343].  It also contains references to [RFC6991] and [RFC7224].
 
-   <CODE BEGINS> file "ietf-if-extensions@2022-12-14.yang"
+   <CODE BEGINS> file "ietf-if-extensions@2023-01-26.yang"
    module ietf-if-extensions {
      yang-version 1.1;
 
@@ -557,7 +557,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 10]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 10]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -613,7 +613,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 11]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 11]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -669,7 +669,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 12]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 12]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -725,7 +725,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 13]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 13]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -781,7 +781,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 14]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 14]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -837,7 +837,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 15]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 15]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -893,7 +893,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 16]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 16]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -949,7 +949,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 17]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 17]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -1005,7 +1005,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 18]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 18]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -1061,7 +1061,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 19]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 19]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -1117,7 +1117,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 20]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 20]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -1158,7 +1158,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
    interfaces, and Pseudo-Wire Head-End interfaces.  It also contains
    references to [RFC6991], [RFC7224], and [IEEE_802.3.2_2019].
 
-   <CODE BEGINS> file "ietf-if-ethernet-like@2022-12-14.yang"
+   <CODE BEGINS> file "ietf-if-ethernet-like@2023-01-26.yang"
    module ietf-if-ethernet-like {
      yang-version 1.1;
 
@@ -1173,7 +1173,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 21]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 21]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -1229,7 +1229,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 22]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 22]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -1285,7 +1285,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 23]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 23]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -1341,7 +1341,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 24]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 24]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -1397,7 +1397,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 25]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 25]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -1453,7 +1453,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 26]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 26]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -1509,7 +1509,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 27]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 27]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -1565,7 +1565,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 28]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 28]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -1621,7 +1621,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 29]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 29]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -1677,7 +1677,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 30]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 30]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -1733,7 +1733,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 31]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 31]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -1789,7 +1789,7 @@ Internet-Draft          Interface Extensions YANG           January 2023
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 32]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 32]
 
 Internet-Draft          Interface Extensions YANG           January 2023
 
@@ -1845,4 +1845,4 @@ Authors' Addresses
 
 
 
-Wilton & Mansfield        Expires 30 July 2023                 [Page 33]
+Wilton & Mansfield        Expires 31 July 2023                 [Page 33]
