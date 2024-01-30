@@ -11,6 +11,7 @@ module ietf-if-ethernet-like {
     reference
       "RFC 8343: A YANG Data Model For Interface Management";
   }
+
   import ietf-yang-types {
     prefix yang;
     reference "RFC 6991: Common YANG Data Types";
@@ -48,7 +49,7 @@ module ietf-if-ethernet-like {
 
      Redistribution and use in source and binary forms, with or
      without modification, is permitted pursuant to, and subject to
-     the license terms contained in, the Simplified BSD License set
+     the license terms contained in, the Revised BSD License set
      forth in Section 4.c of the IETF Trust's Legal Provisions
      Relating to IETF Documents
      (https://trustee.ietf.org/license-info).
@@ -56,9 +57,9 @@ module ietf-if-ethernet-like {
      This version of this YANG module is part of RFC XXXX
      (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
      for full legal notices.";
-
-  revision 2022-12-14 {
+  revision 2023-01-26 {
     description "Initial revision.";
+
     reference
       "RFC XXXX, Common Interface Extension YANG Data Models";
   }
