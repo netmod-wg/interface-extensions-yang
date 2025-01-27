@@ -5,12 +5,12 @@
 Internet Engineering Task Force                              R.G. Wilton
 Internet-Draft                                             Cisco Systems
 Intended status: Standards Track                            S. Mansfield
-Expires: 17 June 2023                                           Ericsson
-                                                        14 December 2022
+Expires: 31 July 2025                                           Ericsson
+                                                         27 January 2025
 
 
               Common Interface Extension YANG Data Models
-                   draft-ietf-netmod-intf-ext-yang-11
+                   draft-ietf-netmod-intf-ext-yang-15
 
 Abstract
 
@@ -37,11 +37,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 June 2023.
+   This Internet-Draft will expire on 31 July 2025.
 
 Copyright Notice
 
-   Copyright (c) 2022 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Wilton & Mansfield        Expires 17 June 2023                  [Page 1]
+Wilton & Mansfield        Expires 31 July 2025                  [Page 1]
 
-Internet-Draft          Interface Extensions YANG          December 2022
+Internet-Draft          Interface Extensions YANG           January 2025
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -86,39 +86,39 @@ Table of Contents
      2.7.  Forwarding Mode . . . . . . . . . . . . . . . . . . . . .   9
    3.  Interfaces Ethernet-Like Module . . . . . . . . . . . . . . .   9
    4.  Interface Extensions YANG Module  . . . . . . . . . . . . . .  10
-   5.  Interfaces Ethernet-Like YANG Module  . . . . . . . . . . . .  21
-   6.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . .  25
-     6.1.  Carrier delay configuration . . . . . . . . . . . . . . .  25
-     6.2.  Dampening configuration . . . . . . . . . . . . . . . . .  26
-     6.3.  MAC address configuration . . . . . . . . . . . . . . . .  27
-   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  29
-   8.  ChangeLog . . . . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.1.  Version -10 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.2.  Version -09 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.3.  Version -08 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.4.  Version -07 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.5.  Version -06 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.6.  Version -05 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.7.  Version -04 . . . . . . . . . . . . . . . . . . . . . . .  29
-     8.8.  Version -03 . . . . . . . . . . . . . . . . . . . . . . .  30
-     8.9.  Version -02 . . . . . . . . . . . . . . . . . . . . . . .  30
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  30
-     9.1.  YANG Module Registrations . . . . . . . . . . . . . . . .  30
-   10. Security Considerations . . . . . . . . . . . . . . . . . . .  31
-     10.1.  ietf-if-extensions.yang  . . . . . . . . . . . . . . . .  31
+   5.  Interfaces Ethernet-Like YANG Module  . . . . . . . . . . . .  22
+   6.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . .  30
+     6.1.  Carrier delay configuration . . . . . . . . . . . . . . .  30
+     6.2.  Dampening configuration . . . . . . . . . . . . . . . . .  32
+     6.3.  MAC address configuration . . . . . . . . . . . . . . . .  32
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  34
+   8.  ChangeLog . . . . . . . . . . . . . . . . . . . . . . . . . .  34
+     8.1.  Version -10 . . . . . . . . . . . . . . . . . . . . . . .  34
+     8.2.  Version -09 . . . . . . . . . . . . . . . . . . . . . . .  34
+     8.3.  Version -08 . . . . . . . . . . . . . . . . . . . . . . .  34
+     8.4.  Version -07 . . . . . . . . . . . . . . . . . . . . . . .  34
+     8.5.  Version -06 . . . . . . . . . . . . . . . . . . . . . . .  35
+     8.6.  Version -05 . . . . . . . . . . . . . . . . . . . . . . .  35
+     8.7.  Version -04 . . . . . . . . . . . . . . . . . . . . . . .  35
+     8.8.  Version -03 . . . . . . . . . . . . . . . . . . . . . . .  35
+     8.9.  Version -02 . . . . . . . . . . . . . . . . . . . . . . .  35
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  35
+     9.1.  YANG Module Registrations . . . . . . . . . . . . . . . .  35
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  36
+     10.1.  ietf-if-extensions.yang  . . . . . . . . . . . . . . . .  36
 
 
 
-Wilton & Mansfield        Expires 17 June 2023                  [Page 2]
+Wilton & Mansfield        Expires 31 July 2025                  [Page 2]
 
-Internet-Draft          Interface Extensions YANG          December 2022
+Internet-Draft          Interface Extensions YANG           January 2025
 
 
-     10.2.  ietf-if-ethernet-like.yang . . . . . . . . . . . . . . .  32
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  32
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  32
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  33
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  34
+     10.2.  ietf-if-ethernet-like.yang . . . . . . . . . . . . . . .  37
+   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  38
+     11.1.  Normative References . . . . . . . . . . . . . . . . . .  38
+     11.2.  Informative References . . . . . . . . . . . . . . . . .  38
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  39
 
 1.  Introduction
 
@@ -165,9 +165,9 @@ Internet-Draft          Interface Extensions YANG          December 2022
 
 
 
-Wilton & Mansfield        Expires 17 June 2023                  [Page 3]
+Wilton & Mansfield        Expires 31 July 2025                  [Page 3]
 
-Internet-Draft          Interface Extensions YANG          December 2022
+Internet-Draft          Interface Extensions YANG           January 2025
 
 
 1.1.  Terminology
@@ -221,9 +221,9 @@ Internet-Draft          Interface Extensions YANG          December 2022
 
 
 
-Wilton & Mansfield        Expires 17 June 2023                  [Page 4]
+Wilton & Mansfield        Expires 31 July 2025                  [Page 4]
 
-Internet-Draft          Interface Extensions YANG          December 2022
+Internet-Draft          Interface Extensions YANG           January 2025
 
 
    module: ietf-if-extensions
@@ -277,9 +277,9 @@ Internet-Draft          Interface Extensions YANG          December 2022
 
 
 
-Wilton & Mansfield        Expires 17 June 2023                  [Page 5]
+Wilton & Mansfield        Expires 31 July 2025                  [Page 5]
 
-Internet-Draft          Interface Extensions YANG          December 2022
+Internet-Draft          Interface Extensions YANG           January 2025
 
 
    The configuration allows for separate timer values to be used in the
@@ -333,9 +333,9 @@ Internet-Draft          Interface Extensions YANG          December 2022
 
 
 
-Wilton & Mansfield        Expires 17 June 2023                  [Page 6]
+Wilton & Mansfield        Expires 31 July 2025                  [Page 6]
 
-Internet-Draft          Interface Extensions YANG          December 2022
+Internet-Draft          Interface Extensions YANG           January 2025
 
 
 2.2.1.  Suppress Threshold
@@ -389,9 +389,9 @@ Internet-Draft          Interface Extensions YANG          December 2022
 
 
 
-Wilton & Mansfield        Expires 17 June 2023                  [Page 7]
+Wilton & Mansfield        Expires 31 July 2025                  [Page 7]
 
-Internet-Draft          Interface Extensions YANG          December 2022
+Internet-Draft          Interface Extensions YANG           January 2025
 
 
 2.4.  Loopback
@@ -445,9 +445,9 @@ Internet-Draft          Interface Extensions YANG          December 2022
 
 
 
-Wilton & Mansfield        Expires 17 June 2023                  [Page 8]
+Wilton & Mansfield        Expires 31 July 2025                  [Page 8]
 
-Internet-Draft          Interface Extensions YANG          December 2022
+Internet-Draft          Interface Extensions YANG           January 2025
 
 
    For some vendor specific interface naming conventions the name of the
@@ -497,24 +497,53 @@ Internet-Draft          Interface Extensions YANG          December 2022
    reporting of the operational MAC address and the burnt-in MAC address
    (BIA) associated with any interface using Ethernet framing.
 
+
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                  [Page 9]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
+   The module also contains a set of counters that are used to report
+   the number of packets received and transmitted on an interface that
+   fall into various size ranges, in a style that is similar
+   etherStatsPkt* counters, defined in RFC 2819, but covering a wider
+   range of frame sizes, and providing counters for both the ingress and
+   egress directions.
+
    The "ietf-if-ethernet-like" YANG module has the following structure:
 
 
-
-Wilton & Mansfield        Expires 17 June 2023                  [Page 9]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
-
-   module: ietf-if-ethernet-like
      augment /if:interfaces/if:interface:
        +--rw ethernet-like
           +--rw mac-address?       yang:mac-address
           |       {configurable-mac-address}?
           +--ro bia-mac-address?   yang:mac-address
      augment /if:interfaces/if:interface/if:statistics:
-       +--ro in-drop-unknown-dest-mac-pkts?   yang:counter64
-       +--ro in-discard-overflows?            yang:counter64
+       +--ro in-discard-unknown-dest-mac-pkts?   yang:counter64
+       +--ro in-discard-overflows?               yang:counter64
+       +--ro in-pkts-64-octets?                  yang:counter64
+       +--ro in-pkts-65-to-127-octets?           yang:counter64
+       +--ro in-pkts-128-to-255-octets?          yang:counter64
+       +--ro in-pkts-256-to-511-octets?          yang:counter64
+       +--ro in-pkts-512-to-1023-octets?         yang:counter64
+       +--ro in-pkts-1024-to-1518-octets?        yang:counter64
+       +--ro in-pkts-1519-to-2047-octets?        yang:counter64
+       +--ro in-pkts-2048-to-4095-octets?        yang:counter64
+       +--ro in-pkts-4096-to-8191-octets?        yang:counter64
+       +--ro in-pkts-8192-to-max-octets?         yang:counter64
+       +--ro out-pkts-64-octets?                 yang:counter64
+       +--ro out-pkts-65-to-127-octets?          yang:counter64
+       +--ro out-pkts-128-to-255-octets?         yang:counter64
+       +--ro out-pkts-256-to-511-octets?         yang:counter64
+       +--ro out-pkts-512-to-1023-octets?        yang:counter64
+       +--ro out-pkts-1024-to-1518-octets?       yang:counter64
+       +--ro out-pkts-1519-to-2047-octets?       yang:counter64
+       +--ro out-pkts-2048-to-4095-octets?       yang:counter64
+       +--ro out-pkts-4096-to-8191-octets?       yang:counter64
+       +--ro out-pkts-8192-to-max-octets?        yang:counter64
 
 
 4.  Interface Extensions YANG Module
@@ -522,7 +551,18 @@ Internet-Draft          Interface Extensions YANG          December 2022
    This YANG module augments the interface container defined in
    [RFC8343].  It also contains references to [RFC6991] and [RFC7224].
 
-   <CODE BEGINS> file "ietf-if-extensions@2022-12-14.yang"
+
+
+
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 10]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
+   <CODE BEGINS> file "ietf-if-extensions@2025-01-27.yang"
    module ietf-if-extensions {
      yang-version 1.1;
 
@@ -554,27 +594,30 @@ Internet-Draft          Interface Extensions YANG          December 2022
         WG List:  <mailto:netmod@ietf.org>
 
         Editor:   Robert Wilton
+                  <mailto:rwilton@cisco.com>
 
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 10]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
-
-                  <mailto:rwilton@cisco.com>";
+        Editor:   Scott Mansfield
+                  <mailto:scott.mansfield@ericsson.com>";
 
      description
        "This module contains common definitions for extending the IETF
         interface YANG model (RFC 8343) with common configurable layer 2
         properties.
 
-        Copyright (c) 2022 IETF Trust and the persons identified as
+        Copyright (c) 2025 IETF Trust and the persons identified as
         authors of the code.  All rights reserved.
 
         Redistribution and use in source and binary forms, with or
         without modification, is permitted pursuant to, and subject to
-        the license terms contained in, the Simplified BSD License set
+        the license terms contained in, the Revised BSD License set
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 11]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
         forth in Section 4.c of the IETF Trust's Legal Provisions
         Relating to IETF Documents
         (https://trustee.ietf.org/license-info).
@@ -589,7 +632,7 @@ Internet-Draft          Interface Extensions YANG          December 2022
         described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
         they appear in all capitals, as shown here.";
 
-     revision 2022-12-14 {
+     revision 2025-01-27 {
        description
          "Initial revision.";
 
@@ -610,14 +653,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
          "This feature indicates that the device supports interface
           dampening, which is a feature that is used to limit the
           propagation of interface link state flaps over longer
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 11]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
-
           periods.";
        reference "RFC XXXX, Section 2.2 Dampening";
      }
@@ -631,6 +666,14 @@ Internet-Draft          Interface Extensions YANG          December 2022
 
      feature max-frame-size {
        description
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 12]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
          "This feature indicates that the device supports configuring or
           reporting the maximum frame size on interfaces.";
        reference "RFC XXXX, Section 2.5 Maximum Frame Size";
@@ -666,14 +709,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
        description
          "This identity represents the child sub-interface of any
           interface types that uses Ethernet framing (with or without
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 12]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
-
           802.1Q tagging).";
      }
 
@@ -687,6 +722,14 @@ Internet-Draft          Interface Extensions YANG          December 2022
          "All egress traffic on the interface is internally looped back
           within the interface to be received on the ingress path.";
        reference "RFC XXXX, Section 2.4";
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 13]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
      }
      identity line {
        base loopback;
@@ -722,14 +765,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
          "Layer 2 based forwarding, such as Ethernet/VLAN based
           switching, or L2VPN services.";
        reference "RFC XXXX, Section 2.7";
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 13]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
-
      }
      identity network {
        base forwarding-mode;
@@ -743,6 +778,14 @@ Internet-Draft          Interface Extensions YANG          December 2022
       * Augments the IETF interfaces model with leaves to configure
       * and monitor link-flap-suppression on an interface.
       */
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 14]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
      augment "/if:interfaces/if:interface" {
        description
          "Augments the IETF interface model with optional common
@@ -778,14 +821,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
               the link signal must be continuously present and error
               free before the interface state is allowed to transition
               from down to up.  If not configured, the behavior is
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 14]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
-
               vendor/interface specific, but with the general
               expectation that sufficient default delay should be used
               to ensure that the interface is stable when enabled before
@@ -799,6 +834,14 @@ Internet-Draft          Interface Extensions YANG          December 2022
            description
              "Defines the number of times the underlying link state
               has changed to, or from, state up.  This counter should be
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 15]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
               incremented even if the high layer interface state changes
               are being suppressed by a running link flap suppression
               timer.";
@@ -834,14 +877,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
 
        /*
         * Augments the IETF interfaces model with a container to hold
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 15]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
-
         * generic interface dampening
         */
        container dampening {
@@ -855,6 +890,14 @@ Internet-Draft          Interface Extensions YANG          December 2022
          reference "RFC XXXX, Section 2.2 Dampening";
 
          leaf half-life {
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 16]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
            type uint32;
            units seconds;
            description
@@ -890,14 +933,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
          }
 
          leaf max-suppress-time {
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 16]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
-
            type uint32;
            units seconds;
            description
@@ -911,6 +946,14 @@ Internet-Draft          Interface Extensions YANG          December 2022
          }
 
          leaf penalty {
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 17]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
            type uint32;
            config false;
            description
@@ -946,14 +989,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
          }
        }
 
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 17]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
-
        /*
         * Various types of interfaces support a configurable layer 2
         * encapsulation, any that are supported by YANG should be
@@ -967,6 +1002,14 @@ Internet-Draft          Interface Extensions YANG          December 2022
            "derived-from-or-self(../if:type,
                                  'ianaift:ethernetCsmacd') or
             derived-from-or-self(../if:type,
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 18]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
                                  'ianaift:ieee8023adLag') or
             derived-from-or-self(../if:type, 'ianaift:pos') or
             derived-from-or-self(../if:type,
@@ -1002,14 +1045,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
            description
              "All interface types that support loopback configuration.";
          }
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 18]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
-
          if-feature "loopback";
          type identityref {
            base loopback;
@@ -1023,6 +1058,14 @@ Internet-Draft          Interface Extensions YANG          December 2022
         */
        leaf max-frame-size {
          if-feature "max-frame-size";
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 19]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
          type uint32 {
            range "64 .. max";
          }
@@ -1058,14 +1101,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
 
      /*
       * Add generic support for sub-interfaces.
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 19]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
-
       *
       * This should be extended to cover all interface types that are
       * child interfaces of other interfaces.
@@ -1079,6 +1114,14 @@ Internet-Draft          Interface Extensions YANG          December 2022
            "Any ianaift:types that explicitly represent sub-interfaces
             or any types that derive from the sub-interface identity.";
        }
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 20]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
        if-feature "sub-interfaces";
 
        description
@@ -1114,14 +1157,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
        description
          "Augment the interface model statistics with a sub-interface
           demux discard counter.";
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 20]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
-
        leaf in-discard-unknown-encaps {
          type yang:counter64;
          units frames;
@@ -1135,6 +1170,14 @@ Internet-Draft          Interface Extensions YANG          December 2022
 
             For consistency, frames counted against this counter are
             also counted against the IETF interfaces statistics.  In
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 21]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
             particular, they are included in in-octets and in-discards,
             but are not included in in-unicast-pkts, in-multicast-pkts
             or in-broadcast-pkts, because they are not delivered to a
@@ -1158,7 +1201,7 @@ Internet-Draft          Interface Extensions YANG          December 2022
    interfaces, and Pseudo-Wire Head-End interfaces.  It also contains
    references to [RFC6991], [RFC7224], and [IEEE802.3.2-2019].
 
-   <CODE BEGINS> file "ietf-if-ethernet-like@2022-12-14.yang"
+   <CODE BEGINS> file "ietf-if-ethernet-like@2025-01-27.yang"
    module ietf-if-ethernet-like {
      yang-version 1.1;
 
@@ -1170,14 +1213,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
      import ietf-interfaces {
        prefix if;
        reference
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 21]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
-
          "RFC 8343: A YANG Data Model For Interface Management";
      }
 
@@ -1191,6 +1226,14 @@ Internet-Draft          Interface Extensions YANG          December 2022
        reference "RFC 7224: IANA Interface Type YANG Module";
      }
 
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 22]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
      organization
        "IETF NETMOD (NETCONF Data Modeling Language) Working Group";
 
@@ -1199,7 +1242,10 @@ Internet-Draft          Interface Extensions YANG          December 2022
         WG List:  <mailto:netmod@ietf.org>
 
         Editor:   Robert Wilton
-                  <mailto:rwilton@cisco.com>";
+                  <mailto:rwilton@cisco.com>
+
+        Editor:   Scott Mansfield
+                  <mailto:scott.mansfield@ericsson.com>";
 
      description
        "This module contains YANG definitions for configuration for
@@ -1213,12 +1259,12 @@ Internet-Draft          Interface Extensions YANG          December 2022
         ieee802-ethernet-interface.yang, as part of IEEE Std
         802.3.2-2019.
 
-        Copyright (c) 2022 IETF Trust and the persons identified as
+        Copyright (c) 2025 IETF Trust and the persons identified as
         authors of the code.  All rights reserved.
 
         Redistribution and use in source and binary forms, with or
         without modification, is permitted pursuant to, and subject to
-        the license terms contained in, the Simplified BSD License set
+        the license terms contained in, the Revised BSD License set
         forth in Section 4.c of the IETF Trust's Legal Provisions
         Relating to IETF Documents
         (https://trustee.ietf.org/license-info).
@@ -1226,15 +1272,7 @@ Internet-Draft          Interface Extensions YANG          December 2022
         This version of this YANG module is part of RFC XXXX
         (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
         for full legal notices.";
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 22]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
-
-     revision 2022-12-14 {
+     revision 2025-01-27 {
        description "Initial revision.";
 
        reference
@@ -1244,9 +1282,268 @@ Internet-Draft          Interface Extensions YANG          December 2022
      feature configurable-mac-address {
        description
          "This feature indicates that MAC addresses on Ethernet-like
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 23]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
           interfaces can be configured.";
        reference
          "RFC XXXX, Section 3, Interfaces Ethernet-Like Module";
+     }
+
+     grouping ingress-frame-size-counters {
+       description
+         "A grouping that defines a set of counters that are used to
+          provide ingress frame size counters in the style of the
+          etherStatsPkt* counters, defined in RFC 2819, but extended
+          to cover the larger frame sizes supported by some hardware.";
+       reference
+         "RFC 2819, Section 5, EtherStatsEntry";
+
+       leaf in-pkts-64-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets (including bad
+            packets) received that were 64 octets in length
+            (excluding framing bits but including FCS octets).";
+         reference
+           "RFC 2819, Section 5, etherStatsPkts64Octets";
+       }
+
+       leaf in-pkts-65-to-127-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets (including bad
+            packets) received that were between 65 and 127
+            octets in length inclusive (excluding framing
+            bits but including FCS octets).";
+         reference
+           "RFC 2819, Section 5, etherStatsPkts65to127Octets";
+       }
+
+       leaf in-pkts-128-to-255-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets (including bad
+            packets) received that were between 128 and 255
+            octets in length inclusive (excluding framing
+            bits but including FCS octets).";
+         reference
+           "RFC 2819, Section 5, etherStatsPkts128to255Octets";
+       }
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 24]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
+       leaf in-pkts-256-to-511-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets (including bad
+            packets) received that were between 256 and 511
+            octets in length inclusive (excluding framing
+            bits but including FCS octets).";
+         reference
+           "RFC 2819, Section 5, etherStatsPkts256to511Octets";
+       }
+
+       leaf in-pkts-512-to-1023-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets (including bad
+            packets) received that were between 512 and 1023
+            octets in length inclusive (excluding framing
+            bits but including FCS octets).";
+         reference
+           "RFC 2819, Section 5, etherStatsPkts512to1023Octets";
+       }
+
+       leaf in-pkts-1024-to-1518-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets (including bad
+            packets) received that were between 1024 and 1518
+            octets in length inclusive (excluding framing
+            bits but including FCS octets).";
+         reference
+           "RFC 2819, Section 5, etherStatsPkts1024to1518Octets";
+       }
+
+       leaf in-pkts-1519-to-2047-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets (including bad
+            packets) received that were between 1519 and 2047
+            octets in length inclusive (excluding framing
+            bits but including FCS octets).";
+       }
+
+       leaf in-pkts-2048-to-4095-octets {
+         type yang:counter64;
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 25]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
+         units frames;
+         description
+           "The total number of packets (including bad
+            packets) received that were between 2048 and 4095
+            octets in length inclusive (excluding framing
+            bits but including FCS octets).";
+       }
+
+       leaf in-pkts-4096-to-8191-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets (including bad
+            packets) received that were between 4096 and 8191
+            octets in length inclusive (excluding framing
+            bits but including FCS octets).";
+       }
+
+       leaf in-pkts-8192-to-max-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets (including bad
+            packets) received that were more than 8192 octets
+            in length inclusive (excluding framing bits but
+            including FCS octets).";
+       }
+     }
+
+     grouping egress-frame-size-counters {
+       description
+         "A grouping that defines a set of counters that are used to
+          provide frame size counters in the style of the
+          etherStatsPkt* counters, defined in RFC 2819, but in the
+          egress direction and extended to cover the larger frame
+          sizes supported by some hardware.";
+
+       leaf out-pkts-64-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets transmitted that were 64 octets
+            in length (excluding framing bits but including FCS
+            octets).";
+       }
+
+       leaf out-pkts-65-to-127-octets {
+         type yang:counter64;
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 26]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
+         units frames;
+         description
+           "The total number of packets transmitted that were between
+            65 and 127 octets in length inclusive (excluding framing
+            bits but including FCS octets).";
+       }
+
+       leaf out-pkts-128-to-255-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets transmitted that were between
+            128 and 255 octets in length inclusive (excluding framing
+            bits but including FCS octets).";
+       }
+
+       leaf out-pkts-256-to-511-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets transmitted that were between
+            256 and 511 octets in length inclusive (excluding framing
+            bits but including FCS octets).";
+       }
+
+       leaf out-pkts-512-to-1023-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets transmitted that were between
+            512 and 1023 octets in length inclusive (excluding framing
+            bits but including FCS octets).";
+       }
+
+       leaf out-pkts-1024-to-1518-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets transmitted that were between
+            1024 and 1518 octets in length inclusive (excluding framing
+            bits but including FCS octets).";
+       }
+
+       leaf out-pkts-1519-to-2047-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets transmitted that were between
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 27]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
+            1519 and 2047 octets in length inclusive (excluding framing
+            bits but including FCS octets).";
+       }
+
+       leaf out-pkts-2048-to-4095-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets transmitted that were between
+            2048 and 4095 octets in length inclusive (excluding framing
+            bits but including FCS octets).";
+       }
+
+       leaf out-pkts-4096-to-8191-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets transmitted that were between
+           4096 and 8191 octets in length inclusive (excluding framing
+           bits but including FCS octets).";
+       }
+
+       leaf out-pkts-8192-to-max-octets {
+         type yang:counter64;
+         units frames;
+         description
+           "The total number of packets transmitted that were more than
+            8192 octets in length inclusive (excluding framing bits but
+            including FCS octets).";
+       }
      }
 
 
@@ -1265,6 +1562,14 @@ Internet-Draft          Interface Extensions YANG          December 2022
 
        container ethernet-like {
          description
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 28]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
            "Contains parameters for interfaces that use Ethernet framing
             and expose an Ethernet MAC layer.";
 
@@ -1282,14 +1587,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
            config false;
            description
              "The 'burnt-in' MAC address.  I.e the default MAC address
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 23]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
-
               assigned to the interface if no MAC address has been
               explicitly configured on it.";
          }
@@ -1321,6 +1618,14 @@ Internet-Draft          Interface Extensions YANG          December 2022
             not pass any ingress destination MAC address filter.
 
             For consistency, frames counted against this counter are
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 29]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
             also counted against the IETF interfaces statistics.  In
             particular, they are included in in-octets and in-discards,
             but are not included in in-unicast-pkts, in-multicast-pkts
@@ -1338,17 +1643,12 @@ Internet-Draft          Interface Extensions YANG          December 2022
          type yang:counter64;
          units frames;
          description
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 24]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
-
             "A count of the number of frames discarded because of
              overflows.";
        }
+
+       uses ingress-frame-size-counters;
+       uses egress-frame-size-counters;
      }
    }
    <CODE ENDS>
@@ -1371,6 +1671,17 @@ Internet-Draft          Interface Extensions YANG          December 2022
    the high layers.
 
 
+
+
+
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 30]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
    <?xml version="1.0" encoding="utf-8"?>
    <interfaces
     xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces"
@@ -1385,21 +1696,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
        </if-ext:link-flap-suppression>
      </interface>
    </interfaces>
-
-
-
-
-
-
-
-
-
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 25]
-
-Internet-Draft          Interface Extensions YANG          December 2022
 
 
    The following example shows explicit link flap suppression delay up
@@ -1430,6 +1726,18 @@ Internet-Draft          Interface Extensions YANG          December 2022
    </config>
 
 
+
+
+
+
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 31]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
 6.2.  Dampening configuration
 
    The following example shows what the operational state datastore may
@@ -1440,22 +1748,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
    the interface will remain suppressed for another 103 seconds before
    the 'penalty' is below the 'reuse' leaf value and the interface is
    allowed to go back up again.
-
-
-
-
-
-
-
-
-
-
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 26]
-
-Internet-Draft          Interface Extensions YANG          December 2022
 
 
    <?xml version="1.0" encoding="utf-8"?>
@@ -1489,6 +1781,19 @@ Internet-Draft          Interface Extensions YANG          December 2022
    always reports the default MAC address assigned to the hardware.
 
 
+
+
+
+
+
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 32]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
    <?xml version="1.0" encoding="utf-8"?>
      <interfaces
        xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces"
@@ -1504,14 +1809,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
          </ethernet-like>
        </interface>
      </interfaces>
-
-
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 27]
-
-Internet-Draft          Interface Extensions YANG          December 2022
 
 
    The following example shows the intended configuration for interface
@@ -1542,6 +1839,17 @@ Internet-Draft          Interface Extensions YANG          December 2022
    retaining the same value - which should never change.
 
 
+
+
+
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 33]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
    <?xml version="1.0" encoding="utf-8"?>
    <interfaces
     xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces"
@@ -1557,17 +1865,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
        </ethernet-like>
      </interface>
    </interfaces>
-
-
-
-
-
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 28]
-
-Internet-Draft          Interface Extensions YANG          December 2022
 
 
 7.  Acknowledgements
@@ -1598,6 +1895,17 @@ Internet-Draft          Interface Extensions YANG          December 2022
 
    *  Minor editorial updates
 
+
+
+
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 34]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
 8.5.  Version -06
 
    *  Remove reservable-bandwidth, based on Acee's suggestion
@@ -1614,17 +1922,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
 8.7.  Version -04
 
    *  Incorporate feedback from Lada, some comments left as open issues.
-
-
-
-
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 29]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
 
 8.8.  Version -03
 
@@ -1658,6 +1955,13 @@ Internet-Draft          Interface Extensions YANG          December 2022
 
       XML Namespace: urn:ietf:params:xml:ns:yang:ietf-if-ethernet-like
 
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 35]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
       Prefix: ethlike
 
       Reference: [RFCXXXX]
@@ -1673,14 +1977,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
       XML: N/A, the requested URI is an XML namespace.
 
       URI: urn:ietf:params:xml:ns:yang:ietf-if-ethernet-like
-
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 30]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
 
       Registrant Contact: The IESG.
 
@@ -1712,6 +2008,16 @@ Internet-Draft          Interface Extensions YANG          December 2022
    drop traffic forwarded over it.  More specific details of the
    possible failure modes are given below.
 
+
+
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 36]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
    The following leaf could cause the interface to go down and stop
    processing any ingress or egress traffic on the interface.  It could
    also cause broadcast traffic storms.
@@ -1730,13 +2036,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
    *  /if:interfaces/if:interface/dampening/half-life
 
    *  /if:interfaces/if:interface/dampening/reuse
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 31]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
 
    *  /if:interfaces/if:interface/dampening/suppress
 
@@ -1767,6 +2066,14 @@ Internet-Draft          Interface Extensions YANG          December 2022
    risk of causing protocol instability, excessive protocol traffic, and
    general traffic loss, particularly if the configuration change caused
    a duplicate MAC address to be present on the local network.  The
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 37]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
    following leaf is affected:
 
    *  interfaces/interface/ethernet-like/mac-address
@@ -1783,16 +2090,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
               <https://www.rfc-editor.org/info/rfc3688>.
-
-
-
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 32]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
 
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
               the Network Configuration Protocol (NETCONF)", RFC 6020,
@@ -1825,6 +2122,14 @@ Internet-Draft          Interface Extensions YANG          December 2022
               13 July 2020, <https://www.ietf.org/archive/id/draft-ietf-
               netmod-sub-intf-vlan-model-07.txt>.
 
+
+
+
+Wilton & Mansfield        Expires 31 July 2025                 [Page 38]
+
+Internet-Draft          Interface Extensions YANG           January 2025
+
+
    [IEEE802.3.2-2019]
               IEEE WG802.3 - Ethernet Working Group, "IEEE
               802.3.2-2019", 2019.
@@ -1842,13 +2147,6 @@ Internet-Draft          Interface Extensions YANG          December 2022
               Protocol (NETCONF) Access Control Model", RFC 6536,
               DOI 10.17487/RFC6536, March 2012,
               <https://www.rfc-editor.org/info/rfc6536>.
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 33]
-
-Internet-Draft          Interface Extensions YANG          December 2022
-
 
    [RFC6991]  Schoenwaelder, J., Ed., "Common YANG Data Types",
               RFC 6991, DOI 10.17487/RFC6991, July 2013,
@@ -1883,22 +2181,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Wilton & Mansfield        Expires 17 June 2023                 [Page 34]
+Wilton & Mansfield        Expires 31 July 2025                 [Page 39]

@@ -32,7 +32,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" consensus="true" docName="draft-ietf-netmod-intf-ext-yang-11" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="4" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" consensus="true" docName="draft-ietf-netmod-intf-ext-yang-15" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="4" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.15.0 -->
   <!-- category values: std, bcp, info, exp, and historic
    ipr values: full3667, noModification3667, noDerivatives3667
@@ -43,7 +43,7 @@
     <!-- The abbreviated title is used in the page header - it is only necessary if the 
          full title is longer than 39 characters -->
     <title abbrev="Interface Extensions YANG">Common Interface Extension YANG Data Models</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-netmod-intf-ext-yang-11"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-netmod-intf-ext-yang-15"/>
     <!-- add 'role="editor"' below for the editors if appropriate -->
       <!-- Another author who claims to be an editor -->
       <author fullname="Robert Wilton" initials="R.G." surname="Wilton">
@@ -58,7 +58,7 @@
         <email>scott.mansfield@ericsson.com</email>
       </address>
     </author>
-    <date year="2023"/>
+    <date year="2025"/>
     <!-- If the month and year are both specified and are the current ones, xml2rfc will fill 
          in the current day for you. If only the current year is specified, xml2rfc will fill 
 	 in the current day and month for you. If the year is not the current one, it is 
@@ -395,19 +395,44 @@ module: ietf-if-extensions
       <t>This module currently contains leaves for the configuration and
         reporting of the operational MAC address and the burnt-in MAC address
         (BIA) associated with any interface using Ethernet framing.</t>
+      <t>The module also contains a set of counters that are used to report
+        the number of packets received and transmitted on an interface that
+        fall into various size ranges, in a style that is similar
+        etherStatsPkt* counters, defined in RFC 2819, but covering a wider
+        range of frame sizes, and providing counters for both the ingress
+        and egress directions.</t>
       <t keepWithNext="true">The "ietf-if-ethernet-like" YANG module has the
           following structure:</t>
       <artwork name="" type="" align="left" alt=""><![CDATA[
                     
-module: ietf-if-ethernet-like
   augment /if:interfaces/if:interface:
     +--rw ethernet-like
        +--rw mac-address?       yang:mac-address
        |       {configurable-mac-address}?
        +--ro bia-mac-address?   yang:mac-address
   augment /if:interfaces/if:interface/if:statistics:
-    +--ro in-drop-unknown-dest-mac-pkts?   yang:counter64
-    +--ro in-discard-overflows?            yang:counter64
+    +--ro in-discard-unknown-dest-mac-pkts?   yang:counter64
+    +--ro in-discard-overflows?               yang:counter64
+    +--ro in-pkts-64-octets?                  yang:counter64
+    +--ro in-pkts-65-to-127-octets?           yang:counter64
+    +--ro in-pkts-128-to-255-octets?          yang:counter64
+    +--ro in-pkts-256-to-511-octets?          yang:counter64
+    +--ro in-pkts-512-to-1023-octets?         yang:counter64
+    +--ro in-pkts-1024-to-1518-octets?        yang:counter64
+    +--ro in-pkts-1519-to-2047-octets?        yang:counter64
+    +--ro in-pkts-2048-to-4095-octets?        yang:counter64
+    +--ro in-pkts-4096-to-8191-octets?        yang:counter64
+    +--ro in-pkts-8192-to-max-octets?         yang:counter64
+    +--ro out-pkts-64-octets?                 yang:counter64
+    +--ro out-pkts-65-to-127-octets?          yang:counter64
+    +--ro out-pkts-128-to-255-octets?         yang:counter64
+    +--ro out-pkts-256-to-511-octets?         yang:counter64
+    +--ro out-pkts-512-to-1023-octets?        yang:counter64
+    +--ro out-pkts-1024-to-1518-octets?       yang:counter64
+    +--ro out-pkts-1519-to-2047-octets?       yang:counter64
+    +--ro out-pkts-2048-to-4095-octets?       yang:counter64
+    +--ro out-pkts-4096-to-8191-octets?       yang:counter64
+    +--ro out-pkts-8192-to-max-octets?        yang:counter64
             
                 ]]></artwork>
     </section>
@@ -419,7 +444,7 @@ module: ietf-if-ethernet-like
                 contains references to <xref target="RFC6991" format="default"/>
                 and <xref target="RFC7224" format="default"/>.
       </t>
-      <sourcecode name="ietf-if-extensions@2022-12-14.yang" type="" markers="true"><![CDATA[
+      <sourcecode name="ietf-if-extensions@2025-01-27.yang" type="" markers="true"><![CDATA[
 module ietf-if-extensions {
   yang-version 1.1;
 
@@ -451,19 +476,22 @@ module ietf-if-extensions {
      WG List:  <mailto:netmod@ietf.org>
 
      Editor:   Robert Wilton
-               <mailto:rwilton@cisco.com>";
+               <mailto:rwilton@cisco.com>
+
+     Editor:   Scott Mansfield
+               <mailto:scott.mansfield@ericsson.com>";
 
   description
     "This module contains common definitions for extending the IETF
      interface YANG model (RFC 8343) with common configurable layer 2
      properties.
 
-     Copyright (c) 2022 IETF Trust and the persons identified as
+     Copyright (c) 2025 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
      without modification, is permitted pursuant to, and subject to
-     the license terms contained in, the Simplified BSD License set
+     the license terms contained in, the Revised BSD License set
      forth in Section 4.c of the IETF Trust's Legal Provisions
      Relating to IETF Documents
      (https://trustee.ietf.org/license-info).
@@ -478,7 +506,7 @@ module ietf-if-extensions {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-  revision 2022-12-14 {
+  revision 2025-01-27 {
     description
       "Initial revision.";
 
@@ -488,7 +516,7 @@ module ietf-if-extensions {
 
   feature link-flap-suppression {
     description
-      "This feature indicates that configurable interface link 
+      "This feature indicates that configurable interface link
        delay is supported, which is a feature is used to limit the
        propagation of very short interface link state flaps.";
     reference "RFC XXXX, Section 2.1 Link Flap Suppression";
@@ -577,7 +605,7 @@ module ietf-if-extensions {
     reference "RFC XXXX, Section 2.4";
   }
 
-  
+
   identity forwarding-mode {
     description "Base identity for forwarding-mode options.";
     reference "RFC XXXX, Section 2.7";
@@ -603,7 +631,7 @@ module ietf-if-extensions {
     reference "RFC XXXX, Section 2.7";
   }
 
-  
+
   /*
    * Augments the IETF interfaces model with leaves to configure
    * and monitor link-flap-suppression on an interface.
@@ -702,7 +730,7 @@ module ietf-if-extensions {
         "Interface dampening limits the propagation of interface link
          state flaps over longer periods.";
       reference "RFC XXXX, Section 2.2 Dampening";
-      
+
       leaf half-life {
         type uint32;
         units seconds;
@@ -716,7 +744,7 @@ module ietf-if-extensions {
            specific.";
         reference "RFC XXXX, Section 2.3.2 Half-Life Period";
       }
-      
+
       leaf reuse {
         type uint32;
         description
@@ -861,7 +889,7 @@ module ietf-if-extensions {
          to higher layer protocols is restricted to the maximum frame
          payload size, and MAY be further restricted by explicit
          layer 3 or protocol specific MTU configuration.";
-      
+
       reference "RFC XXXX, Section 2.5 Maximum Frame Size";
     }
 
@@ -931,7 +959,6 @@ module ietf-if-extensions {
     description
       "Augment the interface model statistics with a sub-interface
        demux discard counter.";
-
     leaf in-discard-unknown-encaps {
       type yang:counter64;
       units frames;
@@ -967,7 +994,7 @@ module ietf-if-extensions {
             interfaces. This includes Ethernet interfaces, 802.3 LAG (802.1AX)
             interfaces, Switch Virtual interfaces, and Pseudo-Wire Head-End
             interfaces.  It also contains references to <xref target="RFC6991" format="default"/>, <xref target="RFC7224" format="default"/>, and <xref target="IEEE802.3.2-2019" format="default"/>.</t>
-      <sourcecode name="ietf-if-ethernet-like@2022-12-14.yang" type="" markers="true"><![CDATA[
+      <sourcecode name="ietf-if-ethernet-like@2025-01-27.yang" type="" markers="true"><![CDATA[
 module ietf-if-ethernet-like {
   yang-version 1.1;
 
@@ -1000,7 +1027,10 @@ module ietf-if-ethernet-like {
      WG List:  <mailto:netmod@ietf.org>
 
      Editor:   Robert Wilton
-               <mailto:rwilton@cisco.com>";
+               <mailto:rwilton@cisco.com>
+
+     Editor:   Scott Mansfield
+               <mailto:scott.mansfield@ericsson.com>";
 
   description
     "This module contains YANG definitions for configuration for
@@ -1014,12 +1044,12 @@ module ietf-if-ethernet-like {
      ieee802-ethernet-interface.yang, as part of IEEE Std
      802.3.2-2019.
 
-     Copyright (c) 2022 IETF Trust and the persons identified as
+     Copyright (c) 2025 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
      without modification, is permitted pursuant to, and subject to
-     the license terms contained in, the Simplified BSD License set
+     the license terms contained in, the Revised BSD License set
      forth in Section 4.c of the IETF Trust's Legal Provisions
      Relating to IETF Documents
      (https://trustee.ietf.org/license-info).
@@ -1027,8 +1057,7 @@ module ietf-if-ethernet-like {
      This version of this YANG module is part of RFC XXXX
      (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
      for full legal notices.";
-  
-  revision 2022-12-14 {
+  revision 2025-01-27 {
     description "Initial revision.";
 
     reference
@@ -1043,7 +1072,227 @@ module ietf-if-ethernet-like {
       "RFC XXXX, Section 3, Interfaces Ethernet-Like Module";
   }
 
-  
+  grouping ingress-frame-size-counters {
+    description
+      "A grouping that defines a set of counters that are used to
+       provide ingress frame size counters in the style of the
+       etherStatsPkt* counters, defined in RFC 2819, but extended
+       to cover the larger frame sizes supported by some hardware.";
+    reference
+      "RFC 2819, Section 5, EtherStatsEntry";
+
+    leaf in-pkts-64-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets (including bad
+         packets) received that were 64 octets in length
+         (excluding framing bits but including FCS octets).";
+      reference
+        "RFC 2819, Section 5, etherStatsPkts64Octets";
+    }
+
+    leaf in-pkts-65-to-127-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets (including bad
+         packets) received that were between 65 and 127
+         octets in length inclusive (excluding framing
+         bits but including FCS octets).";
+      reference
+        "RFC 2819, Section 5, etherStatsPkts65to127Octets";
+    }
+
+    leaf in-pkts-128-to-255-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets (including bad
+         packets) received that were between 128 and 255
+         octets in length inclusive (excluding framing
+         bits but including FCS octets).";
+      reference
+        "RFC 2819, Section 5, etherStatsPkts128to255Octets";
+    }
+
+    leaf in-pkts-256-to-511-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets (including bad
+         packets) received that were between 256 and 511
+         octets in length inclusive (excluding framing
+         bits but including FCS octets).";
+      reference
+        "RFC 2819, Section 5, etherStatsPkts256to511Octets";
+    }
+
+    leaf in-pkts-512-to-1023-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets (including bad
+         packets) received that were between 512 and 1023
+         octets in length inclusive (excluding framing
+         bits but including FCS octets).";
+      reference
+        "RFC 2819, Section 5, etherStatsPkts512to1023Octets";
+    }
+
+    leaf in-pkts-1024-to-1518-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets (including bad
+         packets) received that were between 1024 and 1518
+         octets in length inclusive (excluding framing
+         bits but including FCS octets).";
+      reference
+        "RFC 2819, Section 5, etherStatsPkts1024to1518Octets";
+    }
+
+    leaf in-pkts-1519-to-2047-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets (including bad
+         packets) received that were between 1519 and 2047
+         octets in length inclusive (excluding framing
+         bits but including FCS octets).";
+    }
+
+    leaf in-pkts-2048-to-4095-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets (including bad
+         packets) received that were between 2048 and 4095
+         octets in length inclusive (excluding framing
+         bits but including FCS octets).";
+    }
+
+    leaf in-pkts-4096-to-8191-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets (including bad
+         packets) received that were between 4096 and 8191
+         octets in length inclusive (excluding framing
+         bits but including FCS octets).";
+    }
+
+    leaf in-pkts-8192-to-max-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets (including bad
+         packets) received that were more than 8192 octets
+         in length inclusive (excluding framing bits but
+         including FCS octets).";
+    }
+  }
+
+  grouping egress-frame-size-counters {
+    description
+      "A grouping that defines a set of counters that are used to
+       provide frame size counters in the style of the
+       etherStatsPkt* counters, defined in RFC 2819, but in the
+       egress direction and extended to cover the larger frame
+       sizes supported by some hardware.";
+
+    leaf out-pkts-64-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets transmitted that were 64 octets
+         in length (excluding framing bits but including FCS
+         octets).";
+    }
+
+    leaf out-pkts-65-to-127-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets transmitted that were between
+         65 and 127 octets in length inclusive (excluding framing
+         bits but including FCS octets).";
+    }
+
+    leaf out-pkts-128-to-255-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets transmitted that were between
+         128 and 255 octets in length inclusive (excluding framing
+         bits but including FCS octets).";
+    }
+
+    leaf out-pkts-256-to-511-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets transmitted that were between
+         256 and 511 octets in length inclusive (excluding framing
+         bits but including FCS octets).";
+    }
+
+    leaf out-pkts-512-to-1023-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets transmitted that were between
+         512 and 1023 octets in length inclusive (excluding framing
+         bits but including FCS octets).";
+    }
+
+    leaf out-pkts-1024-to-1518-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets transmitted that were between
+         1024 and 1518 octets in length inclusive (excluding framing
+         bits but including FCS octets).";
+    }
+
+    leaf out-pkts-1519-to-2047-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets transmitted that were between
+         1519 and 2047 octets in length inclusive (excluding framing
+         bits but including FCS octets).";
+    }
+
+    leaf out-pkts-2048-to-4095-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets transmitted that were between
+         2048 and 4095 octets in length inclusive (excluding framing
+         bits but including FCS octets).";
+    }
+
+    leaf out-pkts-4096-to-8191-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets transmitted that were between
+        4096 and 8191 octets in length inclusive (excluding framing
+        bits but including FCS octets).";
+    }
+
+    leaf out-pkts-8192-to-max-octets {
+      type yang:counter64;
+      units frames;
+      description
+        "The total number of packets transmitted that were more than
+         8192 octets in length inclusive (excluding framing bits but
+         including FCS octets).";
+    }
+  }
+
+
   /*
    * Configuration parameters for Ethernet-like interfaces.
    */
@@ -1061,7 +1310,7 @@ module ietf-if-ethernet-like {
       description
         "Contains parameters for interfaces that use Ethernet framing
          and expose an Ethernet MAC layer.";
-      
+
       leaf mac-address {
         if-feature "configurable-mac-address";
         type yang:mac-address;
@@ -1127,6 +1376,9 @@ module ietf-if-ethernet-like {
          "A count of the number of frames discarded because of
           overflows.";
     }
+
+    uses ingress-frame-size-counters;
+    uses egress-frame-size-counters;
   }
 }
 ]]></sourcecode>
