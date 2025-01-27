@@ -88,7 +88,7 @@ Table of Contents
    4.  Interface Extensions YANG Module  . . . . . . . . . . . . . .  10
    5.  Interfaces Ethernet-Like YANG Module  . . . . . . . . . . . .  22
    6.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . .  30
-     6.1.  Carrier delay configuration . . . . . . . . . . . . . . .  30
+     6.1.  Link Flap Suppression Configuration . . . . . . . . . . .  30
      6.2.  Dampening configuration . . . . . . . . . . . . . . . . .  32
      6.3.  MAC address configuration . . . . . . . . . . . . . . . .  32
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  34
@@ -1660,7 +1660,7 @@ Internet-Draft          Interface Extensions YANG           January 2025
    trivial configuration, or for sub-interfaces, for which examples are
    contained in [I-D.ietf-netmod-sub-intf-vlan-model].
 
-6.1.  Carrier delay configuration
+6.1.  Link Flap Suppression Configuration
 
    The following example shows how the operational state datastore could
    look like for an Ethernet interface without any link flap suppression

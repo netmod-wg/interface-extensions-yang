@@ -1391,7 +1391,7 @@ module ietf-if-ethernet-like {
             or for sub-interfaces, for which examples are contained in
             <xref target="I-D.ietf-netmod-sub-intf-vlan-model" format="default"/>.</t>
       <section numbered="true" toc="default">
-        <name>Carrier delay configuration</name>
+        <name>Link Flap Suppression Configuration</name>
         <t>The following example shows how the operational state
             datastore could look like for an Ethernet interface
             without any link flap suppression configuration.  The down leaf
