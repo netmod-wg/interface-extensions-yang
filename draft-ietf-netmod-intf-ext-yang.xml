@@ -210,7 +210,7 @@ module: ietf-if-extensions
           interface timer to ensure that any interface link state transition
           that occurs and reverts back within the specified time interval is
           entirely suppressed without providing any signalling to any upper
-          layer protocols that the state transition has occurred.  E.g. in the
+          layer protocols that the state transition has occurred.  I.e., in the
           case that the link state transition is suppressed then there is no
           change of the /if:interfaces/if:interface/oper-status or
           /if:interfaces/if:interfaces/last-change leaves for the
@@ -236,7 +236,7 @@ module: ietf-if-extensions
           brought into service.  It can also be used effectively to limit the
           frequency at which link state transition events may occur.  The
           default value for this leaf is determined by the underlying network
-          device.</t>
+          device, and MAY vary based on the 'type' of the interface.</t>
       </section>
       <section anchor="dampening" numbered="true" toc="default">
         <name>Dampening</name>

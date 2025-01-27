@@ -267,7 +267,7 @@ Internet-Draft          Interface Extensions YANG           January 2025
    transition that occurs and reverts back within the specified time
    interval is entirely suppressed without providing any signalling to
    any upper layer protocols that the state transition has occurred.
-   E.g. in the case that the link state transition is suppressed then
+   I.e., in the case that the link state transition is suppressed then
    there is no change of the /if:interfaces/if:interface/oper-status or
    /if:interfaces/if:interfaces/last-change leaves for the interface
    that the feature is operating on.  One obvious side effect of using
@@ -304,7 +304,7 @@ Internet-Draft          Interface Extensions YANG           January 2025
    being brought into service.  It can also be used effectively to limit
    the frequency at which link state transition events may occur.  The
    default value for this leaf is determined by the underlying network
-   device.
+   device, and MAY vary based on the 'type' of the interface.
 
 2.2.  Dampening
 
