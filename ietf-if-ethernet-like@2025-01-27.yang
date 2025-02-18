@@ -60,6 +60,7 @@ module ietf-if-ethernet-like {
      This version of this YANG module is part of RFC XXXX
      (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
      for full legal notices.";
+
   revision 2025-01-27 {
     description "Initial revision.";
 
@@ -88,9 +89,15 @@ module ietf-if-ethernet-like {
       type yang:counter64;
       units frames;
       description
-        "The total number of packets (including bad
-         packets) received that were 64 octets in length
-         (excluding framing bits but including FCS octets).";
+        "The total number of packets (including bad packets)
+         received that were 64 octets in length (excluding framing
+         bits but including FCS octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
       reference
         "RFC 2819, Section 5, etherStatsPkts64Octets";
     }
@@ -99,10 +106,16 @@ module ietf-if-ethernet-like {
       type yang:counter64;
       units frames;
       description
-        "The total number of packets (including bad
-         packets) received that were between 65 and 127
-         octets in length inclusive (excluding framing
-         bits but including FCS octets).";
+        "The total number of packets (including bad packets)
+         received that were between 65 and 127 octets in length
+         inclusive (excluding framing bits but including FCS
+         octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
       reference
         "RFC 2819, Section 5, etherStatsPkts65to127Octets";
     }
@@ -111,10 +124,16 @@ module ietf-if-ethernet-like {
       type yang:counter64;
       units frames;
       description
-        "The total number of packets (including bad
-         packets) received that were between 128 and 255
-         octets in length inclusive (excluding framing
-         bits but including FCS octets).";
+        "The total number of packets (including bad packets)
+         received that were between 128 and 255 octets in length
+         inclusive (excluding framing bits but including FCS
+         octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
       reference
         "RFC 2819, Section 5, etherStatsPkts128to255Octets";
     }
@@ -123,10 +142,16 @@ module ietf-if-ethernet-like {
       type yang:counter64;
       units frames;
       description
-        "The total number of packets (including bad
-         packets) received that were between 256 and 511
-         octets in length inclusive (excluding framing
-         bits but including FCS octets).";
+        "The total number of packets (including bad packets)
+         received that were between 256 and 511 octets in length
+         inclusive (excluding framing bits but including FCS
+         octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
       reference
         "RFC 2819, Section 5, etherStatsPkts256to511Octets";
     }
@@ -135,10 +160,16 @@ module ietf-if-ethernet-like {
       type yang:counter64;
       units frames;
       description
-        "The total number of packets (including bad
-         packets) received that were between 512 and 1023
-         octets in length inclusive (excluding framing
-         bits but including FCS octets).";
+        "The total number of packets (including bad packets)
+         received that were between 512 and 1023 octets in length
+         inclusive (excluding framing bits but including FCS
+         octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
       reference
         "RFC 2819, Section 5, etherStatsPkts512to1023Octets";
     }
@@ -147,10 +178,16 @@ module ietf-if-ethernet-like {
       type yang:counter64;
       units frames;
       description
-        "The total number of packets (including bad
-         packets) received that were between 1024 and 1518
-         octets in length inclusive (excluding framing
-         bits but including FCS octets).";
+        "The total number of packets (including bad packets)
+         received that were between 1024 and 1518 octets in length
+         inclusive (excluding framing bits but including FCS
+         octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
       reference
         "RFC 2819, Section 5, etherStatsPkts1024to1518Octets";
     }
@@ -162,7 +199,13 @@ module ietf-if-ethernet-like {
         "The total number of packets (including bad
          packets) received that were between 1519 and 2047
          octets in length inclusive (excluding framing
-         bits but including FCS octets).";
+         bits but including FCS octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
     }
 
     leaf in-pkts-2048-to-4095-octets {
@@ -172,7 +215,13 @@ module ietf-if-ethernet-like {
         "The total number of packets (including bad
          packets) received that were between 2048 and 4095
          octets in length inclusive (excluding framing
-         bits but including FCS octets).";
+         bits but including FCS octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
     }
 
     leaf in-pkts-4096-to-8191-octets {
@@ -182,17 +231,29 @@ module ietf-if-ethernet-like {
         "The total number of packets (including bad
          packets) received that were between 4096 and 8191
          octets in length inclusive (excluding framing
-         bits but including FCS octets).";
+         bits but including FCS octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
     }
 
     leaf in-pkts-8192-to-max-octets {
       type yang:counter64;
       units frames;
       description
-        "The total number of packets (including bad
-         packets) received that were more than 8192 octets
-         in length inclusive (excluding framing bits but
-         including FCS octets).";
+        "The total number of packets (including bad packets)
+         received that were more than 8192 octets in length
+         inclusive (excluding framing bits but including FCS
+         octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
     }
   }
 
@@ -209,8 +270,13 @@ module ietf-if-ethernet-like {
       units frames;
       description
         "The total number of packets transmitted that were 64 octets
-         in length (excluding framing bits but including FCS
-         octets).";
+         in length (excluding framing bits but including FCS octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
     }
 
     leaf out-pkts-65-to-127-octets {
@@ -219,7 +285,13 @@ module ietf-if-ethernet-like {
       description
         "The total number of packets transmitted that were between
          65 and 127 octets in length inclusive (excluding framing
-         bits but including FCS octets).";
+         bits but including FCS octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
     }
 
     leaf out-pkts-128-to-255-octets {
@@ -228,7 +300,13 @@ module ietf-if-ethernet-like {
       description
         "The total number of packets transmitted that were between
          128 and 255 octets in length inclusive (excluding framing
-         bits but including FCS octets).";
+         bits but including FCS octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
     }
 
     leaf out-pkts-256-to-511-octets {
@@ -237,7 +315,13 @@ module ietf-if-ethernet-like {
       description
         "The total number of packets transmitted that were between
          256 and 511 octets in length inclusive (excluding framing
-         bits but including FCS octets).";
+         bits but including FCS octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
     }
 
     leaf out-pkts-512-to-1023-octets {
@@ -246,7 +330,13 @@ module ietf-if-ethernet-like {
       description
         "The total number of packets transmitted that were between
          512 and 1023 octets in length inclusive (excluding framing
-         bits but including FCS octets).";
+         bits but including FCS octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
     }
 
     leaf out-pkts-1024-to-1518-octets {
@@ -255,7 +345,13 @@ module ietf-if-ethernet-like {
       description
         "The total number of packets transmitted that were between
          1024 and 1518 octets in length inclusive (excluding framing
-         bits but including FCS octets).";
+         bits but including FCS octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
     }
 
     leaf out-pkts-1519-to-2047-octets {
@@ -264,7 +360,13 @@ module ietf-if-ethernet-like {
       description
         "The total number of packets transmitted that were between
          1519 and 2047 octets in length inclusive (excluding framing
-         bits but including FCS octets).";
+         bits but including FCS octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
     }
 
     leaf out-pkts-2048-to-4095-octets {
@@ -273,7 +375,13 @@ module ietf-if-ethernet-like {
       description
         "The total number of packets transmitted that were between
          2048 and 4095 octets in length inclusive (excluding framing
-         bits but including FCS octets).";
+         bits but including FCS octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
     }
 
     leaf out-pkts-4096-to-8191-octets {
@@ -282,7 +390,13 @@ module ietf-if-ethernet-like {
       description
         "The total number of packets transmitted that were between
         4096 and 8191 octets in length inclusive (excluding framing
-        bits but including FCS octets).";
+        bits but including FCS octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
     }
 
     leaf out-pkts-8192-to-max-octets {
@@ -291,7 +405,13 @@ module ietf-if-ethernet-like {
       description
         "The total number of packets transmitted that were more than
          8192 octets in length inclusive (excluding framing bits but
-         including FCS octets).";
+         including FCS octets).
+
+         Discontinuities in the values of this counter can occur at
+         re-initialization of the management system, and at other
+         times as indicated by the value of the 'discontinuity-time'
+         leaf defined in the ietf-interfaces YANG module
+         (RFC 8343).";
     }
   }
 
@@ -370,14 +490,6 @@ module ietf-if-ethernet-like {
          times as indicated by the value of the 'discontinuity-time'
          leaf defined in the ietf-interfaces YANG module
          (RFC 8343).";
-    }
-
-    leaf in-discard-overflows {
-      type yang:counter64;
-      units frames;
-      description
-         "A count of the number of frames discarded because of
-          overflows.";
     }
 
     uses ingress-frame-size-counters;
