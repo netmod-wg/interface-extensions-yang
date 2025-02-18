@@ -423,7 +423,6 @@ module: ietf-if-extensions
       <t keepWithNext="true">The "ietf-if-ethernet-like" YANG module has the
           following structure:</t>
       <artwork name="" type="" align="left" alt=""><![CDATA[
-                    
 module: ietf-if-ethernet-like
   augment /if:interfaces/if:interface:
     +--rw ethernet-like
@@ -431,9 +430,29 @@ module: ietf-if-ethernet-like
        |       {configurable-mac-address}?
        +--ro bia-mac-address?   yang:mac-address
   augment /if:interfaces/if:interface/if:statistics:
-    +--ro in-drop-unknown-dest-mac-pkts?   yang:counter64
-    +--ro in-discard-overflows?            yang:counter64
-            
+    +--ro in-discard-unknown-dest-mac-pkts?   yang:counter64
+    +--ro in-discard-overflows?               yang:counter64
+  augment /if:interfaces/if:interface/if:statistics:
+    +--ro in-pkts-64-octets?              yang:counter64
+    +--ro in-pkts-65-to-127-octets?       yang:counter64
+    +--ro in-pkts-128-to-255-octets?      yang:counter64
+    +--ro in-pkts-256-to-511-octets?      yang:counter64
+    +--ro in-pkts-512-to-1023-octets?     yang:counter64
+    +--ro in-pkts-1024-to-1518-octets?    yang:counter64
+    +--ro in-pkts-1519-to-2047-octets?    yang:counter64
+    +--ro in-pkts-2048-to-4095-octets?    yang:counter64
+    +--ro in-pkts-4096-to-8191-octets?    yang:counter64
+    +--ro in-pkts-8192-to-max-octets?     yang:counter64
+    +--ro out-pkts-64-octets?             yang:counter64
+    +--ro out-pkts-65-to-127-octets?      yang:counter64
+    +--ro out-pkts-128-to-255-octets?     yang:counter64
+    +--ro out-pkts-256-to-511-octets?     yang:counter64
+    +--ro out-pkts-512-to-1023-octets?    yang:counter64
+    +--ro out-pkts-1024-to-1518-octets?   yang:counter64
+    +--ro out-pkts-1519-to-2047-octets?   yang:counter64
+    +--ro out-pkts-2048-to-4095-octets?   yang:counter64
+    +--ro out-pkts-4096-to-8191-octets?   yang:counter64
+    +--ro out-pkts-8192-to-max-octets?    yang:counter64
                 ]]></artwork>
     </section>
     <section numbered="true" toc="default">
@@ -992,7 +1011,7 @@ module ietf-if-extensions {
             interfaces. This includes Ethernet interfaces, 802.3 LAG (802.1AX)
             interfaces, Switch Virtual interfaces, and Pseudo-Wire Head-End
             interfaces.  It also contains references to <xref target="RFC6991" format="default"/>, <xref target="RFC7224" format="default"/>, and <xref target="IEEE_802.3.2_2019" format="default"/>.</t>
-      <sourcecode name="ietf-if-ethernet-like@2023-01-26.yang" type="" markers="true"><![CDATA[
+      <sourcecode name="ietf-if-ethernet-like@2025-01-27.yang" type="" markers="true"><![CDATA[
 module ietf-if-ethernet-like {
   yang-version 1.1;
 
