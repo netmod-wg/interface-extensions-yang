@@ -59,31 +59,16 @@
       </address>
     </author>
     <date year="2025"/>
-    <!-- If the month and year are both specified and are the current ones, xml2rfc will fill 
-         in the current day for you. If only the current year is specified, xml2rfc will fill 
-	 in the current day and month for you. If the year is not the current one, it is 
-	 necessary to specify at least a month (xml2rfc assumes day="1" if not specified for the 
-	 purpose of calculating the expiry date).  With drafts it is normally sufficient to 
-	 specify just the year. -->
-        <!-- Meta-data Declarations -->
       <area>General</area>
     <workgroup>Internet Engineering Task Force</workgroup>
-    <!-- WG name at the upperleft corner of the doc,
-         IETF is fine for individual submissions.  
-	 If this element is not present, the default is "Network Working Group",
-         which is used by the RFC Editor as a nod to the history of the IETF. -->
       <keyword>template</keyword>
-    <!-- Keywords will be incorporated into HTML output
-         files in a meta tag but they have no effect on text or nroff
-         output. If you submit your draft to the RFC Editor, the
-         keywords will be used for the search engine. -->
       <abstract>
       <t>This document defines two YANG modules that augment the Interfaces
         data model defined in the "YANG Data Model for Interface Management"
         with additional configuration and operational data nodes to support
         common lower layer interface properties, such as interface MTU.</t>
       <t>The YANG modules in this document conform to the Network Management
-	Datastore Architecture (NMDA) defined in RFC 8342.</t>
+         Datastore Architecture (NMDA) defined in RFC 8342.</t>
     </abstract>
   </front>
   <middle>
@@ -130,16 +115,56 @@
         <name>Terminology</name>
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
           "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-          "OPTIONAL" in this document are to be interpreted as described in BCP
-          14 <xref target="RFC2119" format="default">RFC 2119</xref> <xref target="RFC8174" format="default">RFC
-          8174</xref> when, and only when, they appear in all capitals, as shown
-          here.</t>
+	  "OPTIONAL" in this document are to be interpreted as described in BCP 14
+          <xref target="RFC2119" format="default"/> <xref target="RFC8174" format="default"/>
+          when, and only when, they appear in all capitals, as shown here.</t>
       </section>
       <section numbered="true" toc="default">
         <name>Tree Diagrams</name>
         <t>Tree diagrams used in this document follow the notation defined in
 	   <xref target="RFC8340" format="default"/>.</t>
       </section>
+      <section anchor="prefixes-in-data-node-names">
+        <name>Prefixes in Data Node Names</name>
+        <t>In this document, names of data nodes and other data model objects are prefixed using the standard prefix associated with the corresponding YANG imported modules, as shown in <xref target="tab-prefix"/>.</t>
+            <table anchor="tab-prefix">
+	      <name>Prefixes for imported YANG modules</name>
+	      <thead>
+	        <tr>
+	          <th align="left">Prefix</th>
+		  <th align="left">YANG Module</th>
+		  <th align="left">Reference</th>
+		</tr>
+	      </thead>
+	      <tbody>
+	        <tr>
+	          <td align="left">if-ext</td>
+		  <td align="left">ietf-if-extensions</td>
+		  <td align="left">This document</td>
+	        </tr>
+	        <tr>
+	          <td align="left">ethlike</td>
+		  <td align="left">ietf-if-ethernet-like</td>
+		  <td align="left">This document</td>
+	        </tr>
+	        <tr>
+	          <td align="left">yang</td>
+		  <td align="left">ietf-yang-types</td>
+		  <td align="left"><xref target="RFC6991"/></td>
+	        </tr>
+	        <tr>
+	          <td align="left">if</td>
+		  <td align="left">ietf-interfaces</td>
+		  <td align="left"><xref target="RFC8343"/></td>
+	        </tr>
+	        <tr>
+	          <td align="left">ianaift</td>
+		  <td align="left">iana-if-type</td>
+		  <td align="left"><xref target="RFC7224"/></td>
+	        </tr>
+	      </tbody>
+	    </table>
+	</section>
     </section>
     <section numbered="true" toc="default">
       <name>Interface Extensions Module</name>
@@ -160,7 +185,9 @@
         <li>MTU configuration leaves applicable to all packet/frame based
               interfaces.</li>
         <li>A forwarding mode leaf to indicate the OSI layer at which the
-              interface handles traffic.</li>
+		interface handles traffic.</li>
+	<li>A peer interface leaf useable for all types of associated peer
+		interfaces, such as virtual interface pairs.</li>
         <li>A generic "sub-interface" identity that an interface identity
 	      definition can derive from if it defines a sub-interface.</li>
         <li>A parent interface leaf useable for all types of sub-interface
@@ -190,8 +217,9 @@ module: ietf-if-extensions
     +--rw loopback?          identityref {loopback}?
     +--rw max-frame-size?    uint32 {max-frame-size}?
     +--ro forwarding-mode?   identityref
+    +--rw peer-interface?    identityref
   augment /if:interfaces/if:interface:
-    +--rw parent-interface    if:interface-ref {sub-interfaces}?
+    +--rw parent-interface if:interface-ref {sub-interfaces}?
   augment /if:interfaces/if:interface/if:statistics:
     +--ro in-discard-unknown-encaps?   yang:counter64
             {sub-interfaces}?
@@ -385,6 +413,21 @@ module: ietf-if-extensions
               L3VPNs.</li>
         </ul>
       </section>
+      <section numbered="true" toc="default">
+	 <name>Peer-interface</name>
+	 <t>
+         The peer-interface feature specifies the minimal leaves required to
+         define a peer interface that is directly associated to another
+         interface.
+
+         All or a subset of the egress traffic of an interface will be
+         received by its peer-interface on its ingress path and vice versa.
+
+         This can, for example, be used to model virtual interface pairs
+         which are commonly applied to interconnect different network
+         namespaces on the same hosts in the context of containerization.
+         </t>
+      </section>
     </section>
     <section numbered="true" toc="default">
       <name>Interfaces Ethernet-Like Module</name>
@@ -404,7 +447,7 @@ module: ietf-if-extensions
       <t keepWithNext="true">The "ietf-if-ethernet-like" YANG module has the
           following structure:</t>
       <artwork name="" type="" align="left" alt=""><![CDATA[
-                    
+
   augment /if:interfaces/if:interface:
     +--rw ethernet-like
        +--rw mac-address?       yang:mac-address
@@ -433,7 +476,7 @@ module: ietf-if-extensions
     +--ro out-pkts-2048-to-4095-octets?       yang:counter64
     +--ro out-pkts-4096-to-8191-octets?       yang:counter64
     +--ro out-pkts-8192-to-max-octets?        yang:counter64
-            
+
                 ]]></artwork>
     </section>
     <section numbered="true" toc="default">
@@ -487,6 +530,7 @@ module ietf-if-extensions {
      properties.
 
      Copyright (c) 2025 IETF Trust and the persons identified as
+
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -508,7 +552,7 @@ module ietf-if-extensions {
 
   revision 2025-01-27 {
     description
-      "Initial revision.";
+      "Interface Extension YANG Module initial revision";
 
     reference
       "RFC XXXX, Common Interface Extension YANG Data Models";
@@ -553,6 +597,15 @@ module ietf-if-extensions {
        decisions to be applied to a subset of the traffic processed
        on the specified parent interface.";
     reference "RFC XXXX, Section 2.6 Sub-interface";
+  }
+
+  feature peer-interface {
+    description
+      "This feature indicates that the device supports the
+       specification of peer-interfaces.  A Peer-interface is defined
+       as logical peer that receives egress traffic of the given
+       interface on its ingress path and vice versa.";
+    reference "RFC XXXX, Section 2.8 Peer-interface";
   }
 
   /*
@@ -604,7 +657,6 @@ module ietf-if-extensions {
        path, with equivalent semantics to loopback internal.";
     reference "RFC XXXX, Section 2.4";
   }
-
 
   identity forwarding-mode {
     description "Base identity for forwarding-mode options.";
@@ -907,6 +959,15 @@ module ietf-if-extensions {
         "The forwarding mode that the interface is operating in.";
       reference "RFC XXXX, Section 2.7 Forwarding Mode";
     }
+    leaf peer-interface {
+      if-feature "peer-interface";
+
+      type if:interface-ref;
+
+      description
+        "The peer interface associated to this interface.";
+      reference "RFC XXXX, Section 2.8 Peer-interface";
+    }
   }
 
   /*
@@ -993,7 +1054,7 @@ module ietf-if-extensions {
             <xref target="RFC8343" format="default">RFC 8343</xref> for Ethernet-like
             interfaces. This includes Ethernet interfaces, 802.3 LAG (802.1AX)
             interfaces, Switch Virtual interfaces, and Pseudo-Wire Head-End
-            interfaces.  It also contains references to <xref target="RFC6991" format="default"/>, <xref target="RFC7224" format="default"/>, and <xref target="IEEE802.3.2-2019" format="default"/>.</t>
+            interfaces.  It also contains references to <xref target="RFC6991" format="default"/>, <xref target="RFC7224" format="default"/>, and <xref target="IEEE_802.3.2_2019" format="default"/>.</t>
       <sourcecode name="ietf-if-ethernet-like@2025-01-27.yang" type="" markers="true"><![CDATA[
 module ietf-if-ethernet-like {
   yang-version 1.1;
@@ -1057,6 +1118,7 @@ module ietf-if-ethernet-like {
      This version of this YANG module is part of RFC XXXX
      (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
      for full legal notices.";
+     
   revision 2025-01-27 {
     description "Initial revision.";
 
@@ -1401,22 +1463,24 @@ module ietf-if-ethernet-like {
             stable for at least 50 msecs before the interface is
             reported as being up to the high layers.</t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
-                    
-<?xml version="1.0" encoding="utf-8"?>
-<interfaces 
- xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces"
- xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type"
-xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
-  <interface>
-    <name>eth0</name>
-    <type>ianaift:ethernetCsmacd</type>
-    <if-ext:link-flap-suppression>
-      <if-ext:down>0</if-ext:down>
-      <if-ext:up>50</if-ext:up>
-    </if-ext:link-flap-suppression>
-  </interface>
-</interfaces>
-            
+{
+  "ietf-interfaces:interfaces": {
+    "interface": [
+      {
+        "name": "eth0",
+        "type": "iana-if-type:ethernetCsmacd",
+        "oper-status": "up",
+        "statistics": {
+          "discontinuity-time": "2023-12-15T09:04:00-05:00"
+        },
+        "ietf-if-extensions:link-flap-suppression": {
+          "down": 0,
+          "up": 50
+        }
+      }
+    ]
+  }
+}
                 ]]></artwork>
         <t>The following example shows explicit link flap suppression delay up and down
             values have been configured.  A 50 msec down leaf value has been
@@ -1428,24 +1492,24 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
             higher layer protocol state flaps could occur.
         </t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
-                    
-<?xml version="1.0" encoding="utf-8"?>
-<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
-  <interfaces 
-    xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces"
-    xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type"
-    xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
-    <interface>
-      <name>eth0</name>
-      <type>ianaift:ethernetCsmacd</type>
-      <if-ext:link-flap-suppression>
-        <if-ext:down>50</if-ext:down>
-        <if-ext:up>1000</if-ext:up>
-      </if-ext:link-flap-suppression>
-    </interface>
-  </interfaces>
-</config>
-            
+{
+  "ietf-interfaces:interfaces": {
+    "interface": [
+      {
+        "name": "eth0",
+        "type": "iana-if-type:ethernetCsmacd",
+        "oper-status": "up",
+        "statistics": {
+          "discontinuity-time": "2023-12-15T09:04:00-05:00"
+        },
+        "ietf-if-extensions:link-flap-suppression": {
+          "down": 50,
+          "up": 1000
+        }
+      }
+    ]
+  }
+}
                 ]]></artwork>
       </section>
       <section numbered="true" toc="default">
@@ -1461,28 +1525,30 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
             allowed to go back up again.
         </t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
-                    
-<?xml version="1.0" encoding="utf-8"?>
-<interfaces 
- xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces"
- xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">
-  <interface>
-    <name>eth0</name>
-    <type>ianaift:ethernetCsmacd</type>
-    <oper-status>down</oper-status>
-    <dampening
-     xmlns="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
-      <half-life>60</half-life>
-      <reuse>750</reuse>
-      <suppress>2000</suppress>
-      <max-suppress-time>240</max-suppress-time>
-      <penalty>2480</penalty>
-      <suppressed>true</suppressed>
-      <time-remaining>103</time-remaining>
-    </dampening>
-  </interface>
-</interfaces>
-            
+{
+  "ietf-interfaces:interfaces": {
+    "interface": [
+      {
+        "name": "eth0",
+        "type": "iana-if-type:ethernetCsmacd",
+        "oper-status": "down",
+        "statistics": {
+          "discontinuity-time": "2023-12-15T09:04:00-05:00"
+        },
+        "ietf-if-extensions:dampening": {
+          "half-life": 60,
+          "reuse": 750,
+	  "suppress": 2000,
+	  "max-suppress-time": 240,
+	  "penalty": 2480,
+	  "suppressed": true,
+	  "time-remaining": 103
+        }
+      }
+    ]
+  }
+}
+
                 ]]></artwork>
       </section>
       <section numbered="true" toc="default">
@@ -1495,46 +1561,46 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
             always reports the default MAC address assigned to the hardware.
         </t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
-                    
-<?xml version="1.0" encoding="utf-8"?>
-  <interfaces 
-    xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces"
-    xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">
-    <interface>
-      <name>eth0</name>
-      <type>ianaift:ethernetCsmacd</type>
-      <phys-address>00:00:5E:00:53:30</phys-address>
-      <ethernet-like
-        xmlns="urn:ietf:params:xml:ns:yang:ietf-if-ethernet-like">
-        <mac-address>00:00:5E:00:53:30</mac-address>
-        <bia-mac-address>00:00:5E:00:53:30</bia-mac-address>
-      </ethernet-like>
-    </interface>
-  </interfaces>
-            
+{
+  "ietf-interfaces:interfaces": {
+    "interface": [
+      {
+        "name": "eth0",
+        "type": "iana-if-type:ethernetCsmacd",
+	"phys-address": "00:00:5E:00:53:30",
+        "oper-status": "up",
+        "admin-status": "up",
+	"if-index": 1,
+	"ietf-if-ethernet-like:ethernet-like": {
+	   "mac-address": "00:00:5E:00:53:30",
+	   "bia-mac-address": "00:00:5E:00:53:30"
+	},
+        "statistics": {
+          "discontinuity-time": "2023-12-15T09:04:00-05:00"
+        }
+      }
+    ]
+  }
+}
                 ]]></artwork>
         <t>
               The following example shows the intended configuration for
               interface eth0 with an explicit MAC address configured.
         </t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
-                    
-<?xml version="1.0" encoding="utf-8"?>
-<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
-  <interfaces 
-    xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces"
-    xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">
-    <interface>
-      <name>eth0</name>
-      <type>ianaift:ethernetCsmacd</type>
-      <ethernet-like
-        xmlns="urn:ietf:params:xml:ns:yang:ietf-if-ethernet-like">
-        <mac-address>00:00:5E:00:53:35</mac-address>
-      </ethernet-like>
-    </interface>
-  </interfaces>
-</config>
-            
+{
+  "ietf-interfaces:interfaces": {
+    "interface": [
+      {
+        "name": "eth0",
+        "type": "iana-if-type:ethernetCsmacd",
+	"ietf-if-ethernet-like:ethernet-like": {
+	   "mac-address": "00:00:5E:00:53:30"
+	}
+      }
+    ]
+  }
+}
                 ]]></artwork>
         <t>
             After the MAC address configuration has been successfully applied,
@@ -1544,97 +1610,78 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
             retaining the same value - which should never change.
         </t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
-                    
-<?xml version="1.0" encoding="utf-8"?>
-<interfaces 
- xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces"
- xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">
-  <interface>
-    <name>eth0</name>
-    <type>ianaift:ethernetCsmacd</type>
-      <phys-address>00:00:5E:00:53:35</phys-address>
-    <ethernet-like
-      xmlns="urn:ietf:params:xml:ns:yang:ietf-if-ethernet-like">
-      <mac-address>00:00:5E:00:53:35</mac-address>
-      <bia-mac-address>00:00:5E:00:53:30</bia-mac-address>
-    </ethernet-like>
-  </interface>
-</interfaces>
-
+{
+  "ietf-interfaces:interfaces": {
+    "interface": [
+      {
+        "name": "eth0",
+        "type": "iana-if-type:ethernetCsmacd",
+	"phys-address": "00:00:5E:00:53:35",
+        "oper-status": "up",
+        "admin-status": "up",
+	"if-index": 1,
+	"ietf-if-ethernet-like:ethernet-like": {
+	   "mac-address": "00:00:5E:00:53:35",
+	   "bia-mac-address": "00:00:5E:00:53:30"
+	},
+        "statistics": {
+          "discontinuity-time": "2023-12-15T09:04:00-05:00"
+        }
+      }
+    ]
+  }
+}
                 ]]></artwork>
       </section>
+      <section numbered="true" toc="default">
+        <name>Peer interface configuration</name>
+        <t>
+        The following example shows how a veth pair modeled as peer
+        interfaces is represented in the operational state datastore.
+        It matches the following iproute2 command:
+
+        ip link add veth1 type veth peer name veth2
+
+        </t>
+        <artwork name="" type="" align="left" alt=""><![CDATA[
+{
+  "ietf-interfaces:interfaces": {
+    "interface": [
+      {
+        "name": "veth1",
+        "type": "iana-if-type:propVirtual",
+        "oper-status": "down",
+        "statistics": {
+          "discontinuity-time": "2023-12-15T09:04:00-05:00"
+        },
+        "ietf-if-extensions:peer-interface": "veth2"
+      },
+      {
+        "name": "veth2",
+        "type": "iana-if-type:propVirtual",
+        "oper-status": "down",
+        "statistics": {
+          "discontinuity-time": "2023-12-15T09:04:00-05:00"
+        },
+        "ietf-if-extensions:peer-interface": "veth1"
+      }
+    ]
+  }
+}
+	   ]]></artwork>
+   </section>
+                    
     </section>
-    <!-- This PI places the pagebreak correctly (before the section title) in the text output. -->
-        <section anchor="Acknowledgements" numbered="true" toc="default">
+    <section anchor="Acknowledgements" numbered="true" toc="default">
       <name>Acknowledgements</name>
-      <t>The authors wish to thank Eric Gray, Ing-Wher Chen, Jon Culver,
-            Juergen Schoenwaelder, Ladislav Lhotka, Lou Berger, Mahesh
-            Jethanandani, Martin Bjorklund, Michael Zitao, Neil Ketley, Qin Wu,
-            William Lupton, Xufeng Liu, Andy Bierman, and Vladimir Vassilev for
-            their helpful comments contributing to this document.</t>
+      <t>The authors wish to thank Florian Kauer, Eric Gray, Ing-Wher Chen,
+	    Jon Culver, Juergen Schoenwaelder, Ladislav Lhotka, Lou Berger,
+	    Mahesh Jethanandani, Martin Bjorklund, Michael Zitao,
+	    Neil Ketley, Qin Wu, William Lupton, Xufeng Liu, Andy Bierman,
+	    and Vladimir Vassilev for their helpful comments contributing to
+	    this document.</t>
     </section>
-    <section numbered="true" toc="default">
-      <name>ChangeLog</name>
-      <t>XXX, RFC Editor, please delete this change log before publication.</t>
-      <section numbered="true" toc="default">
-        <name>Version -10</name>
-        <ul spacing="normal">
-          <li>Update modules from github and tree diagram.</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>Version -09</name>
-        <ul spacing="normal">
-          <li>Fixed IANA section.</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>Version -08</name>
-        <ul spacing="normal">
-          <li>Initial updates after WG LC comments.</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>Version -07</name>
-        <ul spacing="normal">
-          <li>Minor editorial updates</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>Version -06</name>
-        <ul spacing="normal">
-          <li>Remove reservable-bandwidth, based on Acee's suggestion</li>
-          <li>Add examples</li>
-          <li>Add additional state parameters for link-flap-suppression and dampening</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>Version -05</name>
-        <ul spacing="normal">
-          <li>Incorporate feedback from Andy Bierman</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>Version -04</name>
-        <ul spacing="normal">
-          <li>Incorporate feedback from Lada, some comments left as open issues.</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>Version -03</name>
-        <ul spacing="normal">
-          <li>Fixed incorrect module name references, and updated tree output</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>Version -02</name>
-        <ul spacing="normal">
-          <li>Minor changes only: Fix errors in when statements, use derived-from-or-self() for future proofing.</li>
-        </ul>
-      </section>
-    </section>
-    <!-- Possibly a 'Contributors' section ... -->
-        <section anchor="IANA" numbered="true" toc="default">
+    <section anchor="IANA" numbered="true" toc="default">
       <name>IANA Considerations</name>
       <section anchor="yang-module-registrations" numbered="true" toc="default">
         <name>YANG Module Registrations</name>
@@ -1645,14 +1692,14 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
           <li>Name: ietf-if-extensions</li>
           <li>XML Namespace: urn:ietf:params:xml:ns:yang:ietf-if-extensions</li>
           <li>Prefix: if-ext</li>
-          <li>Reference: [RFCXXXX]</li>
+          <li>Reference: RFCXXXX</li>
         </ul>
         <t>The ietf-if-ethernet-like module:</t>
         <ul empty="true" spacing="normal">
           <li>Name: ietf-if-ethernet-like</li>
           <li>XML Namespace: urn:ietf:params:xml:ns:yang:ietf-if-ethernet-like</li>
           <li>Prefix: ethlike</li>
-          <li>Reference: [RFCXXXX]</li>
+          <li>Reference: RFCXXXX</li>
         </ul>
         <t>This document registers two URIs in the "IETF XML Registry" <xref target="RFC3688" format="default"/>.  Following the format in RFC 3688, the following
         registrations have been made.
@@ -1669,20 +1716,14 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
           <li>XML: N/A, the requested URI is an XML namespace.</li>
         </ul>
       </section>
-      <!--      <t>All drafts are required to have an IANA considerations section (see
-      <xref target="I-D.narten-iana-considerations-rfc2434bis">the update of
-      RFC 2434</xref> for a guide). If the draft does not require IANA to do
-      anything, the section contains an explicit statement that this is the
-      case (as above). If there are no requirements for IANA, the section will
-      be removed during conversion into an RFC by the RFC Editor.</t>-->
-        </section>
+    </section>
     <section anchor="Security" numbered="true" toc="default">
       <name>Security Considerations</name>
       <t>The YANG module defined in this memo is designed to be accessed via
           the NETCONF protocol <xref target="RFC6241" format="default">RFC 6241</xref>. The
           lowest NETCONF layer is the secure transport layer and the mandatory
           to implement secure transport is SSH <xref target="RFC6242" format="default">RFC
-          6242</xref>.  The NETCONF access control model <xref target="RFC6536" format="default">RFC 6536</xref> provides the means to restrict access
+          6242</xref>.  The NETCONF access control model <xref target="RFC8341" format="default">RFC 8341</xref> provides the means to restrict access
           for particular NETCONF users to a pre-configured subset of all
           available NETCONF protocol operations and content.</t>
       <t>There are a number of data nodes defined in this YANG module which
@@ -1740,15 +1781,15 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
       <section numbered="true" toc="default">
         <name>ietf-if-ethernet-like.yang</name>
         <t>Generally, the configuration nodes in the
-                ietf-if-ethernet-like YANG module are concerned with
-                configuration that is common across all types of Ethernet-like
-                interfaces.  The module currently only contains a node for
-                configuring the operational MAC address to use on an interface.
-                Adding/modifying/deleting this leaf has the potential risk of
-                causing protocol instability, excessive protocol traffic, and
-                general traffic loss, particularly if the configuration change
-                caused a duplicate MAC address to be present on the local
-                network.  The following leaf is affected:
+           ietf-if-ethernet-like YANG module are concerned with
+           configuration that is common across all types of Ethernet-like
+           interfaces.  The module currently only contains a node for
+           configuring the operational MAC address to use on an interface.
+           Adding/modifying/deleting this leaf has the potential risk of
+           causing protocol instability, excessive protocol traffic, and
+           general traffic loss, particularly if the configuration change
+           caused a duplicate MAC address to be present on the local
+           network.  The following leaf is affected:
         </t>
         <ul spacing="normal">
           <li>interfaces/interface/ethernet-like/mac-address</li>
@@ -1769,258 +1810,29 @@ xmlns:if-ext="urn:ietf:params:xml:ns:yang:ietf-if-extensions">
      directory as the including file. You can also define the XML_LIBRARY environment variable
      with a value containing a set of directories to search.  These can be either in the local
      filing system or remote ones accessed by http (http://domain/dir/... ).-->
-        <references>
+      <references>
       <name>References</name>
       <references>
         <name>Normative References</name>
-        <!--?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?-->
-            <reference anchor="RFC3688" target="https://www.rfc-editor.org/info/rfc3688" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3688.xml">
-          <front>
-            <title>The IETF XML Registry</title>
-            <author fullname="M. Mealling" initials="M." surname="Mealling"/>
-            <date month="January" year="2004"/>
-            <abstract>
-              <t>This document describes an IANA maintained registry for IETF standards which use Extensible Markup Language (XML) related items such as Namespaces, Document Type Declarations (DTDs), Schemas, and Resource Description Framework (RDF) Schemas.</t>
-            </abstract>
-          </front>
-          <seriesInfo name="BCP" value="81"/>
-          <seriesInfo name="RFC" value="3688"/>
-          <seriesInfo name="DOI" value="10.17487/RFC3688"/>
-        </reference>
-        <reference anchor="RFC6020" target="https://www.rfc-editor.org/info/rfc6020" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6020.xml">
-          <front>
-            <title>YANG - A Data Modeling Language for the Network Configuration Protocol (NETCONF)</title>
-            <author fullname="M. Bjorklund" initials="M." role="editor" surname="Bjorklund"/>
-            <date month="October" year="2010"/>
-            <abstract>
-              <t>YANG is a data modeling language used to model configuration and state data manipulated by the Network Configuration Protocol (NETCONF), NETCONF remote procedure calls, and NETCONF notifications. [STANDARDS-TRACK]</t>
-            </abstract>
-          </front>
-          <seriesInfo name="RFC" value="6020"/>
-          <seriesInfo name="DOI" value="10.17487/RFC6020"/>
-        </reference>
-        <reference anchor="RFC7950" target="https://www.rfc-editor.org/info/rfc7950" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7950.xml">
-          <front>
-            <title>The YANG 1.1 Data Modeling Language</title>
-            <author fullname="M. Bjorklund" initials="M." role="editor" surname="Bjorklund"/>
-            <date month="August" year="2016"/>
-            <abstract>
-              <t>YANG is a data modeling language used to model configuration data, state data, Remote Procedure Calls, and notifications for network management protocols.  This document describes the syntax and semantics of version 1.1 of the YANG language.  YANG version 1.1 is a maintenance release of the YANG language, addressing ambiguities and defects in the original specification.  There are a small number of backward incompatibilities from YANG version 1.  This document also specifies the YANG mappings to the Network Configuration Protocol (NETCONF).</t>
-            </abstract>
-          </front>
-          <seriesInfo name="RFC" value="7950"/>
-          <seriesInfo name="DOI" value="10.17487/RFC7950"/>
-        </reference>
-        <reference anchor="RFC2119" target="https://www.rfc-editor.org/info/rfc2119" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
-          <front>
-            <title>Key words for use in RFCs to Indicate Requirement Levels</title>
-            <author fullname="S. Bradner" initials="S." surname="Bradner"/>
-            <date month="March" year="1997"/>
-            <abstract>
-              <t>In many standards track documents several words are used to signify the requirements in the specification.  These words are often capitalized.  This document defines these words as they should be interpreted in IETF documents.  This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.</t>
-            </abstract>
-          </front>
-          <seriesInfo name="BCP" value="14"/>
-          <seriesInfo name="RFC" value="2119"/>
-          <seriesInfo name="DOI" value="10.17487/RFC2119"/>
-        </reference>
-        <reference anchor="RFC8174" target="https://www.rfc-editor.org/info/rfc8174" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml">
-          <front>
-            <title>Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</title>
-            <author fullname="B. Leiba" initials="B." surname="Leiba"/>
-            <date month="May" year="2017"/>
-            <abstract>
-              <t>RFC 2119 specifies common key words that may be used in protocol specifications.  This document aims to reduce the ambiguity by clarifying that only UPPERCASE usage of the key words have the defined special meanings.</t>
-            </abstract>
-          </front>
-          <seriesInfo name="BCP" value="14"/>
-          <seriesInfo name="RFC" value="8174"/>
-          <seriesInfo name="DOI" value="10.17487/RFC8174"/>
-        </reference>
-        <reference anchor="RFC8342" target="https://www.rfc-editor.org/info/rfc8342" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8342.xml">
-          <front>
-            <title>Network Management Datastore Architecture (NMDA)</title>
-            <author fullname="M. Bjorklund" initials="M." surname="Bjorklund"/>
-            <author fullname="J. Schoenwaelder" initials="J." surname="Schoenwaelder"/>
-            <author fullname="P. Shafer" initials="P." surname="Shafer"/>
-            <author fullname="K. Watsen" initials="K." surname="Watsen"/>
-            <author fullname="R. Wilton" initials="R." surname="Wilton"/>
-            <date month="March" year="2018"/>
-            <abstract>
-              <t>Datastores are a fundamental concept binding the data models written in the YANG data modeling language to network management protocols such as the Network Configuration Protocol (NETCONF) and RESTCONF.  This document defines an architectural framework for datastores based on the experience gained with the initial simpler model, addressing requirements that were not well supported in the initial model.  This document updates RFC 7950.</t>
-            </abstract>
-          </front>
-          <seriesInfo name="RFC" value="8342"/>
-          <seriesInfo name="DOI" value="10.17487/RFC8342"/>
-        </reference>
-        <reference anchor="RFC8343" target="https://www.rfc-editor.org/info/rfc8343" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8343.xml">
-          <front>
-            <title>A YANG Data Model for Interface Management</title>
-            <author fullname="M. Bjorklund" initials="M." surname="Bjorklund"/>
-            <date month="March" year="2018"/>
-            <abstract>
-              <t>This document defines a YANG data model for the management of network interfaces. It is expected that interface-type-specific data models augment the generic interfaces data model defined in this document. The data model includes definitions for configuration and system state (status information and counters for the collection of statistics).</t>
-              <t>The YANG data model in this document conforms to the Network Management Datastore Architecture (NMDA) defined in RFC 8342.</t>
-              <t>This document obsoletes RFC 7223.</t>
-            </abstract>
-          </front>
-          <seriesInfo name="RFC" value="8343"/>
-          <seriesInfo name="DOI" value="10.17487/RFC8343"/>
-        </reference>
-        <!--      <reference anchor="min_ref">
-        <!- - the following is the minimum to make xml2rfc happy - ->
-
-        <front>
-          <title>Minimal Reference</title>
-
-          <author initials="authInitials" surname="authSurName">
-            <organization></organization>
-          </author>
-
-          <date year="2006" />
-        </front>
-      </reference>-->
-        </references>
+	    <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2119.xml"/>
+	    <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.3688.xml"/>
+	    <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6020.xml"/>
+	    <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7950.xml"/>
+	    <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
+	    <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8342.xml"/>
+	    <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8343.xml"/>
+      </references>
       <references>
         <name>Informative References</name>
-        <!-- Here we use entities that we defined at the beginning. -->
-            <!-- &RFC2629;
-      &RFC3552; -->
-            <reference anchor="RFC6241" target="https://www.rfc-editor.org/info/rfc6241" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml">
-          <front>
-            <title>Network Configuration Protocol (NETCONF)</title>
-            <author fullname="R. Enns" initials="R." role="editor" surname="Enns"/>
-            <author fullname="M. Bjorklund" initials="M." role="editor" surname="Bjorklund"/>
-            <author fullname="J. Schoenwaelder" initials="J." role="editor" surname="Schoenwaelder"/>
-            <author fullname="A. Bierman" initials="A." role="editor" surname="Bierman"/>
-            <date month="June" year="2011"/>
-            <abstract>
-              <t>The Network Configuration Protocol (NETCONF) defined in this document provides mechanisms to install, manipulate, and delete the configuration of network devices.  It uses an Extensible Markup Language (XML)-based data encoding for the configuration data as well as the protocol messages.  The NETCONF protocol operations are realized as remote procedure calls (RPCs).  This document obsoletes RFC 4741. [STANDARDS-TRACK]</t>
-            </abstract>
-          </front>
-          <seriesInfo name="RFC" value="6241"/>
-          <seriesInfo name="DOI" value="10.17487/RFC6241"/>
-        </reference>
-        <reference anchor="RFC6242" target="https://www.rfc-editor.org/info/rfc6242" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6242.xml">
-          <front>
-            <title>Using the NETCONF Protocol over Secure Shell (SSH)</title>
-            <author fullname="M. Wasserman" initials="M." surname="Wasserman"/>
-            <date month="June" year="2011"/>
-            <abstract>
-              <t>This document describes a method for invoking and running the Network Configuration Protocol (NETCONF) within a Secure Shell (SSH) session as an SSH subsystem.  This document obsoletes RFC 4742. [STANDARDS-TRACK]</t>
-            </abstract>
-          </front>
-          <seriesInfo name="RFC" value="6242"/>
-          <seriesInfo name="DOI" value="10.17487/RFC6242"/>
-        </reference>
-        <reference anchor="RFC6536" target="https://www.rfc-editor.org/info/rfc6536" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6536.xml">
-          <front>
-            <title>Network Configuration Protocol (NETCONF) Access Control Model</title>
-            <author fullname="A. Bierman" initials="A." surname="Bierman"/>
-            <author fullname="M. Bjorklund" initials="M." surname="Bjorklund"/>
-            <date month="March" year="2012"/>
-            <abstract>
-              <t>The standardization of network configuration interfaces for use with the Network Configuration Protocol (NETCONF) requires a structured and secure operating environment that promotes human usability and multi-vendor interoperability.  There is a need for standard mechanisms to restrict NETCONF protocol access for particular users to a pre-configured subset of all available NETCONF protocol operations and content.  This document defines such an access control model. [STANDARDS-TRACK]</t>
-            </abstract>
-          </front>
-          <seriesInfo name="RFC" value="6536"/>
-          <seriesInfo name="DOI" value="10.17487/RFC6536"/>
-        </reference>
-        <reference anchor="RFC6991" target="https://www.rfc-editor.org/info/rfc6991" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6991.xml">
-          <front>
-            <title>Common YANG Data Types</title>
-            <author fullname="J. Schoenwaelder" initials="J." role="editor" surname="Schoenwaelder"/>
-            <date month="July" year="2013"/>
-            <abstract>
-              <t>This document introduces a collection of common data types to be used with the YANG data modeling language.  This document obsoletes RFC 6021.</t>
-            </abstract>
-          </front>
-          <seriesInfo name="RFC" value="6991"/>
-          <seriesInfo name="DOI" value="10.17487/RFC6991"/>
-        </reference>
-        <reference anchor="RFC7224" target="https://www.rfc-editor.org/info/rfc7224" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7224.xml">
-          <front>
-            <title>IANA Interface Type YANG Module</title>
-            <author fullname="M. Bjorklund" initials="M." surname="Bjorklund"/>
-            <date month="May" year="2014"/>
-            <abstract>
-              <t>This document defines the initial version of the iana-if-type YANG module.</t>
-            </abstract>
-          </front>
-          <seriesInfo name="RFC" value="7224"/>
-          <seriesInfo name="DOI" value="10.17487/RFC7224"/>
-        </reference>
-        <reference anchor="RFC8340" target="https://www.rfc-editor.org/info/rfc8340" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8340.xml">
-          <front>
-            <title>YANG Tree Diagrams</title>
-            <author fullname="M. Bjorklund" initials="M." surname="Bjorklund"/>
-            <author fullname="L. Berger" initials="L." role="editor" surname="Berger"/>
-            <date month="March" year="2018"/>
-            <abstract>
-              <t>This document captures the current syntax used in YANG module tree diagrams.  The purpose of this document is to provide a single location for this definition.  This syntax may be updated from time to time based on the evolution of the YANG language.</t>
-            </abstract>
-          </front>
-          <seriesInfo name="BCP" value="215"/>
-          <seriesInfo name="RFC" value="8340"/>
-          <seriesInfo name="DOI" value="10.17487/RFC8340"/>
-        </reference>
-        <!-- XXX, RFC Editor, please check that this references is cited appropriately. -->
-
-            <reference anchor="IEEE802.3.2-2019" target="">
-          <front>
-            <title>IEEE 802.3.2-2019</title>
-            <author initials="" surname="" fullname="">
-              <organization>IEEE WG802.3 - Ethernet Working Group</organization>
-            </author>
-            <date year="2019"/>
-          </front>
-        </reference>
-        <reference anchor="I-D.ietf-netmod-sub-intf-vlan-model" target="https://www.ietf.org/archive/id/draft-ietf-netmod-sub-intf-vlan-model-07.txt" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-sub-intf-vlan-model.xml">
-          <front>
-            <title>Sub-interface VLAN YANG Data Models</title>
-            <author fullname="Robert Wilton">
-              <organization>Cisco Systems</organization>
-            </author>
-            <author fullname="David Ball">
-              <organization>Cisco Systems</organization>
-            </author>
-            <author fullname="Tapraj Singh">
-              <organization>Cisco Systems</organization>
-            </author>
-            <author fullname="Selvakumar Sivaraj">
-              <organization>Juniper Networks</organization>
-            </author>
-            <date day="13" month="July" year="2020"/>
-            <abstract>
-              <t>This document defines YANG modules to add support for classifying traffic received on interfaces as Ethernet/VLAN framed packets to sub-interfaces based on the fields available in the Ethernet/VLAN frame headers. These modules allow configuration of Layer 3 and Layer 2 sub-interfaces (e.g. L2VPN attachment circuits) that can interoperate with IETF based forwarding protocols; such as IP and L3VPN services; or L2VPN services like VPWS, VPLS, and EVPN. The sub-interfaces also interoperate with VLAN tagged traffic orginating from an IEEE 802.1Q compliant bridge. The model differs from an IEEE 802.1Q bridge model in that the configuration is interface/sub-interface based as opposed to being based on membership of an 802.1Q VLAN bridge. The YANG data models in this document conforms to the Network Management Datastore Architecture (NMDA) defined in RFC 8342.</t>
-            </abstract>
-          </front>
-          <seriesInfo name="Internet-Draft" value="draft-ietf-netmod-sub-intf-vlan-model-07"/>
-        </reference>
-        <!--&I-D.narten-iana-considerations-rfc2434bis;-->
-
-            <!-- A reference written by by an organization not a person. -->
-
-            <!--      <reference anchor="DOMINATION"
-                 target="http://www.example.com/dominator.html">
-        <front>
-          <title>Ultimate Plan for Taking Over the World</title>
-
-          <author>
-            <organization>Mad Dominators, Inc.</organization>
-          </author>
-
-          <date year="1984" />
-        </front>
-      </reference>-->
-        </references>
+	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6241.xml"/>
+	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6242.xml"/>
+	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6991.xml"/>
+	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7224.xml"/>
+	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8340.xml"/>
+	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8341.xml"/>
+	<xi:include href="https://bib.ietf.org/public/rfc/bibxml6/reference.R.IEEE.802.3.2-2019.xml"/>
+	<xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netmod-sub-intf-vlan-model.xml"/>
+      </references>
     </references>
-    <!--    <section anchor="app-additional" title="Additional Stuff">
-      <t>This becomes an Appendix.</t>
-    </section>-->
-        <!-- Change Log
-
-v00 2015-03-02  RGW   Initial version
-                      -->
     </back>
 </rfc>
