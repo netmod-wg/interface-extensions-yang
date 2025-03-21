@@ -32,7 +32,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" consensus="true" docName="draft-ietf-netmod-intf-ext-yang-15" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="4" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" consensus="true" docName="draft-ietf-netmod-intf-ext-yang-16" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="4" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.15.0 -->
   <!-- category values: std, bcp, info, exp, and historic
    ipr values: full3667, noModification3667, noDerivatives3667
@@ -43,7 +43,7 @@
     <!-- The abbreviated title is used in the page header - it is only necessary if the 
          full title is longer than 39 characters -->
     <title abbrev="Interface Extensions YANG">Common Interface Extension YANG Data Models</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-netmod-intf-ext-yang-15"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-netmod-intf-ext-yang-16"/>
     <!-- add 'role="editor"' below for the editors if appropriate -->
       <!-- Another author who claims to be an editor -->
       <author fullname="Robert Wilton" initials="R.G." surname="Wilton">
@@ -483,7 +483,7 @@ module: ietf-if-ethernet-like
                 contains references to <xref target="RFC6991" format="default"/>
                 and <xref target="RFC7224" format="default"/>.
       </t>
-      <sourcecode name="ietf-if-extensions@2025-01-27.yang" type="" markers="true"><![CDATA[
+      <sourcecode name="ietf-if-extensions@2025-01-27.yang" type="yang" markers="true"><![CDATA[
 module ietf-if-extensions {
   yang-version 1.1;
 
@@ -1060,7 +1060,7 @@ module ietf-if-extensions {
             interfaces. This includes Ethernet interfaces, 802.3 LAG (802.1AX)
             interfaces, Switch Virtual interfaces, and Pseudo-Wire Head-End
             interfaces.  It also contains references to <xref target="RFC6991" format="default"/>, <xref target="RFC7224" format="default"/>, and <xref target="IEEE_802.3.2_2019" format="default"/>.</t>
-      <sourcecode name="ietf-if-ethernet-like@2025-01-27.yang" type="" markers="true"><![CDATA[
+      <sourcecode name="ietf-if-ethernet-like@2025-01-27.yang" type="yang" markers="true"><![CDATA[
 module ietf-if-ethernet-like {
   yang-version 1.1;
 
