@@ -32,7 +32,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" consensus="true" docName="draft-ietf-netmod-intf-ext-yang-16" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="4" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" consensus="true" docName="draft-ietf-netmod-intf-ext-yang-17" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="4" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.15.0 -->
   <!-- category values: std, bcp, info, exp, and historic
    ipr values: full3667, noModification3667, noDerivatives3667
@@ -43,7 +43,7 @@
     <!-- The abbreviated title is used in the page header - it is only necessary if the 
          full title is longer than 39 characters -->
     <title abbrev="Interface Extensions YANG">Common Interface Extension YANG Data Models</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-netmod-intf-ext-yang-16"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-netmod-intf-ext-yang-17"/>
     <!-- add 'role="editor"' below for the editors if appropriate -->
       <!-- Another author who claims to be an editor -->
       <author fullname="Robert Wilton" initials="R.G." surname="Wilton">
@@ -89,7 +89,7 @@
         formal standard specification.  Instead, they are for features that are
         commonly implemented in equivalent ways by multiple independent network
         equipment vendors.  The aim of this document is to define common paths and
-        leaves for the configuration of these equivalent features in a uniform
+        leafs for the configuration of these equivalent features in a uniform
         way, making it easier for users of the YANG model to access these
         features in a vendor independent way.  Where necessary, a description of
         the expected behavior is also provided with the aim of ensuring vendors
@@ -182,7 +182,7 @@
               encapsulations.</li>
         <li>A loopback configuration leaf that is primarily aimed at
               loopback at the physical layer.</li>
-        <li>MTU configuration leaves applicable to all packet/frame based
+        <li>MTU configuration leafs applicable to all packet/frame based
               interfaces.</li>
         <li>A forwarding mode leaf to indicate the OSI layer at which the
 		interface handles traffic.</li>
@@ -239,7 +239,7 @@ module: ietf-if-extensions
           layer protocols that the state transition has occurred.  I.e., in the
           case that the link state transition is suppressed then there is no
           change of the /if:interfaces/if:interface/oper-status or
-          /if:interfaces/if:interfaces/last-change leaves for the
+          /if:interfaces/if:interfaces/last-change leafs for the
           interface that the feature is operating on.  One obvious side effect
           of using this feature that is that any state transition will always be
           delayed by the specified time interval.</t>
@@ -367,16 +367,24 @@ module: ietf-if-extensions
       </section>
       <section numbered="true" toc="default">
         <name>Sub-interface</name>
-        <t>The sub-interface feature specifies the minimal leaves required to
+        <t>The sub-interface feature specifies the minimal leafs required to
           define a child interface that is parented to another interface.</t>
         <t>A sub-interface is a logical interface that handles a subset of the
-          traffic on the parent interface.  Separate configuration leaves are
+          traffic on the parent interface.  Separate configuration leafs are
           used to classify the subset of ingress traffic received on the parent
           interface to be processed in the context of a given sub-interface.
           All egress traffic processed on a sub-interface is given to the parent
           interface for transmission.  Otherwise, a sub-interface is like any
-          other interface in /if:interfaces and supports the standard interface
-          features and configuration.</t>
+          other interface entry in the /if:interfaces/if:interface list,
+          appearing as another regular list entry, and supporting the same standard
+          interface features and configuration.  For example, using the ietf-ip YANG
+          module <xref target="RFC8344"/>, to configure an IPv6 address on
+          a sub-interface uses the same schema path,
+          /if:interfaces/if:interface/ip:ipv6/ip:address/ip:ip, that would also
+          be used to configure an IPv6 address on any other type of interface.
+          Further examples of sub-interface configuration are given in the
+          appendices of <xref target="I-D.ietf-netmod-sub-intf-vlan-model"/>.
+          </t>
         <t>For some vendor specific interface naming conventions the name of
           the child interface is sufficient to determine the parent interface,
           which implies that the child interface can never be reparented to a
@@ -394,10 +402,10 @@ module: ietf-if-extensions
       <section numbered="true" toc="default">
         <name>Forwarding Mode</name>
         <t>The forwarding mode leaf provides additional information as to what
-          mode or layer an interface is logically operating and forwarding
-          traffic at.  The implication of this leaf is that for traffic
-          forwarded at a given layer that any headers for lower layers are
-          stripped off before the packet is forwarded at the given layer.
+          mode or layer an interface (or sub-interface) is logically operating
+          and forwarding traffic at.  The implication of this leaf is that for
+          traffic forwarded at a given layer that any headers for lower layers
+          are stripped off before the packet is forwarded at the given layer.
           Conversely, on egress any lower layer headers must be added to the
           packet before it is transmitted out of the interface.</t>
         <t>The following forwarding modes are defined:
@@ -414,7 +422,7 @@ module: ietf-if-extensions
       <section numbered="true" toc="default">
 	 <name>Peer-interface</name>
 	 <t>
-         The peer-interface feature specifies the minimal leaves required to
+         The peer-interface feature specifies the minimal leafs required to
          define a peer interface that is directly associated to another
          interface.
 
@@ -433,7 +441,7 @@ module: ietf-if-extensions
         all configuration and operational data that is common across interface
         types that use Ethernet framing as their datalink layer
         encapsulation.</t>
-      <t>This module currently contains leaves for the configuration and
+      <t>This module currently contains leafs for the configuration and
         reporting of the operational MAC address and the burnt-in MAC address
         (BIA) associated with any interface using Ethernet framing.</t>
       <t>The module also contains a set of counters that are used to report
@@ -483,7 +491,7 @@ module: ietf-if-ethernet-like
                 contains references to <xref target="RFC6991" format="default"/>
                 and <xref target="RFC7224" format="default"/>.
       </t>
-      <sourcecode name="ietf-if-extensions@2025-01-27.yang" type="yang" markers="true"><![CDATA[
+      <sourcecode name="ietf-if-extensions@2025-08-07.yang" type="yang" markers="true"><![CDATA[
 module ietf-if-extensions {
   yang-version 1.1;
 
@@ -511,7 +519,7 @@ module ietf-if-extensions {
     "IETF NETMOD (NETCONF Data Modeling Language) Working Group";
 
   contact
-    "WG Web:   <http://tools.ietf.org/wg/netmod/>
+    "WG Web:   <https://datatracker.ietf.org/wg/netmod/about/>
      WG List:  <mailto:netmod@ietf.org>
 
      Editor:   Robert Wilton
@@ -521,9 +529,9 @@ module ietf-if-extensions {
                <mailto:scott.mansfield@ericsson.com>";
 
   description
-    "This module contains common definitions for extending the IETF
-     interface YANG model (RFC 8343) with common configurable layer 2
-     properties.
+    "This module contains definitions for extending the IETF
+     interface YANG model (RFC 8343) with common configurable
+     layer 2 properties.
 
      Copyright (c) 2025 IETF Trust and the persons identified as
 
@@ -546,9 +554,9 @@ module ietf-if-extensions {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-  revision 2025-01-27 {
+  revision 2025-08-07 {
     description
-      "Interface Extension YANG Module initial revision";
+      "Initial revision";
 
     reference
       "RFC XXXX, Common Interface Extension YANG Data Models";
@@ -573,15 +581,15 @@ module ietf-if-extensions {
 
   feature loopback {
     description
-      "This feature indicates that configurable interface loopback is
-       supported.";
+      "This feature indicates that configurable interface loopback
+       is supported.";
     reference "RFC XXXX, Section 2.4 Loopback";
   }
 
   feature max-frame-size {
     description
-      "This feature indicates that the device supports configuring or
-       reporting the maximum frame size on interfaces.";
+      "This feature indicates that the device supports configuring
+       or reporting the maximum frame size on interfaces.";
     reference "RFC XXXX, Section 2.5 Maximum Frame Size";
   }
 
@@ -589,18 +597,18 @@ module ietf-if-extensions {
     description
       "This feature indicates that the device supports the
        instantiation of sub-interfaces.  Sub-interfaces are defined
-       as logical child interfaces that allow features and forwarding
-       decisions to be applied to a subset of the traffic processed
-       on the specified parent interface.";
+       as logical child interfaces that allow features and
+       forwarding decisions to be applied to a subset of the traffic
+       processed on the specified parent interface.";
     reference "RFC XXXX, Section 2.6 Sub-interface";
   }
 
   feature peer-interface {
     description
       "This feature indicates that the device supports the
-       specification of peer-interfaces.  A Peer-interface is defined
-       as logical peer that receives egress traffic of the given
-       interface on its ingress path and vice versa.";
+       specification of peer-interfaces.  A Peer-interface is
+       defined as logical peer that receives egress traffic of the
+       given interface on its ingress path and vice versa.";
     reference "RFC XXXX, Section 2.8 Peer-interface";
   }
 
@@ -652,13 +660,14 @@ module ietf-if-extensions {
   identity network {
     base forwarding-mode;
     description
-      "Network layer based forwarding, such as IP, MPLS, or L3VPNs.";
+      "Network layer based forwarding, such as IP, MPLS,
+       or L3VPNs.";
     reference "RFC XXXX, Section 2.7";
   }
 
 
   /*
-   * Augments the IETF interfaces model with leaves to configure
+   * Augments the IETF interfaces model with leafs to configure
    * and monitor link-flap-suppression on an interface.
    */
   augment "/if:interfaces/if:interface" {
@@ -678,15 +687,16 @@ module ietf-if-extensions {
         type uint32;
         units milliseconds;
         description
-          "Delays the propagation of a 'loss of carrier signal' event
-           that would cause the interface state to go down, i.e. the
-           command allows short link flaps to be suppressed. The
-           configured value indicates the minimum time interval (in
-           milliseconds) that the link signal must be continuously
-           down before the interface state is brought down. If not
-           configured, the behavior on loss of link signal is
-           vendor/interface specific, but with the general
-           expectation that there should be little or no delay.";
+          "Delays the propagation of a 'loss of carrier signal'
+           event that would cause the interface state to go down,
+           i.e., the command allows short link flaps to be
+           suppressed. The configured value indicates the minimum
+           time interval (in milliseconds) that the link signal must
+           be continuously down before the interface state is
+           brought down. If not configured, the behavior on loss of
+           link signal is vendor/interface specific, but with the
+           general expectation that there should be little or no
+           delay.";
       }
       leaf up {
         type uint32;
@@ -698,9 +708,10 @@ module ietf-if-extensions {
            from down to up.  If not configured, the behavior is
            vendor/interface specific, but with the general
            expectation that sufficient default delay should be used
-           to ensure that the interface is stable when enabled before
-           being reported as being up.  Configured values that are
-           too low for the hardware capabilties may be rejected.";
+           to ensure that the interface is stable when enabled
+           before being reported as being up.  Configured values
+           that are too low for the hardware capabilities may be
+           rejected.";
       }
       leaf carrier-transitions {
         type yang:counter64;
@@ -708,10 +719,10 @@ module ietf-if-extensions {
         config false;
         description
           "Defines the number of times the underlying link state
-           has changed to, or from, state up.  This counter should be
-           incremented even if the high layer interface state changes
-           are being suppressed by a running link flap suppression
-           timer.";
+           has changed to, or from, state up.  This counter should
+           be incremented even if the high layer interface state
+           changes are being suppressed by a running link flap
+           suppression timer.";
       }
       leaf timer-running {
         type enumeration {
@@ -752,8 +763,8 @@ module ietf-if-extensions {
         "Enable interface link flap dampening with default settings
          (that are vendor/device specific).";
       description
-        "Interface dampening limits the propagation of interface link
-         state flaps over longer periods.";
+        "Interface dampening limits the propagation of interface
+         link state flaps over longer periods.";
       reference "RFC XXXX, Section 2.2 Dampening";
 
       leaf half-life {
@@ -774,7 +785,7 @@ module ietf-if-extensions {
         type uint32;
         description
           "Penalty value below which a stable interface is
-           unsuppressed (i.e. brought up) (no units).  The default
+           unsuppressed (i.e., brought up) (no units).  The default
            value is vendor/device specific.  The penalty value for a
            link up->down state change is 1000 units.";
         reference "RFC XXXX, Section 2.2.3 Reuse Threshold";
@@ -783,11 +794,11 @@ module ietf-if-extensions {
       leaf suppress {
         type uint32;
         description
-          "Limit at which an interface is suppressed (i.e. held down)
-           when its penalty exceeds that limit (no units).  The value
-           must be greater than the reuse threshold.  The default
-           value is vendor/device specific.  The penalty value for a
-           link up->down state change is 1000 units.";
+          "Limit at which an interface is suppressed (i.e., held
+           down) when its penalty exceeds that limit (no units).
+           The value must be greater than the reuse threshold.  The
+           default value is vendor/device specific.  The penalty
+           value for a link up->down state change is 1000 units.";
         reference "RFC XXXX, Section 2.2.1 Suppress Threshold";
       }
 
@@ -798,8 +809,8 @@ module ietf-if-extensions {
           "Maximum time (in seconds) that an interface can be
            suppressed before being unsuppressed if no further link
            up->down state change penalties have been applied.  This
-           value effectively acts as a ceiling that the penalty value
-           cannot exceed.  The default value is vendor/device
+           value effectively acts as a ceiling that the penalty
+           value cannot exceed.  The default value is vendor/device
            specific.";
         reference "RFC XXXX, Section 2.2.4 Maximum Suppress Time";
       }
@@ -810,7 +821,7 @@ module ietf-if-extensions {
         description
           "The current penalty value for this interface.  When the
            penalty value exceeds the 'suppress' leaf then the
-           interface is suppressed (i.e. held down).";
+           interface is suppressed (i.e., held down).";
         reference "RFC XXXX, Section 2.2 Dampening";
       }
 
@@ -818,8 +829,8 @@ module ietf-if-extensions {
         type boolean;
         config false;
         description
-          "Represents whether the interface is suppressed (i.e. held
-           down) because the 'penalty' leaf value exceeds the
+          "Represents whether the interface is suppressed (i.e.,
+           held down) because the 'penalty' leaf value exceeds the
            'suppress' leaf.";
         reference "RFC XXXX, Section 2.2 Dampening";
       }
@@ -885,7 +896,7 @@ module ietf-if-extensions {
             derived-from-or-self(../if:type, 'ianaift:atm') or
             derived-from-or-self(../if:type, 'ianaift:otnOtu')" {
         description
-          "All interface types that support loopback configuration.";
+          "All interface types supporting loopback configuration.";
       }
       if-feature "loopback";
       type identityref {
@@ -910,9 +921,9 @@ module ietf-if-extensions {
 
          If configured, the max-frame-size also limits the maximum
          frame size of any child sub-interfaces.  The MTU available
-         to higher layer protocols is restricted to the maximum frame
-         payload size, and MAY be further restricted by explicit
-         layer 3 or protocol specific MTU configuration.";
+         to higher layer protocols is restricted to the maximum
+         frame payload size, and MAY be further restricted by
+         explicit layer 3 or protocol specific MTU configuration.";
 
       reference "RFC XXXX, Section 2.5 Maximum Frame Size";
     }
@@ -950,8 +961,8 @@ module ietf-if-extensions {
    */
   augment "/if:interfaces/if:interface" {
     when "derived-from-or-self(if:type, 'ianaift:l2vlan') or
-          derived-from-or-self(if:type, 'ianaift:atmSubInterface') or
-          derived-from-or-self(if:type, 'ianaift:frameRelay')"  {
+          derived-from-or-self(if:type, 'ianaift:atmSubInterface')
+          or derived-from-or-self(if:type, 'ianaift:frameRelay')"  {
       description
         "Any ianaift:types that explicitly represent
          sub-interfaces.";
@@ -982,16 +993,16 @@ module ietf-if-extensions {
        counter";
     leaf in-discard-overflows {
       type yang:counter64;
-      units frames;
+      units packets;
       description
-        "A count of the number of frames discarded because of
+        "A count of the number of packets discarded because of
          overflows, e.g., because there were insufficient
          resources to buffer or process the frame.
 
-         This counter does not include frames that were discarded
+         This counter does not include packets that were discarded
          due to a QOS policy.
 
-         For consistency, frames counted against this counter are
+         For consistency, packets counted against this counter are
          also counted against the IETF interfaces statistics.  In
          particular, they are included in in-octets and in-discards,
          but are not included in in-unicast-pkts, in-multicast-pkts
@@ -1002,8 +1013,7 @@ module ietf-if-extensions {
          re-initialization of the management system, and at other
          times as indicated by the value of the 'discontinuity-time'
          leaf defined in the ietf-interfaces YANG module
-         (RFC 8343).
-          ";
+         (RFC 8343).";
     }
   }
 
@@ -1017,8 +1027,8 @@ module ietf-if-extensions {
                                'ianaift:ieee8023adLag') or
           derived-from-or-self(../if:type, 'ianaift:ifPwType')" {
       description
-        "Applies to interfaces that can demultiplex ingress frames to
-         sub-interfaces.";
+        "Applies to interfaces that can demultiplex ingress packets
+         to sub-interfaces.";
     }
     if-feature "sub-interfaces";
 
@@ -1027,16 +1037,16 @@ module ietf-if-extensions {
        demux discard counter.";
     leaf in-discard-unknown-encaps {
       type yang:counter64;
-      units frames;
+      units packets;
       description
-        "A count of the number of frames that were well formed, but
-         otherwise discarded because their encapsulation does not
-         classify the frame to the interface or any child
-         sub-interface.  E.g., a frame might be discarded because the
+        "A count of the number of packets that were well-formed,
+         but otherwise discarded because their encapsulation does
+         not classify the packet to the interface or any child
+         sub-interface.  E.g., a packet might be discarded because
          it has an unknown VLAN Id, or does not have a VLAN Id when
          one is expected.
 
-         For consistency, frames counted against this counter are
+         For consistency, packets counted against this counter are
          also counted against the IETF interfaces statistics.  In
          particular, they are included in in-octets and in-discards,
          but are not included in in-unicast-pkts, in-multicast-pkts
@@ -1060,7 +1070,7 @@ module ietf-if-extensions {
             interfaces. This includes Ethernet interfaces, 802.3 LAG (802.1AX)
             interfaces, Switch Virtual interfaces, and Pseudo-Wire Head-End
             interfaces.  It also contains references to <xref target="RFC6991" format="default"/>, <xref target="RFC7224" format="default"/>, and <xref target="IEEE_802.3.2_2019" format="default"/>.</t>
-      <sourcecode name="ietf-if-ethernet-like@2025-01-27.yang" type="yang" markers="true"><![CDATA[
+      <sourcecode name="ietf-if-ethernet-like@2025-08-07.yang" type="yang" markers="true"><![CDATA[
 module ietf-if-ethernet-like {
   yang-version 1.1;
 
@@ -1089,7 +1099,7 @@ module ietf-if-ethernet-like {
     "IETF NETMOD (NETCONF Data Modeling Language) Working Group";
 
   contact
-    "WG Web:   <http://tools.ietf.org/wg/netmod/>
+    "WG Web:   <https://datatracker.ietf.org/wg/netmod/about/>
      WG List:  <mailto:netmod@ietf.org>
 
      Editor:   Robert Wilton
@@ -1124,7 +1134,7 @@ module ietf-if-ethernet-like {
      (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
      for full legal notices.";
 
-  revision 2025-01-27 {
+  revision 2025-08-07 {
     description "Initial revision.";
 
     reference
@@ -1510,9 +1520,9 @@ module ietf-if-ethernet-like {
         type yang:mac-address;
         config false;
         description
-          "The 'burnt-in' MAC address.  I.e the default MAC address
-           assigned to the interface if no MAC address has been
-           explicitly configured on it.";
+          "The 'burnt-in' MAC address.  I.e., the default MAC
+           address assigned to the interface if no MAC address has
+           been explicitly configured on it.";
       }
     }
   }
@@ -1537,7 +1547,7 @@ module ietf-if-ethernet-like {
       type yang:counter64;
       units frames;
       description
-        "A count of the number of frames that were well formed, but
+        "A count of the number of frames that were well-formed, but
          otherwise discarded because the destination MAC address did
          not pass any ingress destination MAC address filter.
 
@@ -1711,7 +1721,7 @@ module ietf-if-ethernet-like {
         "name": "eth0",
         "type": "iana-if-type:ethernetCsmacd",
 	"ietf-if-ethernet-like:ethernet-like": {
-	   "mac-address": "00:00:5E:00:53:30"
+	   "mac-address": "00:00:5E:00:53:35"
 	}
       }
     ]
@@ -1786,7 +1796,6 @@ module ietf-if-ethernet-like {
 }
 	   ]]></artwork>
    </section>
-                    
     </section>
     <section anchor="Acknowledgements" numbered="true" toc="default">
       <name>Acknowledgements</name>
@@ -1795,7 +1804,8 @@ module ietf-if-ethernet-like {
 	    Mahesh Jethanandani, Martin Bjorklund, Michael Zitao,
 	    Neil Ketley, Qin Wu, William Lupton, Xufeng Liu, Andy Bierman,
 	    and Vladimir Vassilev for their helpful comments contributing to
-	    this document.</t>
+	    this document.  The authors would like to thank Mahesh Jethanandani for
+      his thoughtful AD review.</t>
     </section>
     <section anchor="IANA" numbered="true" toc="default">
       <name>IANA Considerations</name>
@@ -1835,82 +1845,42 @@ module ietf-if-ethernet-like {
     </section>
     <section anchor="Security" numbered="true" toc="default">
       <name>Security Considerations</name>
-      <t>The YANG module defined in this memo is designed to be accessed via
-          the NETCONF protocol <xref target="RFC6241" format="default">RFC 6241</xref>. The
-          lowest NETCONF layer is the secure transport layer and the mandatory
-          to implement secure transport is SSH <xref target="RFC6242" format="default">RFC
-          6242</xref>.  The NETCONF access control model <xref target="RFC8341" format="default">RFC 8341</xref> provides the means to restrict access
-          for particular NETCONF users to a pre-configured subset of all
-          available NETCONF protocol operations and content.</t>
-      <t>There are a number of data nodes defined in this YANG module which
-          are writable/creatable/deletable (i.e. config true, which is the
-          default).  These data nodes may be considered sensitive or vulnerable
-          in some network environments.  Write operations (e.g. edit-config) to
-          these data nodes without proper protection can have a negative effect
-          on network operations.  These are the subtrees and data nodes and
-          their sensitivity/vulnerability:</t>
-      <section numbered="true" toc="default">
-        <name>ietf-if-extensions.yang</name>
-        <t>The ietf-if-extensions YANG module contains various configuration
-            leaves that affect the behavior of interfaces.  Modifying these
-            leaves can cause an interface to go down, or become unreliable, or
-            to drop traffic forwarded over it. More specific details of the
-            possible failure modes are given below.</t>
-        <t>The following leaf could cause the interface to go down
-            and stop processing any ingress or egress traffic on the
-            interface.  It could also cause broadcast traffic storms.
-        </t>
-        <ul spacing="normal">
-          <li>/if:interfaces/if:interface/loopback</li>
-        </ul>
-        <t>The following leaves could cause instabilities at the
-                interface link layer, and cause unwanted higher layer routing
-                path changes if the leaves are modified, although they would
-                generally only affect a device that had some underlying link
-                stability issues:
-        </t>
-        <ul spacing="normal">
-          <li>/if:interfaces/if:interface/link-flap-suppression/down</li>
-          <li>/if:interfaces/if:interface/link-flap-suppression/up</li>
-          <li>/if:interfaces/if:interface/dampening/half-life</li>
-          <li>/if:interfaces/if:interface/dampening/reuse</li>
-          <li>/if:interfaces/if:interface/dampening/suppress</li>
-          <li>/if:interfaces/if:interface/dampening/max-suppress-time</li>
-        </ul>
-        <t>The following leaves could cause traffic loss on the
-                interface because the received or transmitted frames do not
-                comply with the frame matching criteria on the interface and
-                hence would be dropped:
-        </t>
-        <ul spacing="normal">
-          <li>/if:interfaces/if:interface/encapsulation</li>
-          <li>/if:interfaces/if:interface/max-frame-size</li>
-          <li>/if:interfaces/if:interface/forwarding-mode</li>
-        </ul>
-        <t>Changing the parent-interface leaf could cause all traffic on
-                the affected interface to be dropped.  The affected leaf is:
-        </t>
-        <ul spacing="normal">
-          <li>/if:interfaces/if:interface/parent-interface</li>
-        </ul>
-      </section>
-      <section numbered="true" toc="default">
-        <name>ietf-if-ethernet-like.yang</name>
-        <t>Generally, the configuration nodes in the
-           ietf-if-ethernet-like YANG module are concerned with
-           configuration that is common across all types of Ethernet-like
-           interfaces.  The module currently only contains a node for
-           configuring the operational MAC address to use on an interface.
-           Adding/modifying/deleting this leaf has the potential risk of
-           causing protocol instability, excessive protocol traffic, and
-           general traffic loss, particularly if the configuration change
-           caused a duplicate MAC address to be present on the local
-           network.  The following leaf is affected:
-        </t>
-        <ul spacing="normal">
-          <li>interfaces/interface/ethernet-like/mac-address</li>
-        </ul>
-      </section>
+      <t>This section is modeled after the template described in Section 3.7 of
+      [RFCAAAA].</t>
+      <t>The ietf-if-extensions and ietf-if-ethernet-like YANG modules define
+      data models that are designed to be accessed via YANG-based management
+      protocols, such as NETCONF <xref target="RFC6241"/> and RESTCONF
+      <xref target="RFC8040"/>. These protocols have to use a secure transport
+      layer (e.g., SSH <xref target="RFC4252"/>, TLS <xref target="RFC8446"/>,
+      and QUIC <xref target="RFC9000"/>) and have to use mutual authentication.</t>
+
+      <t>The Network Configuration Access Control Model (NACM)
+      <xref target="RFC8341"/> provides the means to restrict access for
+      particular NETCONF or RESTCONF users to a preconfigured subset of all
+      available NETCONF or RESTCONF protocol operations and content.</t>
+
+      <t>There are a number of data nodes defined in this YANG module that are
+      writable/creatable/deletable (i.e., "config true", which is the default).
+      All writable data nodes are likely to be reasonably sensitive or
+      vulnerable in some network environments. Write operations
+      (e.g., edit-config) and delete operations to these data nodes without
+      proper protection or authentication can have a negative effect on network
+      operations. The following subtrees and data nodes have particular
+      sensitivities/vulnerabilities:</t>
+
+      <ul spacing="normal">
+        <li>There are no particularly sensitive writable data nodes.</li>
+      </ul>
+
+      <t>Some of the readable data nodes in this YANG module may be considered
+      sensitive or vulnerable in some network environments. It is thus important
+      to control read access (e.g., via get, get-config, or notification) to
+      these data nodes. Specifically, the following subtrees and data nodes have
+      particular sensitivities/vulnerabilities:</t>
+
+      <ul spacing="normal">
+        <li>There are no particularly sensitive readable data nodes.</li>
+      </ul>
     </section>
   </middle>
   <!--  *****BACK MATTER ***** -->
@@ -1930,24 +1900,28 @@ module ietf-if-ethernet-like {
       <name>References</name>
       <references>
         <name>Normative References</name>
-	    <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2119.xml"/>
-	    <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.3688.xml"/>
-	    <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6020.xml"/>
-	    <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7950.xml"/>
-	    <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
-	    <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8342.xml"/>
-	    <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8343.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2119.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.3688.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6020.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7950.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8341.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8342.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8343.xml"/>
       </references>
       <references>
         <name>Informative References</name>
-	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6241.xml"/>
-	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6242.xml"/>
-	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6991.xml"/>
-	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7224.xml"/>
-	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8340.xml"/>
-	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8341.xml"/>
-	<xi:include href="https://bib.ietf.org/public/rfc/bibxml6/reference.R.IEEE.802.3.2-2019.xml"/>
-	<xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netmod-sub-intf-vlan-model.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6241.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6991.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7224.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8340.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8344.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml6/reference.R.IEEE.802.3.2-2019.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netmod-sub-intf-vlan-model.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8040.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8446.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9000.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4252.xml"/>
       </references>
     </references>
     </back>
